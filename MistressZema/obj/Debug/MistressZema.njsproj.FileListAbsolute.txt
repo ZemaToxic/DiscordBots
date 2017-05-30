@@ -1,0 +1,2 @@
+C:\DiscordBots\MistressZema\obj\Debug\MistressZema.njsprojResolveAssemblyReference.cache
+C:\DiscordBots\MistressZema\bin\Microsoft.NodejsTools.WebRole.dll
