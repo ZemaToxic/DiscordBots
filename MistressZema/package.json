@@ -1,0 +1,9 @@
+{
+  "name": "mistress-zema",
+  "version": "0.0.0",
+  "description": "MistressZema",
+  "main": "MistressZema.js",
+  "author": {
+    "name": "ZemaToxic"
+  }
+}
