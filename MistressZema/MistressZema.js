@@ -83,7 +83,7 @@ quote = loadQuotes(quote)
 // Create an event listener for messages
 client.on('message', message => {
     
-    /*
+    
     // Ignore all messages unless they start with 'prefix' (~)
     
 
@@ -283,17 +283,6 @@ client.on('message', message => {
 
         message.channel.send({ embed });
     }
-    
-    
-    
-
-
-*/
-    if (message.author.bot) return;
-    if (!message.content.startsWith(prefix)) return;
-
-    let command = message.content.split(' ')[0];
-    command = command.slice(prefix.length);
 
     if (command === "testquote")
     {
@@ -308,7 +297,7 @@ client.on('message', message => {
         return;
     }
    
-    let args = message.content.split(' ').slice(1);
+   
     // The list of if/else is replaced with those simple 2 lines:
 
     try {
