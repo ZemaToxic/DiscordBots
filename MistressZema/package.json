@@ -5,5 +5,9 @@
   "main": "MistressZema.js",
   "author": {
     "name": "ZemaToxic"
+  },
+  "dependencies": {
+    "discord.js": "^11.1.0",
+    "sqlite": "^2.8.0"
   }
 }
