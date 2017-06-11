@@ -18,10 +18,13 @@ var COLOR_YELLOW = '\x1b[1m\x1b[33m';
 
 // Import the discord.js module
 const Discord = require('discord.js');
+const YTDL = require("ytdl-core");
 const fs = require('fs')
 
 // Create an instance of a Discord client
 const client = new Discord.Client();
+// Create a server empty Object
+var servers = {};
 
 // The token of your bot - https://discordapp.com/developers/applications/me
 const token = 'MzE4NTYxNzQyMTE4NTg0MzIy.DA0LVg.K_Gu0kCsLUV7a6xDZzn-7Xc5A7o';
@@ -49,9 +52,21 @@ const loadQuotes = (quote) => {
     }
 }
 
+function play(connection, message) {
+    var server = servers[message.guild.id];
 
-// The ready event is vital, it means that your bot will only start reacting to information
-// from Discord _after_ ready is emitted
+    server.dispatcher = connection.playStream(YTDL(server.queue[0], {filter: "audioonly"}));
+
+    server.queue.shift();
+
+    server.dispatcher.on("end", function () {
+        if (server.queue[0]) play(connection, message);
+        else connection.disconnect();
+    });
+}
+
+
+// The ready event is vital, it means that your bot will only start reacting to information from Discord _after_ ready is emitted
 client.on('ready', () => {
     console.log(COLOR_YELLOW,'I am Connected!',RESET_COLOR);
 });
@@ -64,23 +79,18 @@ client.on('guildMemberAdd', member => {
 });
 
 const prefix = "~";
+
+// Used for Quote JSON
 let quote = []
-
-
 quote = loadQuotes(quote)
 
 // Create an event listener for messages
 client.on('message', message => {
-    
-    
+   
     // Ignore all messages unless they start with 'prefix' (~)
-    
-
     if (!message.content.startsWith(prefix)) return;
-
-
+    
     // Remove the prefix and Do things based off the second Word.
- 
     let command = message.content.split(" ")[0];
     command = command.slice(prefix.length);
 
@@ -285,16 +295,55 @@ client.on('message', message => {
         }
         return;
     }
-   
-   
-    // The list of if/else is replaced with those simple 2 lines:
 
-    try {
-        let commandFile = require(`./commands/${command}.js`);
-        commandFile.run(client, message, args);
-    } catch (err) {
-        console.error(err);
+    if (command == "play") {
+        // If no Link provided Complain.
+        if (!args[0]) {
+            message.channel.send("Please Provide a Link to a song.")
+        }
+        // If the User is not in a voice Channel.... Complain.
+        if (!message.member.voiceChannel) {
+            message.channel.send("You must be in a Voice Channel.")
+        }
+        // Make a queue if there is none
+        if (!servers[message.guild.id]) servers[message.guild.id] = {
+            queue: []
+        }
+        // Make server = The current connected Server.
+        var server = servers[message.guild.id];
+
+        server.queue.push(args[0]);
+
+        // Call the Play function
+        if (!message.guild.voiceConnection) message.member.voiceChannel.join().then(connection => {
+            play(connection, message);
+        })
     }
+
+    if (command == "skip") {
+        var server = servers[message.guild.id];
+        // If there is a dispatcher, End the song.
+        if (server.dispatcher) server.dispatcher.end();
+    }
+
+
+    if (command == "stop") {
+        var server = servers[message.guild.id];
+        if (message.member.voiceChannel) {
+            message.member.voiceChannel.leave()
+        } else {
+            message.reply('You need to join a voice channel first!');
+        }
+    }
+
+
+    //// The list of if/else is replaced with those simple 2 lines:
+    //try {
+    //    let commandFile = require(`./commands/${command}.js`);
+    //    commandFile.run(client, message, args);
+    //} catch (err) {
+    //    console.error(err);
+    //}
 
 });
 
