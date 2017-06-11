@@ -109,7 +109,7 @@ exports.run = (client, message, args) => {
     // IF DEL
     if (args[0] === "del")
     {
-        var quoteNumbertoDel = args[1];
+        var quoteNumbertoDel = parseInt(args[1]);
         sql.get(`SELECT * FROM quotes WHERE ID ='${quoteNumbertoDel}'`).then(row => {
 
             // OLLOLDSADS
@@ -170,44 +170,44 @@ exports.run = (client, message, args) => {
 
     // IF TEST
     if (args[0] === "test") {
-        //args.splice(0, 1);
-        //var quoteNumToEdit = args[0];
-
-        //args.splice(0, 1);
-        //var quoteToEdit = args.join(' ')
-
-       // sql.run(`DELETE FROM quotes WHERE ID ='${quoteNumToEdit}'`)
 
         try {
             var quoteToEdit = args[1]
 
-            sql.run(`DELETE FROM quotes WHERE ID ='${quoteToEdit}'`)
+            sql.run(`DELETE FROM quotes WHERE ID ='${quoteToEdit}'`);
+			sql.run(`UPDATE quotes SET ID = ID - 1 WHERE ID > ?`);
+			
+			
+			
+			
+			
+			
 
-            sql.get(`SELECT seq FROM sqlite_sequence WHERE name = 'quotes'`).then(row => {
-                totalQuotes = row;
+            // sql.get(`SELECT seq FROM sqlite_sequence WHERE name = 'quotes'`).then(row => {
+                // totalQuotes = row;
 
-                var quotesOnwardsToEdit = parseInt(quoteToEdit) + 1;
+                // var quotesOnwardsToEdit = parseInt(quoteToEdit) + 1;
 
-                console.log(quotesOnwardsToEdit)
+                // console.log(quotesOnwardsToEdit)
 
-                for (i = quotesOnwardsToEdit; i < totalQuotes.seq; i++) {
+                // for (i = quotesOnwardsToEdit; i < totalQuotes.seq; i++) {
 
-                    sql.get(`SELECT * FROM quotes WHERE ID >'${quoteToEdit}'`).then(row => {
-                 // console.log("ROW ID: " + row.ID)
-                 // console.log("CURRENT ROW: " + i)
-                 // console.log("TOTAL QUOTES: " + totalQuotes.seq)
+                 // sql.get(`select * from quotes where id >'${quotetoedit}'`).then(row => {
+                 // console.log("row id: " + row.id)
+                 // console.log("current row: " + i)
+                 // console.log("total quotes: " + totalquotes.seq)
                  // console.log("~~~~~~~~~~~~~~~~");
-                  var j = row.ID - 1;
-                 // console.log("ID - 1: " + j)
+                 // var j = row.id - 1;
+                 // console.log("id - 1: " + j)
                  // console.log("!!!!!!!!!!!!!!!!")
-                    sql.run(`UPDATE quotes SET ID = '${j}' where ID = '${row.ID}'`);
-                  })
+                    // sql.run(`UPDATE quotes SET ID = '${j}' where ID = '${row.ID}'`);
+                  // })
 
-            }
+            // }
 
-            }).catch(() => {
-                console.error;
-            });
+            // }).catch(() => {
+                // console.error;
+            // });
 
 
         }
