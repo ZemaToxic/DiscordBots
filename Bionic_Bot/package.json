@@ -1,0 +1,15 @@
+{
+  "name": "bionic-bot",
+  "version": "0.0.0",
+  "description": "BionicBot",
+  "main": "BionicBot.js",
+  "author": {
+    "name": "ZemaToxic"
+  },
+  "dependencies": {
+    "discord.js": "^11.1.0",
+    "opusscript": "0.0.3",
+    "sqlite": "^2.8.0",
+    "ytdl-core": "^0.14.2"
+  }
+}

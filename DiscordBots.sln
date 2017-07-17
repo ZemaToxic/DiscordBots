@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "MistressZema", "MistressZema\MistressZema.njsproj", "{6390DBE4-EB2E-489F-B966-ED1E9DAA8207}"
 EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "BionicBot", "Bionic_Bot\BionicBot.njsproj", "{FE977A1E-5E99-430F-924D-ABACAA906DE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6390DBE4-EB2E-489F-B966-ED1E9DAA8207}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6390DBE4-EB2E-489F-B966-ED1E9DAA8207}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6390DBE4-EB2E-489F-B966-ED1E9DAA8207}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE977A1E-5E99-430F-924D-ABACAA906DE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE977A1E-5E99-430F-924D-ABACAA906DE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE977A1E-5E99-430F-924D-ABACAA906DE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE977A1E-5E99-430F-924D-ABACAA906DE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

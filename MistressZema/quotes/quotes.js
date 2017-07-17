@@ -6,6 +6,7 @@ console.log(sql);
 
 var conToMilli      = 60 * 60 * 1000
 var timeZone        = 0
+var QUOTENUMBER;
 
 // -- Get Date of Streamer For BAN CODE --
 function getCurrentDate() {
@@ -34,10 +35,45 @@ exports.run = (client, message, args) => {
 
     if (args[0] === undefined)
     {
-        message.channel.send("TESTESTEST");
+        var RandomQuoteMAX;
+        //message.channel.send("TESTESTEST");
+
+        sql.get(`SELECT seq FROM sqlite_sequence WHERE name = 'quotes'`).then(row => {
+            totalQuotes = row;
+        }).catch(() => {
+            console.error;
+            });
+
+        var RandomQuoteMAX = 15;//`${totalQuotes.seq}`;
+
+        var RandomQuote = Math.floor(Math.random() * (RandomQuoteMAX - 1) + 1);
+       
+
+        console.log(RandomQuote)
+
+        sql.get(`SELECT * FROM quotes LIMIT 1 OFFSET ('${RandomQuote - 1}')`).then(row => {
+            message.channel.send({
+                embed: {
+                    color: 3447003,
+                    fields: [{
+                        name: 'Quote',
+                        value: `${row.quote}`
+                    },
+                    {
+                        name: "-------------------------",
+                        value: 'Quote: ' + `${RandomQuote}` + "/" + `${totalQuotes.seq}`
+                    }],
+                    footer: {
+                        text: "Added by " + message.author.username + " | On: " + `${row.date}`
+                    }
+                }
+            });
+
+        }).catch(() => {
+            console.error;
+        });
     }
-
-
+    
     // IF ID IS ENTERED
     var quoteNumber = args[0];
 
@@ -48,8 +84,7 @@ exports.run = (client, message, args) => {
             console.error;
             });
 
-        sql.get(`SELECT * FROM quotes WHERE ID ='${quoteNumber}'`).then(row => {
-
+       sql.get(`SELECT * FROM quotes LIMIT 1 OFFSET ('${quoteNumber - 1}')`).then(row => {
             message.channel.send({
                 embed: {
                     color: 3447003,
@@ -78,7 +113,8 @@ exports.run = (client, message, args) => {
         args.splice(0, 1);
         
         var quoteToAdd = args.join(' ')
-        
+
+
         sql.run('CREATE TABLE IF NOT EXISTS quotes ( ID INTEGER, quote TEXT, addedBy TEXT, date TEXT)')
             .then((
                 sql.run('INSERT INTO quotes ( quote, addedBy, date) VALUES (?, ?, ?)',
@@ -86,6 +122,16 @@ exports.run = (client, message, args) => {
                     message.author.username,
                     getCurrentDate()])));
 
+        sql.get(`SELECT COUNT(quote) FROM quotes`).then(row => {
+
+            // Set The var QUOTENUMBER to be the new Max number of Quotes
+            QUOTENUMBER = row["COUNT(quote)"];
+
+        }).catch(() => {
+            console.error;
+            });
+
+        // Send a embed message Saying a quote has been added and the ID to use when calling it.
         message.channel.send({
             embed: {
                 color: 3464001,
@@ -95,7 +141,7 @@ exports.run = (client, message, args) => {
                 },
                 {
                     name: '-------------------------------------',
-                    value: 'It has been saved as Quote: '
+                    value: 'It has been saved as Quote: ' + (QUOTENUMBER + 1),
                 }
                 ],
                 timestamp: new Date(),
