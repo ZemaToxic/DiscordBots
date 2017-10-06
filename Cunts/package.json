@@ -1,0 +1,16 @@
+{
+  "name": "cunt",
+  "version": "0.0.0",
+  "description": "Cunts",
+  "main": "Cunts.js",
+  "author": {
+    "name": "ZemaToxic"
+  },
+  "dependencies": {
+    "discord.js": "^11.1.0",
+    "moment-timezone": "^0.5.13",
+    "opusscript": "0.0.3",
+    "sqlite": "^2.8.0",
+    "ytdl-core": "^0.14.2"
+  }
+}

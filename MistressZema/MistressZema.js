@@ -1,4 +1,3 @@
-
 //APP DETAILS
 //Client ID: 318561742118584322
 //Client Secret:
@@ -55,7 +54,7 @@ const loadQuotes = (quote) => {
 function play(connection, message) {
     var server = servers[message.guild.id];
 
-    server.dispatcher = connection.playStream(YTDL(server.queue[0], {filter: "audioonly"}));
+    server.dispatcher = connection.playStream(YTDL(server.queue[0], { filter: "audioonly" }));
 
     server.queue.shift();
 
@@ -68,7 +67,7 @@ function play(connection, message) {
 
 // The ready event is vital, it means that your bot will only start reacting to information from Discord _after_ ready is emitted
 client.on('ready', () => {
-    console.log(COLOR_YELLOW,'I am Connected!',RESET_COLOR);
+    console.log(COLOR_YELLOW, 'I am Connected!', RESET_COLOR);
 });
 
 
@@ -86,10 +85,10 @@ quote = loadQuotes(quote)
 
 // Create an event listener for messages
 client.on('message', message => {
-   
+
     // Ignore all messages unless they start with 'prefix' (~)
     if (!message.content.startsWith(prefix)) return;
-    
+
     // Remove the prefix and Do things based off the second Word.
     let command = message.content.split(" ")[0];
     command = command.slice(prefix.length);
@@ -108,7 +107,7 @@ client.on('message', message => {
 
         message.channel.send(num1 + num2);
     }
-    
+
     // If the message is "ping"
     if (command === 'ping') {
         // Send "pong" to the same channel
@@ -124,7 +123,7 @@ client.on('message', message => {
     // we ignore it
     if (!message.guild) return;
 
-    if (command ===  'join') {
+    if (command === 'join') {
         // Only try to join the sender's voice channel if they are in one themselves
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
@@ -283,8 +282,7 @@ client.on('message', message => {
         message.channel.send({ embed });
     }
 
-    if (command === "testquote")
-    {
+    if (command === "testquote") {
         let args = message.content.split(' ').slice(1);
 
         try {

@@ -1,2 +1,4 @@
 C:\DiscordBots\MistressZema\obj\Debug\MistressZema.njsprojResolveAssemblyReference.cache
 C:\DiscordBots\MistressZema\bin\Microsoft.NodejsTools.WebRole.dll
+Z:\ZemaToxic\Documents\DiscordBots\MistressZema\obj\Debug\MistressZema.njsprojResolveAssemblyReference.cache
+Z:\ZemaToxic\Documents\DiscordBots\MistressZema\bin\Microsoft.NodejsTools.WebRole.dll
