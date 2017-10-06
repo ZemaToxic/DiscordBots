@@ -7,6 +7,8 @@ Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "MistressZema", "MistressZem
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "BionicBot", "Bionic_Bot\BionicBot.njsproj", "{FE977A1E-5E99-430F-924D-ABACAA906DE5}"
 EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Cunts", "Cunts.njsproj", "{D9F2B448-D083-4DDD-B8F3-FD2E6364DDB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{FE977A1E-5E99-430F-924D-ABACAA906DE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE977A1E-5E99-430F-924D-ABACAA906DE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE977A1E-5E99-430F-924D-ABACAA906DE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9F2B448-D083-4DDD-B8F3-FD2E6364DDB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9F2B448-D083-4DDD-B8F3-FD2E6364DDB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9F2B448-D083-4DDD-B8F3-FD2E6364DDB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9F2B448-D083-4DDD-B8F3-FD2E6364DDB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
