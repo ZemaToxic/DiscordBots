@@ -137,6 +137,10 @@ client.on('message', message => {
         return;
     }
 
+    //guild.roles
+
+
+
 });
 
 // Log our bot in
