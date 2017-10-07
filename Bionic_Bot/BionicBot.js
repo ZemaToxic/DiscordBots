@@ -78,7 +78,7 @@ client.on('guildMemberAdd', member => {
     member.guild.defaultChannel.send(`Welcome to the server, ${member}!`);
 });
 
-const prefix = "~";
+const prefix = "!";
 
 // Used for Quote JSON
 let quote = []
