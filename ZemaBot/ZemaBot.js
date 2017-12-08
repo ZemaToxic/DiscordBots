@@ -1,12 +1,13 @@
 //APP DETAILS
-//Client ID: 318561742118584322
+//
+//Client ID: 388491707580416001
+//
 //Client Secret:
-//sIQarSj0S2sALMqXhPmG6A_kAJBLCyAs
-
-
-//Username: MistressZema#1309
+//ZJr3vOzuagGFMoE6wCIifKQ7lV - InQuF
+//
+//Username: ZemaBot#2480
 //Token:
-//MzE4NTYxNzQyMTE4NTg0MzIy.DA0LVg.K_Gu0kCsLUV7a6xDZzn - 7Xc5A7o
+//Mzg4NDkxNzA3NTgwNDE2MDAx.DQtynQ.ogT6_2CkhpR90m3xYBxHuHFGcOY
 
 // Console Colour Code
 var RESET_COLOR = '\x1b[0m';
@@ -26,7 +27,7 @@ const client = new Discord.Client();
 var servers = {};
 
 // The token of your bot - https://discordapp.com/developers/applications/me
-const token = 'MzE4NTYxNzQyMTE4NTg0MzIy.DA0LVg.K_Gu0kCsLUV7a6xDZzn-7Xc5A7o';
+const token = 'Mzg4NDkxNzA3NTgwNDE2MDAx.DQtynQ.ogT6_2CkhpR90m3xYBxHuHFGcOY';
 
 // -------- Quotes ----------
 const saveQuotes = (quote) => {

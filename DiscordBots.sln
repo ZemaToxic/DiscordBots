@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "MistressZema", "MistressZema\MistressZema.njsproj", "{6390DBE4-EB2E-489F-B966-ED1E9DAA8207}"
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "ZemaBot", "MistressZema\ZemaBot.njsproj", "{6390DBE4-EB2E-489F-B966-ED1E9DAA8207}"
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "BionicBot", "Bionic_Bot\BionicBot.njsproj", "{FE977A1E-5E99-430F-924D-ABACAA906DE5}"
 EndProject
