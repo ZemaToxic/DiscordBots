@@ -1,14 +1,3 @@
-//APP DETAILS
-//
-//Client ID: 388491707580416001
-//
-//Client Secret:
-//ZJr3vOzuagGFMoE6wCIifKQ7lV - InQuF
-//
-//Username: ZemaBot#2480
-//Token:
-//Mzg4NDkxNzA3NTgwNDE2MDAx.DQtynQ.ogT6_2CkhpR90m3xYBxHuHFGcOY
-
 // Console Colour Code
 var RESET_COLOR = '\x1b[0m';
 var COLOR_RED = '\x1b[1m\x1b[31m';
@@ -18,7 +7,6 @@ var COLOR_YELLOW = '\x1b[1m\x1b[33m';
 
 // Import the discord.js module
 const Discord = require('discord.js');
-const YTDL = require("ytdl-core");
 const fs = require('fs')
 
 // Create an instance of a Discord client
@@ -26,8 +14,20 @@ const client = new Discord.Client();
 // Create a server empty Object
 var servers = {};
 
-// The token of your bot - https://discordapp.com/developers/applications/me
-const token = 'Mzg4NDkxNzA3NTgwNDE2MDAx.DQtynQ.ogT6_2CkhpR90m3xYBxHuHFGcOY';
+// -------- Options ---------
+const loadOptions = (options) => {
+    try {
+        const optionsJson = fs.readFileSync('./options.json')
+        const optionsFromFile = JSON.parse(optionsJson)
+        
+        // merging default commands with added commands
+        return Object.assign(optionsFromFile, options)
+    } catch (err) {
+        console.log(err)
+        // file doesn't exist, returning default commands
+        return options
+    }
+}
 
 // -------- Quotes ----------
 const saveQuotes = (quote) => {
@@ -52,25 +52,10 @@ const loadQuotes = (quote) => {
     }
 }
 
-function play(connection, message) {
-    var server = servers[message.guild.id];
-
-    server.dispatcher = connection.playStream(YTDL(server.queue[0], { filter: "audioonly" }));
-
-    server.queue.shift();
-
-    server.dispatcher.on("end", function () {
-        if (server.queue[0]) play(connection, message);
-        else connection.disconnect();
-    });
-}
-
-
 // The ready event is vital, it means that your bot will only start reacting to information from Discord _after_ ready is emitted
 client.on('ready', () => {
     console.log(COLOR_YELLOW, 'I am Connected!', RESET_COLOR);
 });
-
 
 // Create an event listener for new guild members
 client.on('guildMemberAdd', member => {
@@ -82,11 +67,21 @@ const prefix = "~";
 
 // Used for Quote JSON
 let quote = []
+let botConfig = []
+
+var preventLoop = false;
+
 quote = loadQuotes(quote)
+botConfig = loadOptions(botConfig)
 
 // Create an event listener for messages
 client.on('message', message => {
 
+    // Prevent it looping from reading messages it sends
+    if (preventLoop == true) {
+        if (message.author.username == 'ZemaBot') return;
+    }
+    
     // Ignore all messages unless they start with 'prefix' (~)
     if (!message.content.startsWith(prefix)) return;
 
@@ -114,143 +109,31 @@ client.on('message', message => {
         // Send "pong" to the same channel
         message.channel.send('pong');
     }
-    // If the message is "what is my avatar"
-    if (command === 'what is my avatar') {
-        // Send the user's avatar URL
-        message.reply(message.author.avatarURL);
-    }
 
-    // Voice only works in guilds, if the message does not come from a guild,
-    // we ignore it
-    if (!message.guild) return;
-
-    if (command === 'join') {
-        // Only try to join the sender's voice channel if they are in one themselves
-        if (message.member.voiceChannel) {
-            message.member.voiceChannel.join()
-                .then(connection => {
-                    // Connection is an instance of VoiceConnection
-                    message.reply('I have successfully connected to the channel!');
-                })
-                .catch(console.log);
-        } else {
-            message.reply('You need to join a voice channel first!');
+    // Toggle Looping.
+    if (command === 'looptoggle') {
+        if (preventLoop == true)
+        {
+            preventLoop = false
         }
-    }
-    if (command === 'disconnect') {
-        // Only try to join the sender's voice channel if they are in one themselves
-        if (message.member.voiceChannel) {
-            message.member.voiceChannel.leave()
-        } else {
-            message.reply('You need to join a voice channel first!');
+        else {
+            preventLoop = true;
         }
-    }
-
-    // If the message is Quote.
-    if (command === "quote") {
-
-        const splitMessage = message.content.split(' ')
-
-        // If nothing apart form ~quote then return a random Quote.
-        if (splitMessage.length == 1) {
-
-            var RandomQuote = Math.floor(Math.random() * quote.length) + 1
-
-            message.channel.send("Quote: " + RandomQuote + " -> " + quote[RandomQuote])
-        }
-
-        // Return what ever quote is asked for
-        if (splitMessage.length == 2) {
-            // second word is a number
-            const quoteNumber = parseInt(splitMessage[1]) - 1
-
-            if (quoteNumber >= 0) {
-                if (quote.length > quoteNumber) {
-                    message.channel.send("[" + (quoteNumber + 1) + "/" + quote.length + "] " + quote[quoteNumber])
-                } else {
-                    // If the number asked doesn't exist then error.
-                    message.channel.send("There is only " + quote.length + " quotes, choose a number from from 1 to " + quote.length + ".")
-                }
-            }
-        }
-        if (splitMessage.length < 3) {
-            return
-        }
-
-        const subcommand = splitMessage[1]
-        splitMessage.splice(0, 2)
-        const sentence = splitMessage.join(' ')
-        const quoteNumber = parseInt(splitMessage[0])
-
-        console.log(quoteNumber)
-
-        // ----------- Add -----------
-        if (subcommand === 'add') {
-            if (quote.indexOf(sentence) !== -1) {
-                message.channel.send(sentence + " Is already a Quote.")
-            } else {
-                quote.push(sentence)
-                saveQuotes(quote)
-                message.channel.send(sentence + " Has been saved as !quote " + quote.length + ".")
-            }
-        }
-        // ----------- Edit ----------
-        if (subcommand === 'edit') {
-
-
-            if (quote.indexOf(quoteNumber) !== -1) {
-                quote.push(sentence)
-                saveQuotes(quote)
-                message.channel.send(sentence + " Has been saved.")
-            } else {
-                message.channel.send(sentence + " Is not a Quote.")
-
-            }
-        }
-        // ----------- Delete --------
-        else if (subcommand === 'del' || subcommand === 'delete' || subcommand === 'remove') {
-            if (quote.indexOf(sentence) === -1) {
-                message.channel.send(sentence + " Is not currently a Quote.")
-            } else {
-                quote.splice(quote.indexOf(sentence), 1)
-                saveQuotes(quote)
-                message.channel.send(sentence + " Has been deleted.")
-            }
-        }
-    }
-
-    if (command === "embed") {
         message.channel.send({
             embed: {
-                color: 3447003,
-                author: {
-                    name: client.user.username,
-                    icon_url: client.user.avatarURL
-                },
-                title: 'This is an embed',
-                url: 'http://google.com',
-                description: 'This is a test embed to showcase what they look like and what they can do.',
+                color: 3464001,
                 fields: [{
-                    name: 'Fields',
-                    value: 'They can have different fields with small headlines.'
-                },
-                {
-                    name: 'Masked links',
-                    value: 'You can put [masked links](http://google.com) inside of rich embeds.'
-                },
-                {
-                    name: 'Markdown',
-                    value: 'You can put all the *usual* **__Markdown__** inside of them.'
-                }
-                ],
-                timestamp: new Date(),
+                    name: 'Loop prevention',
+                    value: 'Loop prevention is currently set to ' + preventLoop
+                }],
                 footer: {
-                    icon_url: client.user.avatarURL,
-                    text: '© Example'
+                    text: "Requested by " + message.author.username
                 }
             }
-        });
+        })
     }
+
+    // Rich Embed stuff.
     if (command === "richembed") {
         const embed = new Discord.RichEmbed()
             .setTitle('This is your title, it can hold 256 characters')
@@ -287,7 +170,7 @@ client.on('message', message => {
         let args = message.content.split(' ').slice(1);
 
         try {
-            let quoteFile = require(`./quotes/quotes.js`);
+            let quoteFile = require(`./commands/swears.js`);
             quoteFile.run(client, message, args);
         } catch (err) {
             console.error(err);
@@ -295,58 +178,76 @@ client.on('message', message => {
         return;
     }
 
-    if (command == "play") {
-        // If no Link provided Complain.
-        if (!args[0]) {
-            message.channel.send("Please Provide a Link to a song.")
-        }
-        // If the User is not in a voice Channel.... Complain.
-        if (!message.member.voiceChannel) {
-            message.channel.send("You must be in a Voice Channel.")
-        }
-        // Make a queue if there is none
-        if (!servers[message.guild.id]) servers[message.guild.id] = {
-            queue: []
-        }
-        // Make server = The current connected Server.
-        var server = servers[message.guild.id];
+    // Handle Swear commands.
+    if (command === "swears") {
+        let args = message.content.split(' ').slice(1);
 
-        server.queue.push(args[0]);
-
-        // Call the Play function
-        if (!message.guild.voiceConnection) message.member.voiceChannel.join().then(connection => {
-            play(connection, message);
-        })
+        try {
+            let swearFile = require(`./commands/swears.js`);
+            swearFile.run(client, message, args/*, swearAmount*/);
+        } catch (err) {
+            console.error(err);
+        }
+        return;
     }
 
-    if (command == "skip") {
-        var server = servers[message.guild.id];
-        // If there is a dispatcher, End the song.
-        if (server.dispatcher) server.dispatcher.end();
+    // Return User Information.
+    if (command === "user")
+    {
+        message.channel.send(`Your Username: ${message.author.username}\nYour ID: ${message.author.id}\nYour Connections:  ${message.author.conenctions}`);
+
+        var _Id = message.author.id
+
+        message.guild.members.get(_Id).user.fetchProfile().then(p => { console.log(p.connections) })
     }
-
-
-    if (command == "stop") {
-        var server = servers[message.guild.id];
-        if (message.member.voiceChannel) {
-            message.member.voiceChannel.leave()
-        } else {
-            message.reply('You need to join a voice channel first!');
-        }
-    }
-
-
-    //// The list of if/else is replaced with those simple 2 lines:
-    //try {
-    //    let commandFile = require(`./commands/${command}.js`);
-    //    commandFile.run(client, message, args);
-    //} catch (err) {
-    //    console.error(err);
-    //}
-
 });
 
-
-
 // Log our bot in
-client.login(token);
+client.login(botConfig['token']);
+
+
+
+// Read through all messages for specific words
+// i.e Cunt, Slut, Bitch, Fuck
+
+// Auto run 
+// Make auto count = swearAmount
+
+/*
+        try {
+            let quoteFile = require(`./commands/swears.js`);
+            quoteFile.run(client, message, args, swearAmount);
+        } catch (err) {
+            console.error(err);
+        }
+        return;
+*/
+
+// Return count of swears
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

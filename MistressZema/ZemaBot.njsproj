@@ -3,7 +3,7 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>ZemaBot</Name>
-    <RootNamespace>MistressZema</RootNamespace>
+    <RootNamespace>ZemaBot</RootNamespace>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -12,7 +12,7 @@
     <ProjectGuid>6390dbe4-eb2e-489f-b966-ed1e9daa8207</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>ZemaBot.js</StartupFile>
+    <StartupFile>..\ZemaBot\ZemaBot.js</StartupFile>
     <StartWebBrowser>False</StartWebBrowser>
     <SearchPath>
     </SearchPath>
@@ -32,9 +32,7 @@
     <Compile Include="events\Commands\ping.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="..\ZemaBot\ZemaBot.js">
-      <Link>ZemaBot.js</Link>
-    </Compile>
+    <Compile Include="ZemaBot.js" />
     <Compile Include="quotes\quotes.js">
       <SubType>Code</SubType>
     </Compile>
