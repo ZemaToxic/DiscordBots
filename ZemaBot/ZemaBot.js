@@ -52,16 +52,71 @@ const loadQuotes = (quote) => {
     }
 }
 
-// The ready event is vital, it means that your bot will only start reacting to information from Discord _after_ ready is emitted
+// The ready event is vital, it means that your bot will only 
+// start reacting to information from Discord _after_ ready is emitted
 client.on('ready', () => {
     console.log(COLOR_YELLOW, 'I am Connected!', RESET_COLOR);
 });
 
-// Create an event listener for new guild members
+// Member Joins
 client.on('guildMemberAdd', member => {
     // Send the message to the guilds default channel (usually #general), mentioning the member
     member.guild.defaultChannel.send(`Welcome to the server, ${member}!`);
+
+    // 402404101713035264 logs Channel ID
+    client.channels.get('402404101713035264').send({
+        embed: {
+            color: 3464001,
+            fields: [{
+                name: 'User has Joined',
+                value: `${member}`
+            }],
+            timestamp: new Date(),
+            footer: {
+                text: member.author
+            }
+        }
+    });
+
+
 });
+
+// Member leaves or is kicked
+client.on('guildMemberRemove', member => {
+
+    client.channels.get('402404101713035264').send({
+        embed: {
+            color: 16711680,
+            fields: [{
+                name: 'User has Bitched out',
+                value: `${member}`
+            }],
+            timestamp: new Date(),
+            footer: {
+                text: member.author
+            }
+        }
+    });
+})
+
+// Member Banned
+client.on('guildBanAdd', member => {
+
+    client.channels.get('402404101713035264').send({
+        embed: {
+            color: '#FF1493',
+            fields: [{
+                name: 'User was banned.',
+                value: `${member}`
+            }],
+            timestamp: new Date(),
+            footer: {
+                text: member.author
+            }
+        }
+    });
+})
+
 
 const prefix = "~";
 
@@ -230,24 +285,22 @@ client.login(botConfig['token']);
 
 
 
+//// Emitted whenever a guild member changes - i.e. new role, removed role, nickname.
+//client.on('guildMemberUpdate', member => {
 
+//    console.log(oldMember, newMember);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//    client.channels.get('402404101713035264').send({
+//        embed: {
+//            color: 16711680,
+//            fields: [{
+//                name: 'Member was Updated',
+//                value: `${member}`
+//            }],
+//            timestamp: new Date(),
+//            footer: {
+//                text: member.author
+//            }
+//        }
+//    });
+//})
