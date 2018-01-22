@@ -68,17 +68,15 @@ client.on('guildMemberAdd', member => {
         embed: {
             color: 3464001,
             fields: [{
-                name: 'User has Joined',
-                value: `${member}`
+                name: 'User has Joined ' + `${member.user.id}`,
+                value: 'User joined: ' + `${member}` + " their username is: " + `${member.user.username}`
             }],
             timestamp: new Date(),
             footer: {
-                text: member.author
+                text: member.user.username
             }
         }
     });
-
-
 });
 
 // Member leaves or is kicked
@@ -88,12 +86,12 @@ client.on('guildMemberRemove', member => {
         embed: {
             color: 16711680,
             fields: [{
-                name: 'User has Bitched out',
-                value: `${member}`
+                name: 'User has Bitched out ' + `${member.user.id}`,
+                value: 'User has bitched out ' + `${member}` + " their username is: " + `${member.user.username}`
             }],
             timestamp: new Date(),
             footer: {
-                text: member.author
+                text: member.user.username
             }
         }
     });
@@ -104,7 +102,7 @@ client.on('guildBanAdd', member => {
 
     client.channels.get('402404101713035264').send({
         embed: {
-            color: '#FF1493',
+            color: 16716947,
             fields: [{
                 name: 'User was banned.',
                 value: `${member}`
@@ -115,6 +113,8 @@ client.on('guildBanAdd', member => {
             }
         }
     });
+    console.log(member)
+
 })
 
 
