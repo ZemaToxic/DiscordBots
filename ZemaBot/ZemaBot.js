@@ -14,6 +14,10 @@ const client = new Discord.Client();
 // Create a server empty Object
 var servers = {};
 
+// Catch Errors and ignore them for now 
+process.on("uncaughtException", function (e) { return false; })
+
+
 // -------- Options ---------
 const loadOptions = (options) => {
     try {
@@ -116,7 +120,6 @@ client.on('guildBanAdd', member => {
     console.log(member)
 
 })
-
 
 const prefix = "~";
 
