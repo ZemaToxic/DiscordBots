@@ -7,6 +7,7 @@ var COLOR_YELLOW = '\x1b[1m\x1b[33m';
 
 // Import the discord.js module
 const Discord = require('discord.js');
+var nodemailer = require('nodemailer');
 const fs = require('fs')
 
 // Create an instance of a Discord client
@@ -61,6 +62,22 @@ const loadQuotes = (quote) => {
 client.on('ready', () => {
     console.log(COLOR_YELLOW, 'I am Connected!', RESET_COLOR);
 });
+
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'mseymour.work@gmail.com',
+        pass: 'wwssadadba123'
+    }
+});
+
+var mailOptions = {
+    from: 'mseymour.work@gmail.com',
+    to: 'mseymour.home@gmail.com',
+    subject: 'BOT BROKE! HALP plz fix.',
+    text: 'That was easy!'
+};
+
 
 // Member Joins
 client.on('guildMemberAdd', member => {
@@ -189,6 +206,18 @@ client.on('message', message => {
                 }
             }
         })
+    }
+
+    if (command === 'mail') {
+        // https://myaccount.google.com/lesssecureapps?rfn=27&rfnc=1&eid=-8179429175982098682&et=0&asae=2&pli=1 Need to toggle this
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+                message.channel.send('Mail sent');
+            }
+        });
     }
 
     // Rich Embed stuff.
