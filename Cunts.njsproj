@@ -4,9 +4,9 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{d9f2b448-d083-4ddd-b8f3-fd2e6364ddb9}</ProjectGuid>
-    <ProjectHome>Cunts\</ProjectHome>
+    <ProjectHome>Cunt\</ProjectHome>
     <ProjectView>ShowAllFiles</ProjectView>
-    <StartupFile>Cunts.js</StartupFile>
+    <StartupFile>app.js</StartupFile>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
@@ -21,7 +21,7 @@
     <Compile Include="commands\time.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Cunts.js" />
+    <Compile Include="app.js" />
     <Compile Include="commands\ping.js" />
   </ItemGroup>
   <ItemGroup>

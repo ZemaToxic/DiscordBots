@@ -18,6 +18,9 @@ var servers = {};
 // Catch Errors and ignore them for now 
 process.on("uncaughtException", function (e) { return false; })
 
+// Set Console window title
+process.stdout.write("\033]0;ZemaBot-Discord\007");
+
 
 // -------- Options ---------
 const loadOptions = (options) => {

@@ -2,7 +2,7 @@
   "name": "bionic-bot",
   "version": "0.0.0",
   "description": "BionicBot",
-  "main": "BionicBot.js",
+  "main": "app.js",
   "author": {
     "name": "ZemaToxic"
   },

@@ -1,13 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "BionicBot", "Bionic_Bot\BionicBot.njsproj", "{FE977A1E-5E99-430F-924D-ABACAA906DE5}"
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Cunts", "Cunts.njsproj", "{D9F2B448-D083-4DDD-B8F3-FD2E6364DDB9}"
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "ZemaBot", "ZemaBot\ZemaBot.njsproj", "{4048F98F-C2F8-4529-86CB-38C13530AFAC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3F729BC7-4047-4A68-8CA4-381107457574}"
+	ProjectSection(SolutionItems) = preProject
+		DiscordBots.js = DiscordBots.js
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +35,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E8AA7BEC-F5E1-471D-9DEF-48F925367117}
 	EndGlobalSection
 EndGlobal

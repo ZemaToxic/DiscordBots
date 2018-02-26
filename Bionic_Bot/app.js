@@ -26,6 +26,12 @@ const client = new Discord.Client();
 // Create a server empty Object
 var servers = {};
 
+// Catch Errors and ignore them for now 
+process.on("uncaughtException", function (e) { return false; })
+
+// Set Console window title
+process.stdout.write("\033]0;BionicBot-Discord\007");
+
 // The token of your bot - https://discordapp.com/developers/applications/me
 const token = 'MzM1OTk5NzQ2MzI0MDM3NjMz.DE3s2Q.4vPF_BIpgyOihgNwWy8GVt_ec90';
 

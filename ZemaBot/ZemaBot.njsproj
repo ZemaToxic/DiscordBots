@@ -6,7 +6,7 @@
     <ProjectGuid>{4048f98f-c2f8-4529-86cb-38c13530afac}</ProjectGuid>
     <ProjectHome />
     <ProjectView>ShowAllFiles</ProjectView>
-    <StartupFile>ZemaBot.js</StartupFile>
+    <StartupFile>app.js</StartupFile>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
@@ -17,9 +17,14 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
     <Content Include="options.json" />
+    <Compile Include="commands\quotes.js" />
     <Compile Include="quote.js" />
     <Compile Include="commands\swears.js" />
-    <Compile Include="ZemaBot.js" />
+    <Compile Include="app.js" />
+    <Content Include="package-lock.json" />
+    <Content Include="package.json" />
+    <Content Include="ZemabotDB.db" />
+    <Content Include="ZemabotDB.sqlite" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="commands\" />
