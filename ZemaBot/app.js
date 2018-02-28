@@ -69,13 +69,13 @@ client.on('ready', () => {
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'mseymour.work@gmail.com',
+        user: 'toxicbots.info@gmail.com',
         pass: 'wwssadadba123'
     }
 });
 
 var mailOptions = {
-    from: 'mseymour.work@gmail.com',
+    from: 'toxicbots.info@gmail.com',
     to: 'mseymour.home@gmail.com',
     subject: 'BOT BROKE! HALP plz fix.',
     text: 'That was easy!'
