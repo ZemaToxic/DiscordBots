@@ -9,6 +9,7 @@ var COLOR_YELLOW = '\x1b[1m\x1b[33m';
 const Discord = require('discord.js');
 var nodemailer = require('nodemailer');
 const fs = require('fs')
+const sleep = require('system-sleep');
 
 // Create an instance of a Discord client
 const client = new Discord.Client();
@@ -21,6 +22,7 @@ process.on("uncaughtException", function (e) { return false; })
 // Set Console window title
 process.stdout.write("\033]0;ZemaBot-Discord\007");
 
+//http://localhost:50451/?code=1Ljji7cSZKmwWbxasU4dW1zLXBrxon&guild_id=318559873606615050&permissions=8
 
 // -------- Options ---------
 const loadOptions = (options) => {
@@ -64,6 +66,7 @@ const loadQuotes = (quote) => {
 // start reacting to information from Discord _after_ ready is emitted
 client.on('ready', () => {
     console.log(COLOR_YELLOW, 'I am Connected!', RESET_COLOR);
+    client.user.setActivity("with the Matrix, Poking random things.", { name: "game", type: 1 });
 });
 
 var transporter = nodemailer.createTransport({
@@ -159,17 +162,18 @@ client.on('message', message => {
     if (preventLoop == true) {
         if (message.author.username == 'ZemaBot') return;
     }
-    
+
     // Ignore all messages unless they start with 'prefix' (~)
     if (!message.content.startsWith(prefix)) return;
 
     // Remove the prefix and Do things based off the second Word.
     let command = message.content.split(" ")[0];
     command = command.slice(prefix.length);
-
+    
     // Split the next few words and do things with them.
     let args = message.content.split(" ").slice(1);
 
+    
     if (command === "say") {
         message.channel.send(args.join(" "));
     }
@@ -289,6 +293,14 @@ client.on('message', message => {
         var _Id = message.author.id
 
         message.guild.members.get(_Id).user.fetchProfile().then(p => { console.log(p.connections) })
+    }
+
+    if (command === "restart") {
+        if (message.author.id === '171234951566589954') {
+            message.channel.send("Bot will restart, please wait a minute");
+            sleep(1000);
+            process.exit();
+        }
     }
 });
 
