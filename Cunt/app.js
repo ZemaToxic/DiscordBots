@@ -46,7 +46,7 @@ client.on('ready', () => {
 // Create an event listener for new guild members
 client.on('guildMemberAdd', member => {
     // Send the message to the guilds default channel (usually #general), mentioning the member
-    member.guild.defaultChannel.send(`Welcome to the server, ${member}!`);
+    //member.guild.defaultChannel.send(`Welcome to the server, ${member}!`);
 });
 
 const prefix = "&";
