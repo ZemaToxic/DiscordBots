@@ -40,6 +40,8 @@ const token = 'MzY1NTk0NTI0NjQ0NDA5MzQ1.DLgmBA.mn7nBieG8UyByU_GHzmtk3M80pE';
 // The ready event is vital, it means that your bot will only start reacting to information from Discord _after_ ready is emitted
 client.on('ready', () => {
     console.log(COLOR_YELLOW, 'I am Connected!', RESET_COLOR);
+    client.user.setActivity("silly people be stupid.", { name: "game", type: 3 });
+
 });
 
 
@@ -47,6 +49,7 @@ client.on('ready', () => {
 client.on('guildMemberAdd', member => {
     // Send the message to the guilds default channel (usually #general), mentioning the member
     //member.guild.defaultChannel.send(`Welcome to the server, ${member}!`);
+
 });
 
 const prefix = "&";

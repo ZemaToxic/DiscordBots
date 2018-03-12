@@ -10,6 +10,8 @@ const Discord = require('discord.js');
 var nodemailer = require('nodemailer');
 const fs = require('fs')
 const sleep = require('system-sleep');
+var request = require('request'); // Includes needed for the Bot
+
 
 // Create an instance of a Discord client
 const client = new Discord.Client();
@@ -66,7 +68,7 @@ const loadQuotes = (quote) => {
 // start reacting to information from Discord _after_ ready is emitted
 client.on('ready', () => {
     console.log(COLOR_YELLOW, 'I am Connected!', RESET_COLOR);
-    client.user.setActivity("with the Matrix, Poking random things.", { name: "game", type: 1 });
+    client.user.setActivity("with the Matrix, Poking random things.", { name: "game", type: 0 });
 });
 
 var transporter = nodemailer.createTransport({
@@ -143,6 +145,46 @@ client.on('guildBanAdd', member => {
     console.log(member)
 
 })
+
+client.on('messageDelete', message => {
+
+    // 402404101713035264 logs Channel ID
+    client.channels.get('402404101713035264').send({
+        embed: {
+            color: 65535,
+            fields: [{
+                name: 'Message Deleted',
+                value: 'Message deleted by: ' + `${message.author.username}` + " the message was: " + `"${message}"` + " in channel: #" + `${message.channel.name}`
+            }],
+            timestamp: new Date(),
+            footer: {
+                text: message.author.username
+            }
+        }
+    });
+});
+
+client.on('messageUpdate', (oldMessage, newMessage) => {
+	
+	if(oldMessage.author.username === 'ZemaBot') return;
+	console.log(oldMessage, newMessage);
+
+    // 402404101713035264 logs Channel ID
+    client.channels.get('402404101713035264').send({
+        embed: {
+            color: 16776960,
+            fields: [{
+                name: 'Message Modifed',
+                value: 'Message changed by: ' + `${oldMessage.author.username}` + " the message used to be: " + `"${oldMessage}"` + " it is now, " + `"${newMessage}"` + " in channel: #" + `${oldMessage.channel.name}`
+            }],
+            timestamp: new Date(),
+            footer: {
+                text: oldMessage.author.username
+            }
+        }
+    });
+});
+
 
 const prefix = "~";
 
@@ -286,15 +328,50 @@ client.on('message', message => {
     }
 
     // Return User Information.
-    if (command === "user")
-    {
-        message.channel.send(`Your Username: ${message.author.username}\nYour ID: ${message.author.id}\nYour Connections:  ${message.author.conenctions}`);
+    if (command === "user") {
+        message.channel.send(`Your Username: ${message.author.username}\nYour ID: ${message.author.id}\nYour Connections:  ${message.author.fetchProfile().conenctions}`);
 
         var _Id = message.author.id
 
         message.guild.members.get(_Id).user.fetchProfile().then(p => { console.log(p.connections) })
     }
-
+	
+	if (command === "datatest") {
+		
+		return request ({
+            baseUrl: 'https://discordapp.com/api/v6',
+            url: 'oauth2/token', 
+            method: 'POST',
+            // headers: {
+                 // "Content-Type": 'application/x-www-form-urlencoded',
+             // },
+            json: true,
+            body: {
+                client_id: '388491707580416001',
+                client_secret: 'ZJr3vOzuagGFMoE6wCIifKQ7lV-InQuF',
+                grant_type: 'authorization_code',
+                code: '1Ljji7cSZKmwWbxasU4dW1zLXBrxon',
+                redirect_uri: "http://localhost:50451"
+            }
+        }, (err, {
+                statusCode
+            }, body) => {
+            if (err) {
+                console.log(err);
+            } else if (statusCode !== 200) {
+                console.log({
+                    statusCode,
+                    body
+                });
+            } else {
+                console.log(body);
+            }
+        });
+	
+		console.log(request);
+		
+	}
+		
     if (command === "restart") {
         if (message.author.id === '171234951566589954') {
             message.channel.send("Bot will restart, please wait a minute");
@@ -306,7 +383,6 @@ client.on('message', message => {
 
 // Log our bot in
 client.login(botConfig['token']);
-
 
 
 // Read through all messages for specific words

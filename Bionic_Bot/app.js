@@ -75,6 +75,8 @@ function play(connection, message) {
 // The ready event is vital, it means that your bot will only start reacting to information from Discord _after_ ready is emitted
 client.on('ready', () => {
     console.log(COLOR_YELLOW,'I am Connected!',RESET_COLOR);
+	    client.user.setActivity("with Alpha and Omega *~~boing boing~~*", { name: "game", type: 0 });
+
 });
 
 
