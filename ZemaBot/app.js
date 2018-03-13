@@ -64,13 +64,6 @@ const loadQuotes = (quote) => {
     }
 }
 
-// The ready event is vital, it means that your bot will only 
-// start reacting to information from Discord _after_ ready is emitted
-client.on('ready', () => {
-    console.log(COLOR_YELLOW, 'I am Connected!', RESET_COLOR);
-    client.user.setActivity("with the Matrix, Poking random things.", { name: "game", type: 0 });
-});
-
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -86,6 +79,12 @@ var mailOptions = {
     text: 'That was easy!'
 };
 
+// The ready event is vital, it means that your bot will only 
+// start reacting to information from Discord _after_ ready is emitted
+client.on('ready', () => {
+    console.log(COLOR_YELLOW, 'I am Connected!', RESET_COLOR);
+    client.user.setActivity("with the Matrix, Poking random things.", { name: "game", type: 0 });
+});
 
 // Member Joins
 client.on('guildMemberAdd', member => {
@@ -146,7 +145,10 @@ client.on('guildBanAdd', member => {
 
 })
 
+// Message gets deleted
 client.on('messageDelete', message => {
+
+    if (message.author.username === 'ZemaBot') return;
 
     // 402404101713035264 logs Channel ID
     client.channels.get('402404101713035264').send({
@@ -166,8 +168,10 @@ client.on('messageDelete', message => {
 
 client.on('messageUpdate', (oldMessage, newMessage) => {
 	
-	if(oldMessage.author.username === 'ZemaBot') return;
-	console.log(oldMessage, newMessage);
+    if (oldMessage.author.username === 'ZemaBot') return;
+    if (oldMessage.embeds == true) return;
+
+	//console.log(oldMessage, newMessage);
 
     // 402404101713035264 logs Channel ID
     client.channels.get('402404101713035264').send({
@@ -185,6 +189,31 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
     });
 });
 
+// Client Name change / new roles
+client.on('guildMemberUpdate', (oldMember, newMember) => {
+
+
+})
+
+// Client experiances an error
+client.on("error", error => {
+
+    console.log(error)
+
+    client.channels.get('402404101713035264').send({
+        embed: {
+            color: 16716947,
+            fields: [{
+                name: 'There was an error.',
+                value: `${error}`
+            }],
+            timestamp: new Date(),
+            footer: {
+                text: member.author
+            }
+        }
+    });
+})
 
 const prefix = "~";
 
