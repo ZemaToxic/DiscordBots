@@ -166,6 +166,7 @@ client.on('messageDelete', message => {
     });
 });
 
+// Message edited
 client.on('messageUpdate', (oldMessage, newMessage) => {
 	
     if (oldMessage.author.username === 'ZemaBot') return;
@@ -192,6 +193,41 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
 // Client Name change / new roles
 client.on('guildMemberUpdate', (oldMember, newMember) => {
 
+    // If User nicknames are changed
+    if (oldMember.nickname != newMember.nickname) {
+
+        var oldName = oldMember.nickname;
+        var newName = newMember.nickname;
+
+        if (oldMember.nickname == null) { oldName = oldMember.user.username };
+        if (newMember.nickname == null) { newName = newMember.user.username };
+
+        console.log(oldName, " --- ", newName);
+        
+        client.channels.get('402404101713035264').send({
+            embed: {
+                color: 16737792,
+                fields: [{
+                    name: 'Username Changed.',
+                    value: `${oldName}` + " nickname has changed to: " + `${newName}`
+                }],
+                timestamp: new Date(),
+                footer: {
+                    text: oldMember.username
+                }
+            }
+        });
+    }
+
+    // If Roles are changed
+    if (oldMember.roles != newMember.roles) {
+        if (oldMember.roles.has('389029787005485067')) {
+            console.log("True");
+
+        } else {
+            console.log("False")
+        }
+    }
 
 })
 
@@ -244,7 +280,30 @@ client.on('message', message => {
     // Split the next few words and do things with them.
     let args = message.content.split(" ").slice(1);
 
-    
+    // Purge messages 
+    if (command === "purge") {
+        // Check if the use has the "Robot MK2" Role. ID(389029787005485067)
+        if (message.member.roles.has('389029787005485067') == true) {
+            // Run the purge command        
+            const user = message.mentions.users.first();
+            const amount = !!parseInt(message.content.split(' ')[1]) ? parseInt(message.content.split(' ')[1]) : parseInt(message.content.split(' ')[2])
+            if (!amount) return message.reply('Must specify an amount to delete!');
+            if (!amount && !user) return message.reply('Must specify a user and amount, or just an amount, of messages to purge!');
+            message.channel.fetchMessages({
+                limit: amount,
+            }).then((messages) => {
+                if (user) {
+                    const filterBy = user ? user.id : Client.user.id;
+                    messages = messages.filter(m => m.author.id === filterBy).array().slice(0, amount);
+                }
+                message.channel.bulkDelete(messages).catch(error => console.log(error.stack));
+            });
+        } else {
+            message.channel.send('Im sorry, you dont have permission to use this command')
+        }
+    }
+
+    // Be a parrot
     if (command === "say") {
         message.channel.send(args.join(" "));
     }
