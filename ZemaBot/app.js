@@ -172,8 +172,6 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
     if (oldMessage.author.username === 'ZemaBot') return;
     if (oldMessage.embeds == true) return;
 
-	//console.log(oldMessage, newMessage);
-
     // 402404101713035264 logs Channel ID
     client.channels.get('402404101713035264').send({
         embed: {
@@ -221,14 +219,64 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
 
     // If Roles are changed
     if (oldMember.roles != newMember.roles) {
-        if (oldMember.roles.has('389029787005485067')) {
-            console.log("True");
+
+        function filterArray(src, filt) {
+            var temp = {}, i, result = [];
+            for (i = 0; i < filt.length; i++) {
+                temp[filt[i]] = true;
+            }
+            for (i = 0; i < src.length; i++) {
+                if (!(src[i] in temp)) {
+                    result.push(src[i]);
+                }
+            }
+            return (result);
+        }
+
+        var oldRoles = [];
+        var newRoles = [];
+        oldMember.roles.forEach(function (k, v) {
+            oldRoles.push(k.name);
+        })
+        newMember.roles.forEach(function (k, v) {
+                newRoles.push(k.name)
+        })
+    
+        if (oldRoles.length < newRoles.length) {
+            // If a Role was Added
+            var change = filterArray(newRoles, oldRoles)[0];
+            client.channels.get('402404101713035264').send({
+                embed: {
+                    color: 16750080,
+                    fields: [{
+                        name: 'Use Roles Changed.',
+                        value: `${oldMember.user.username}` + " was given the role: " + `${change}`
+                    }],
+                    timestamp: new Date(),
+                    footer: {
+                        text: oldMember.user.username
+                    }
+                }
+            });
 
         } else {
-            console.log("False")
+            // If a role was removed.
+            var change = filterArray(oldRoles, newRoles)[0];
+            client.channels.get('402404101713035264').send({
+                embed: {
+                    color: 16750080,
+                    fields: [{
+                        name: 'Use Roles Changed.',
+                        value: `${oldMember.user.username}` + " has lost the role: " + `${change}`
+                    }],
+                    timestamp: new Date(),
+                    footer: {
+                        text: oldMember.user.username
+                    }
+                }
+            });
         }
     }
-
 })
 
 // Client experiances an error
