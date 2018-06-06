@@ -472,15 +472,15 @@ client.on('message', message => {
         message.guild.members.get(_Id).user.fetchProfile().then(p => { console.log(p.connections) })
     }
 	
-	if (command === "datatest") {
+	if (command === "datatest2") {
 		
 		return request ({
             baseUrl: 'https://discordapp.com/api/v6',
             url: 'oauth2/token', 
             method: 'POST',
-            // headers: {
-                 // "Content-Type": 'application/x-www-form-urlencoded',
-             // },
+             headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+              },
             json: true,
             body: {
                 client_id: '388491707580416001',
@@ -514,6 +514,16 @@ client.on('message', message => {
             sleep(1000);
             process.exit();
         }
+    }
+
+    if (command === "userTest") {
+        //console.log(client.users);
+        client.users.forEach(function(k, v) {
+
+            message.guild.member(v).addRole('442136610218180609')
+                .then(console.log)
+                .catch(console.error);
+        });
     }
 });
 
