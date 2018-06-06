@@ -516,14 +516,25 @@ client.on('message', message => {
         }
     }
 
-    if (command === "userTest") {
+    if (command === "updateUsers") {
         //console.log(client.users);
-        client.users.forEach(function(k, v) {
+        if (message.author.id === '171234951566589954') {
 
-            message.guild.member(v).addRole('442136610218180609')
-                .then(console.log)
-                .catch(console.error);
-        });
+            // Get rid of clyde bot
+            var userArray = client.users;
+            userArray.delete('1');
+
+            userArray.forEach(function (k, v) {
+                var userID = k['id'];
+
+                message.guild.member(userID).addRole('442136610218180609')
+                    .then(console.log)
+                    .catch(console.error);
+
+                sleep(50);
+
+            });
+        }
     }
 });
 
