@@ -293,7 +293,7 @@ client.on("error", error => {
             }],
             timestamp: new Date(),
             footer: {
-                text: member.author
+                text: "ZemaBot"
             }
         }
     });
