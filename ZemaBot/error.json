@@ -1,122 +1,130 @@
 // JavaScript source code
 ErrorEvent {
-    target:
-    WebSocket {
-        domain: null,
-            _events:
-        {
-            message: [Object],
-                open: [Object],
-                    error: [Object],
-                        close: [Object]
-        },
-        _eventsCount: 4,
-            _maxListeners: undefined,
-                readyState: 2,
-                    protocol: '',
-                        _binaryType: 'nodebuffer',
-                            _finalize: [Function: bound finalize],
-                                _closeFrameReceived: false,
-                                    _closeFrameSent: false,
-                                        _closeMessage: '',
-                                            _closeTimer: null,
-                                                _finalized: true,
-                                                    _closeCode: 1006,
-                                                        _extensions: { },
-        _isServer: false,
-            _receiver:
-        Receiver {
-            _binaryType: 'nodebuffer',
-                _extensions: null,
-                    _maxPayload: 0,
-                        _bufferedBytes: 0,
-                            _buffers: null,
-                                _compressed: false,
-                                    _payloadLength: 36,
-                                        _fragmented: 0,
-                                            _masked: false,
-                                                _fin: true,
-                                                    _mask: null,
-                                                        _opcode: 1,
-                                                            _totalPayloadLength: 0,
-                                                                _messageLength: 0,
-                                                                    _fragments: null,
-                                                                        _cleanupCallback: null,
-                                                                            _isCleaningUp: false,
-                                                                                _hadError: false,
-                                                                                    _loop: false,
-                                                                                        add: [Function: bound add],
-                                                                                            onmessage: null,
-                                                                                                onclose: null,
-                                                                                                    onerror: null,
-                                                                                                        onping: null,
-                                                                                                            onpong: null,
-                                                                                                                _state: 0
-        },
-        _sender:
-        Sender {
-            _extensions: { },
-            _socket: [Object],
-                _firstFragment: true,
-                    _compress: false,
-                        _bufferedBytes: 0,
-                            _deflating: false,
-                                _queue: []
-        },
-        _socket:
-        TLSSocket {
-            _tlsOptions: [Object],
-                _secureEstablished: true,
-                    _securePending: false,
-                        _newSessionPending: false,
-                            _controlReleased: true,
-                                _SNICallback: null,
-                                    servername: 'gateway.discord.gg',
-                                        npnProtocol: false,
-                                            alpnProtocol: false,
-                                                authorized: true,
-                                                    authorizationError: null,
-                                                        encrypted: true,
-                                                            _events: [Object],
-                                                                _eventsCount: 6,
-                                                                    connecting: false,
-                                                                        _hadError: false,
-                                                                            _handle: null,
-                                                                                _parent: null,
-                                                                                    _host: 'gateway.discord.gg',
-                                                                                        _readableState: [Object],
-                                                                                            readable: false,
-                                                                                                domain: null,
-                                                                                                    _maxListeners: undefined,
-                                                                                                        _writableState: [Object],
-                                                                                                            writable: false,
-                                                                                                                allowHalfOpen: false,
-                                                                                                                    _bytesDispatched: 24465,
-                                                                                                                        _sockname: null,
-                                                                                                                            _pendingData: null,
-                                                                                                                                _pendingEncoding: '',
-                                                                                                                                    server: undefined,
-                                                                                                                                        _server: null,
-                                                                                                                                            ssl: null,
-                                                                                                                                                _requestCert: true,
-                                                                                                                                                    _rejectUnauthorized: true,
-                                                                                                                                                        parser: null,
-                                                                                                                                                            _httpMessage: null,
-                                                                                                                                                                _idleNext: null,
-                                                                                                                                                                    _idlePrev: null,
-                                                                                                                                                                        _idleTimeout: -1,
-                                                                                                                                                                            [Symbol(asyncId)]: 197581,
-                                                                                                                                                                                [Symbol(bytesRead)]: 898093
-        },
-        _error: null,
-            url: 'wss://gateway.discord.gg/?v=6&encoding=json',
-                _req: null
+  target: WebSocket
+  {
+    domain: null,
+    _events: {
+      message: [ Object ],
+      open: [ Object ],
+      error: [ Object ],
+      close: [ Object ]
     },
-    type: 'error',
-        message: 'read ECONNRESET',
-            error: {
-                Error: read ECONNRESET
-        at _errnoException(util.js: 992: 11)
-        at TLSWrap.onread(net.js: 618: 25) code: 'ECONNRESET', errno: 'ECONNRESET', syscall: 'read'
-    }
-};
+    _eventsCount: 4,
+    _maxListeners: undefined,
+    readyState: 2,
+    protocol: '',
+    _binaryType: 'nodebuffer',
+    _finalize: [ Function : bound finalize ],
+    _closeFrameReceived: false,
+    _closeFrameSent: false,
+    _closeMessage: '',
+    _closeTimer: null,
+    _finalized: true,
+    _closeCode: 1006,
+    _extensions: {},
+    _isServer: false,
+    _receiver: Receiver
+    {
+      _binaryType: 'nodebuffer',
+      _extensions: null,
+      _maxPayload: 0,
+      _bufferedBytes: 0,
+      _buffers: null,
+      _compressed: false,
+      _payloadLength: 36,
+      _fragmented: 0,
+      _masked: false,
+      _fin: true,
+      _mask: null,
+      _opcode: 1,
+      _totalPayloadLength: 0,
+      _messageLength: 0,
+      _fragments: null,
+      _cleanupCallback: null,
+      _isCleaningUp: false,
+      _hadError: false,
+      _loop: false,
+      add: [ Function : bound add ],
+      onmessage: null,
+      onclose: null,
+      onerror: null,
+      onping: null,
+      onpong: null,
+      _state: 0
+    },
+    _sender: Sender
+    {
+      _extensions: {},
+      _socket: [ Object ],
+      _firstFragment: true,
+      _compress: false,
+      _bufferedBytes: 0,
+      _deflating: false,
+      _queue: []
+    },
+    _socket: TLSSocket
+    {
+      _tlsOptions: [ Object ],
+      _secureEstablished: true,
+      _securePending: false,
+      _newSessionPending: false,
+      _controlReleased: true,
+      _SNICallback: null,
+      servername: 'gateway.discord.gg',
+      npnProtocol: false,
+      alpnProtocol: false,
+      authorized: true,
+      authorizationError: null,
+      encrypted: true,
+      _events: [ Object ],
+      _eventsCount: 6,
+      connecting: false,
+      _hadError: false,
+      _handle: null,
+      _parent: null,
+      _host: 'gateway.discord.gg',
+      _readableState: [ Object ],
+      readable: false,
+      domain: null,
+      _maxListeners: undefined,
+      _writableState: [ Object ],
+      writable: false,
+      allowHalfOpen: false,
+      _bytesDispatched: 24465,
+      _sockname: null,
+      _pendingData: null,
+      _pendingEncoding: '',
+      server: undefined,
+      _server: null,
+      ssl: null,
+      _requestCert: true,
+      _rejectUnauthorized: true,
+      parser: null,
+      _httpMessage: null,
+      _idleNext: null,
+      _idlePrev: null,
+      _idleTimeout: -1,
+      [ Symbol(asyncId) ]
+      : 197581,
+      [ Symbol(bytesRead) ]
+      : 898093
+    },
+    _error: null,
+    url: 'wss://gateway.discord.gg/?v=6&encoding=json',
+    _req: null
+  },
+  type: 'error',
+  message: 'read ECONNRESET',
+  error: {
+    Error: read
+    ECONNRESET at
+    _errnoException(util.js:
+    992: 11)
+    at
+    TLSWrap.onread(net.js:
+    618: 25)
+    code: 'ECONNRESET',
+    errno: 'ECONNRESET',
+    syscall: 'read'
+  }
+}

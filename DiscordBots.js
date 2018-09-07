@@ -23,32 +23,33 @@ var directories = getDirs("./");
 directories.forEach(function( v ){
     
     // Search through each folder looking for app.js
-    console.log(COLOR_YELLOW, timeStamp(), "Searching for ./"+v+"/app.js", RESET_COLOR)
-    if ( fs.existsSync("./"+v+"/app.js") ){
+    console.log(COLOR_YELLOW, timeStamp(), "Searching for ./" + v + "/app.js", RESET_COLOR);
+
+    if ( fs.existsSync("./"+v+"/app.js") ) {
 
         // Make a new [object?] for each bot client
         discordBots[v] = {};
-        discordBots[v].start = function(){
+        discordBots[v].start = function () {
 
             // Start up a new bot client 
-            console.log(COLOR_GREEN, timeStamp(), "Starting Bot "+v,RESET_COLOR);
+            console.log(COLOR_GREEN, timeStamp(), "Starting Bot " + v, RESET_COLOR);
             const bot = discordBots[v].process = spawn('cmd.exe', ['/c', 'cd ./' + v + ' & start node app.js']);
 
             // ????
             discordBots[v].process.stdout.on('data', (d) => {
-                console.log(timeStamp(), "DATA FROM "+v+": "+d);
+                console.log(timeStamp(), "DATA FROM " + v + ": " + d);
             });
             // ????            
             discordBots[v].process.stderr.on('data', (data) => {
-                console.log(timeStamp(), "DATA FROM "+v+': stderr: '+data);
+                console.log(timeStamp(), "DATA FROM " + v + ': stderr: ' + data);
             });
-                
+
             // What to do when each bot child closes
             discordBots[v].process.on('close', (code) => {
-                console.log(COLOR_RED, timeStamp(), "DATA FROM "+v+': Process exited with code ' +code, RESET_COLOR);
-              discordBots[v].start();
+                console.log(COLOR_RED, timeStamp(), "DATA FROM " + v + ': Process exited with code ' + code, RESET_COLOR);
+                discordBots[v].start();
             });
-        }
+        };
         // Start all bots 
         discordBots[v].start();      
     }
@@ -59,4 +60,4 @@ function timeStamp() {
     var hours = now.getHours();
     var minutes = now.getMinutes();
     return "[" + hours + ":" + minutes + "]";
-};
+}

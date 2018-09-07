@@ -17,6 +17,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Content Include="error.json" />
     <Content Include="options.json" />
     <Compile Include="commands\quotes.js" />
     <Compile Include="quote.js" />
