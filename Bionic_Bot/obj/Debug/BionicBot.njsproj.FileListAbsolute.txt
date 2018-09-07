@@ -1,2 +1,0 @@
-Z:\ZemaToxic\Documents\DiscordBots\Bionic_Bot\obj\Debug\BionicBot.njsprojResolveAssemblyReference.cache
-Z:\ZemaToxic\Documents\DiscordBots\Bionic_Bot\bin\Microsoft.NodejsTools.WebRole.dll
