@@ -31,7 +31,7 @@ const loadOptions = (options) => {
     try {
         const optionsJson = fs.readFileSync('./options.json')
         const optionsFromFile = JSON.parse(optionsJson)
-        
+
         // merging default commands with added commands
         return Object.assign(optionsFromFile, options)
     } catch (err) {
@@ -168,9 +168,10 @@ client.on('messageDelete', message => {
 
 // Message edited
 client.on('messageUpdate', (oldMessage, newMessage) => {
-	
+
     if (oldMessage.author.username === 'ZemaBot') return;
     if (oldMessage.embeds == true) return;
+    if (oldMessage == newMessage) return;
 
     // 402404101713035264 logs Channel ID
     client.channels.get('402404101713035264').send({
@@ -201,7 +202,7 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
         if (newMember.nickname == null) { newName = newMember.user.username };
 
         console.log(oldName, " --- ", newName);
-        
+
         client.channels.get('402404101713035264').send({
             embed: {
                 color: 16737792,
@@ -239,9 +240,9 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
             oldRoles.push(k.name);
         })
         newMember.roles.forEach(function (k, v) {
-                newRoles.push(k.name)
+            newRoles.push(k.name)
         })
-    
+
         if (oldRoles.length < newRoles.length) {
             // If a Role was Added
             var change = filterArray(newRoles, oldRoles)[0];
@@ -282,7 +283,9 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
 // Client experiances an error
 client.on("error", error => {
 
-    console.log(error)
+    console.log(error['type']);
+    console.log(error['type']['message']);
+    console.log(parseJSON(error['type']['message']['error']));
 
     client.channels.get('402404101713035264').send({
         embed: {
@@ -298,6 +301,7 @@ client.on("error", error => {
         }
     });
 })
+
 
 const prefix = "~";
 
@@ -324,7 +328,7 @@ client.on('message', message => {
     // Remove the prefix and Do things based off the second Word.
     let command = message.content.split(" ")[0];
     command = command.slice(prefix.length);
-    
+
     // Split the next few words and do things with them.
     let args = message.content.split(" ").slice(1);
 
@@ -372,8 +376,7 @@ client.on('message', message => {
 
     // Toggle Looping.
     if (command === 'looptoggle') {
-        if (preventLoop == true)
-        {
+        if (preventLoop == true) {
             preventLoop = false
         }
         else {
@@ -471,16 +474,16 @@ client.on('message', message => {
 
         message.guild.members.get(_Id).user.fetchProfile().then(p => { console.log(p.connections) })
     }
-	
-	if (command === "datatest2") {
-		
-		return request ({
+
+    if (command === "datatest2") {
+
+        return request({
             baseUrl: 'https://discordapp.com/api/v6',
-            url: 'oauth2/token', 
+            url: 'oauth2/token',
             method: 'POST',
-             headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded',
-              },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
             json: true,
             body: {
                 client_id: '388491707580416001',
@@ -492,22 +495,22 @@ client.on('message', message => {
         }, (err, {
                 statusCode
             }, body) => {
-            if (err) {
-                console.log(err);
-            } else if (statusCode !== 200) {
-                console.log({
-                    statusCode,
-                    body
-                });
-            } else {
-                console.log(body);
-            }
-        });
-	
-		console.log(request);
-		
-	}
-		
+                if (err) {
+                    console.log(err);
+                } else if (statusCode !== 200) {
+                    console.log({
+                        statusCode,
+                        body
+                    });
+                } else {
+                    console.log(body);
+                }
+            });
+
+        console.log(request);
+
+    }
+
     if (command === "restart") {
         if (message.author.id === '171234951566589954') {
             message.channel.send("Bot will restart, please wait a minute");
