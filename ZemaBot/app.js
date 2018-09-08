@@ -284,8 +284,8 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
 client.on("error", error => {
 
     console.log(error['type']);
-    console.log(error['type']['message']);
-    console.log(parseJSON(error['type']['message']['error']));
+    console.log(error['message']);
+    console.log((error['error']));
 
     client.channels.get('402404101713035264').send({
         embed: {
