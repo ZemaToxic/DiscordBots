@@ -292,7 +292,15 @@ client.on("error", error => {
             color: 16716947,
             fields: [{
                 name: 'There was an error.',
-                value: `${error}`
+                value: `${error['type']}`
+            },
+            {
+                name: 'Error Message was ',
+                value: `${error['message']}`
+            },
+            {
+                name: 'Error Object is',
+                value: `${error['error']}`
             }],
             timestamp: new Date(),
             footer: {
