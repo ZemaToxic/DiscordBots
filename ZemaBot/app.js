@@ -300,7 +300,7 @@ client.on("error", error => {
             },
             {
                 name: 'Error Object is',
-                value: `${```error['error']```}`
+                value: `${error['error']}`
             }],
             timestamp: new Date(),
             footer: {
