@@ -17,19 +17,35 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="commands\help.js" />
+    <Compile Include="commands\ping.js" />
+    <Compile Include="commands\randomcolour.js" />
+    <Compile Include="commands\serverinfo.js" />
+    <Compile Include="commands\stats.js" />
+    <Compile Include="commands\time.js" />
+    <Compile Include="commands\userinfo.js" />
+    <Compile Include="modCommands\modHelp.js" />
+    <Compile Include="modCommands\purge.js" />
+    <Compile Include="modCommands\resetDefaults.js" />
+    <Compile Include="modCommands\setActivity.js" />
+    <Compile Include="modCommands\setModChannel.js" />
+    <Compile Include="modCommands\setModRole.js" />
+    <Compile Include="modCommands\setPrefix.js" />
+    <Compile Include="utils.js" />
     <Content Include="error.json" />
+    <Content Include="jsonFiles\ClientData.json" />
+    <Content Include="jsonFiles\options.json" />
     <Content Include="options.json" />
-    <Compile Include="commands\quotes.js" />
+    <Compile Include="eventHandler.js" />
     <Compile Include="quote.js" />
-    <Compile Include="commands\swears.js" />
     <Compile Include="app.js" />
     <Content Include="package-lock.json" />
     <Content Include="package.json" />
-    <Content Include="ZemabotDB.db" />
-    <Content Include="ZemabotDB.sqlite" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="commands\" />
+    <Folder Include="jsonFiles\" />
+    <Folder Include="modCommands\" />
     <Folder Include="ZemaBot" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
