@@ -13,7 +13,7 @@ module.exports = {
       .setTitle('Current Time')
       .setDescription('Current time in various time zones.')
       .addField('Auckland NZ', `${moment.tz(currentDate, "Pacific/Auckland").format("llll")}`, true)
-      .addField('Brisbane AUS', `${moment.tz(currentDate, "Australia/Brisbane").format("llll")}`, true)
+      .addField('Sydney AUS', `${moment.tz(currentDate, "Australia/Sydney").format("llll")}`, true)
       .addBlankField()
       .addField('London UK', `${moment.tz(currentDate, "Europe/London").format("llll")}`, true)
       .addField('Los Angeles US', `${moment.tz(currentDate, "America/los_Angeles").format("llll")}`, true)
