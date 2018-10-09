@@ -17,7 +17,7 @@ module.exports = {
       .addField('Oceania')
       .addField('Auckland NZ', `${moment.tz(currentDate, "Pacific/Auckland").format("llll")}`, true)
       .addField('Sydney AUS', `${moment.tz(currentDate, "Australia/Sydney").format("llll")}`, true)
-      .addBlankField('Europe')
+      .addField('Europe')
       .addField('London UK', `${moment.tz(currentDate, "Europe/London").format("llll")}`, true)
       .addField('Berlin DE', `${moment.tz(currentDate, "Europe/Berlin").format("llll")}`, true)
       .addField('Asia')
