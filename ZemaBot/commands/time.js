@@ -26,6 +26,9 @@ module.exports = {
       .addField('Americas', '<-------------------------------------------------------------------->')
       .addField('Los Angeles US', `${moment.tz(currentDate, "America/Los_Angeles").format("llll")}`, true)
       .addField('Toronto CA', `${moment.tz(currentDate, "America/Toronto").format("llll")}`, true)
+      .addField('Africa', '<-------------------------------------------------------------------->')
+      .addField('Johannesburg SA', `${moment.tz(currentDate, "Africa/Johannesburg").format("llll")}`, true)
+      .addField('Namibia SA', `${moment.tz(currentDate, "Africa/Windhoek").format("llll")}`, true)
       .setColor(0x42F4AA)
       .setTimestamp(new Date());
 
