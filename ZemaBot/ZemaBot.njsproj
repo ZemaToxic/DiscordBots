@@ -31,6 +31,7 @@
     <Compile Include="modCommands\setModChannel.js" />
     <Compile Include="modCommands\setModRole.js" />
     <Compile Include="modCommands\setPrefix.js" />
+    <Compile Include="Template.js" />
     <Compile Include="utils.js" />
     <Content Include="error.json" />
     <Content Include="jsonFiles\ClientData.json" />

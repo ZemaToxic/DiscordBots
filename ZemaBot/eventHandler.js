@@ -38,17 +38,17 @@ module.exports = {
     console.log("Guild Member Changed something");
 
     // If user nickname changes.
-    if (oldMember.nickname != newMember.nickname) {
+    if (oldMember.nickname !== newMember.nickname) {
 
       // Make local vars
       var oldName = oldMember.nickname;
       var newName = newMember.nickname;
 
       // If no set nickname, use the user's username.
-      if (oldMember.nickname == null) {
+      if (oldMember.nickname === null) {
         oldName = oldMember.user.username;
       }
-      if (newMember.nickname == null) {
+      if (newMember.nickname === null) {
         newName = newMember.user.username;
       }
 
@@ -66,7 +66,7 @@ module.exports = {
     }
 
     // If user roles change.
-    if (oldMember.roles != newMember.roles) {
+    if (oldMember.roles !== newMember.roles) {
 
       // Make local vars.
       var oldRoles = [];
@@ -207,12 +207,12 @@ module.exports = {
 
   // error Handler.
   errorHandler: function(client, options, error) {
-    //  console.log(error.error);
+    console.log(error);
     // Make a new RichEmbed
     const embed = new RichEmbed()
       .setTitle('Bot Experianced an error.')
       .setDescription('Error of type: ' + error.message)
-      .addField('Error object:', '\`\`\`' + error.error + '\`\`\`')
+      .addField('Error object:', '\`\`\`\n' + error.error + '\n\`\`\`')
       .setColor(0xA100FF)
       .setTimestamp(new Date());
 
