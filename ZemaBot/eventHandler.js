@@ -1,3 +1,5 @@
+const util = require('util');
+
 const {
 	RichEmbed
 } = require('discord.js');
@@ -212,7 +214,7 @@ module.exports = {
 		const embed = new RichEmbed()
 			.setTitle('Bot Experianced an error.')
 			.setDescription('Error of type: ' + error.message)
-			.addField('Error object:', '```\n' + error.error + '\n```')
+			.addField('Error object:', '```\n' + util.inspect(error.error) + '\n```')
 			.setColor(0xA100FF)
 			.setTimestamp(new Date());
 
