@@ -1,6 +1,4 @@
-const {
-	RichEmbed
-} = require('discord.js');
+const Discord = require('discord.js');
 var moment = require('moment-timezone');
 
 module.exports = {
@@ -14,7 +12,7 @@ module.exports = {
 		var dndMembers = message.guild.members.filter(m => m.presence.status === 'dnd');
 		var offlineMembers = message.guild.members.filter(m => m.presence.status === 'offline');
 
-		const embed = new RichEmbed()
+		const embed = new Discord.RichEmbed()
 			.setTitle('Server Information')
 			.setColor('0ED4DA')
 			.setThumbnail(message.guild.iconURL)

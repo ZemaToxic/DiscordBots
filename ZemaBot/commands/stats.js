@@ -1,18 +1,15 @@
 const Discord = require('discord.js');
-const {
-	RichEmbed
-} = require('discord.js');
 const moment = require('moment');
 require('moment-duration-format');
 
 module.exports = {
 	name: 'stats',
 	description: 'Display Bot status etc.',
-	execute(message, args, options, client) {
+	execute(message, client) {
 
 		const duration = moment.duration(client.uptime).format(' D [days], H [hrs], m [mins], s [secs]');
 
-		const embed = new RichEmbed()
+		const embed = new Discord.RichEmbed()
 			.setTitle('Bot Statistics')
 			.setThumbnail(`${client.user.displayAvatarURL}`)
 			.setDescription('Statistics about the bot.')

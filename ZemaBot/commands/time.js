@@ -1,6 +1,4 @@
-const {
-	RichEmbed
-} = require('discord.js');
+const Discord = require('discord.js');
 var moment = require('moment-timezone');
 
 module.exports = {
@@ -11,7 +9,7 @@ module.exports = {
 		// Make a local variable of the current time.
 		var currentDate = new Date();
 
-		const embed = new RichEmbed()
+		const embed = new Discord.RichEmbed()
 			.setTitle('Current Time')
 			.setDescription('Current time in various time zones.')
 			.addField('Oceania', '<-------------------------------------------------------------------->')

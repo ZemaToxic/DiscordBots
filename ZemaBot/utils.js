@@ -1,8 +1,8 @@
-const fs = require('fs');
+import { writeFile, readFileSync } from 'fs';
 
-module.exports = function () {
+export default function () {
 	this.saveOptions = function (options) { // Save options to File
-		fs.writeFile('./jsonFiles/options.json', JSON.stringify(options, null, 1), (err) => {
+		writeFile('./jsonFiles/options.json', JSON.stringify(options, null, 1), (err) => {
 			if (err) {
 				return console.log(err);
 			}
@@ -11,7 +11,7 @@ module.exports = function () {
 	};
 	this.loadOptions = function (options) {
 		try {
-			const optionsJson = fs.readFileSync('./jsonFiles/options.json');
+			const optionsJson = readFileSync('./jsonFiles/options.json');
 			const optionsFromFile = JSON.parse(optionsJson);
 
 			// Merge default options with added jsonFilesinformation
@@ -32,4 +32,4 @@ module.exports = function () {
 		// Save the values
 		console.log('Initial values set');
 	};
-};
+}

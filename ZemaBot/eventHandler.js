@@ -1,15 +1,12 @@
 const util = require('util');
-
-const {
-	RichEmbed
-} = require('discord.js');
+const Discord = require('discord.js');
 
 module.exports = {
 	// guildMemberAdd function.
 	memberAdd: function(client, options, member) {
 		console.log('Member Joined');
 		// Make a new RichEmbed
-		const embed = new RichEmbed()
+		const embed = new Discord.RichEmbed()
 			.setTitle('User Joined.')
 			.setThumbnail(`${member.user.displayAvatarURL}`)
 			.setDescription('New user joined ' + member + ', there username is: ' + member.user.username)
@@ -24,7 +21,7 @@ module.exports = {
 	memberRemove: function(client, options, member) {
 		console.log('Member Left');
 		// Make a new RichEmbed
-		const embed = new RichEmbed()
+		const embed = new Discord.RichEmbed()
 			.setTitle('User Left.')
 			.setThumbnail(`${member.user.displayAvatarURL}`)
 			.setDescription('User: ' + member + ' has bitched out, their username was: ' + member.user.username)
@@ -55,7 +52,7 @@ module.exports = {
 			}
 
 			// Make a new RichEmbed
-			const embed = new RichEmbed()
+			const embed = new Discord.RichEmbed()
 				.setTitle('User Nickname changed.')
 				.setThumbnail(`${oldMember.user.displayAvatarURL}`)
 				.setDescription('User: ' + oldMember.user.username + '\'s nickname changed, it was: ' + oldName + ', it is now: ' + newName)
@@ -87,7 +84,7 @@ module.exports = {
 				var addedChange = filterArray(newRoles, oldRoles)[0];
 
 				// Make a new RichEmbed
-				const embed = new RichEmbed()
+				const embed = new Discord.RichEmbed()
 					.setTitle('User Role changed.')
 					.setThumbnail(`${oldMember.user.displayAvatarURL}`)
 					.setDescription('User: ' + oldMember + ' has gained the role: ' + addedChange)
@@ -102,7 +99,7 @@ module.exports = {
 				var removedChange = filterArray(oldRoles, newRoles)[0];
 
 				// Make a new RichEmbed
-				const embed = new RichEmbed()
+				const embed = new Discord.RichEmbed()
 					.setTitle('User Role changed.')
 					.setThumbnail(`${oldMember.user.displayAvatarURL}`)
 					.setDescription('User: ' + oldMember + ' has lost the role: ' + removedChange)
@@ -120,7 +117,7 @@ module.exports = {
 	banAdd: function(client, options, member) {
 		console.log('Member Banned');
 		// Make a new RichEmbed
-		const embed = new RichEmbed()
+		const embed = new Discord.RichEmbed()
 			.setTitle('User Banned.')
 			.setThumbnail(`${member.user.displayAvatarURL}`)
 			.setDescription('User: ' + member.user.username + ' was banned.')
@@ -137,7 +134,7 @@ module.exports = {
 		// Make sure the message isnt from the Bot.
 		if (message.author === client.user) return;
 		// Make a new RichEmbed
-		const embed = new RichEmbed()
+		const embed = new Discord.RichEmbed()
 			.setTitle('Message Deleted.')
 			.setThumbnail(`${message.author.displayAvatarURL}`)
 			.setDescription('Message sent by: ' + message.author.username + ' deleted.')
@@ -159,7 +156,7 @@ module.exports = {
 		if (oldMessage.content === newMessage.content) return;
 
 		// Make a new RichEmbed
-		const embed = new RichEmbed()
+		const embed = new Discord.RichEmbed()
 			.setTitle('Message modified')
 			.setThumbnail(`${oldMessage.author.displayAvatarURL}`)
 			.setDescription('Message modifed by: ' + oldMessage.author.username)
@@ -191,7 +188,7 @@ module.exports = {
 		var purger = messages.map(u => u.author.username);
 
 		// Make a new RichEmbed
-		const embed = new RichEmbed()
+		const embed = new Discord.RichEmbed()
 			.setTitle('Messages purged.')
 			.setDescription('Messages purged in channel: ' + firstChannel)
 			.setColor(0xFF0092)
@@ -209,9 +206,9 @@ module.exports = {
 
 	// error Handler.
 	errorHandler: function(client, options, error) {
-		console.log(error);
+
 		// Make a new RichEmbed
-		const embed = new RichEmbed()
+		const embed = new Discord.RichEmbed()
 			.setTitle('Bot Experianced an error.')
 			.setDescription('Error of type: ' + error.message)
 			.addField('Error object:', '```\n' + util.inspect(error.error) + '\n```')

@@ -1,6 +1,4 @@
-const {
-	RichEmbed
-} = require('discord.js');
+const Discord = require('discord.js');
 
 module.exports = {
 	name: 'randomColour',
@@ -11,7 +9,7 @@ module.exports = {
 			return (~~(Math.random() * 16)).toString(16);
 		});
 
-		const embed = new RichEmbed()
+		const embed = new Discord.RichEmbed()
 			.setTitle('Random Colour created.')
 			.setDescription(`New Colour created ${randomColor.toUpperCase()}`)
 			.setColor(randomColor);

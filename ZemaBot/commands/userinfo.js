@@ -1,4 +1,4 @@
-const { RichEmbed } = require('discord.js');
+const Discord = require('discord.js');
 const moment = require('moment');
 require('moment-duration-format');
 const status = {
@@ -25,7 +25,7 @@ module.exports = {
 		}  else {
 			mod = 'No';
 		}
-		const embed = new RichEmbed()
+		const embed = new Discord.RichEmbed()
 			.setColor('#45DE15')
 			.setThumbnail(`${member.user.displayAvatarURL}`)
 			.setAuthor(`${member.user.tag} (${member.id})`, `${member.user.displayAvatarURL}`)

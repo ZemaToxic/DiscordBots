@@ -113,7 +113,7 @@ client.on('message', message => {
 		return;
 	}
 	// Check if its in a mod command.
-	else if (client.modCommands.get(commands) && message.member.roles.has(options.modRole)) {
+	else if (client.modCommands.get(commands) && (message.member.roles.has(options.modRole) || (message.guild.owner.user.username === message.author.username))) {
 		client.modCommands.get(commands).execute(message, args, options, client);
 		return;
 	}
