@@ -1,13 +1,22 @@
-'use strict';
+// Set Console window title
+//process.stdout.write("\033]0;ZemaBot-Discord\007");
 
+// Bot Info
+var clientData = require('./jsonFiles/ClientData.json');
+
+// Utility Imports
+const eventHandler = require('./utils/eventHandler.js');
+require('./utils/utils.js')();
+
+// Imports and Declarations.
+let options = {};	// -- Used for prefix and activity etc.
 const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
+
+// New collections of Commands
 client.commands = new Discord.Collection();
 client.modCommands = new Discord.Collection();
-
-// Set Console window title
-//process.stdout.write("\033]0;ZemaBot-Discord\007");
 
 // Make a new const of all files in the commands folder which end in .js
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -26,11 +35,7 @@ for (const file of modCommandFiles) {
 	client.modCommands.set(command.name, command);
 }
 
-var clientData = require('./jsonFiles/ClientData.json');
-const eventHandler = require('./eventHandler.js');
-require('./utils.js')();
 
-let options = {};
 
 // ---------- Event Handlers ----------
 
