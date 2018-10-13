@@ -36,7 +36,6 @@ for (const file of modCommandFiles) {
 }
 
 
-
 // ---------- Event Handlers ----------
 
 // Bot is Ready to communicate
