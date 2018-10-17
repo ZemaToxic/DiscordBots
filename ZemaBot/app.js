@@ -5,8 +5,8 @@
 var clientData = require('./jsonFiles/ClientData.json');
 
 // Utility Imports
-const eventHandler = require('./utils/eventHandler.js');
-require('./utils/utils.js')();
+const eventHandler = require('./utility/eventHandler.js');
+require('./utility/utils.js')();
 
 // Imports and Declarations.
 let options = {};	// -- Used for prefix and activity etc.
