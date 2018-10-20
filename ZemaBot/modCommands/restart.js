@@ -1,11 +1,13 @@
 module.exports = {
-	name: 'test',
+	name: 'restart',
 	description: 'Restarts the bot if something is being funky',
-	execute(message, client) {
+	execute(message) {
 
-		client.destroy()
-			.then(message.reply('Restarting the bot... BRB'))
-			.catch(console.error);		
-
+		message.reply('Restarting the bot... BRB');
+		setTimeout(execFunc, 1200);
 	}
 };
+
+function execFunc() {
+	process.exit();
+}

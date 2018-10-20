@@ -144,3 +144,13 @@ client.on('message', message => {
 
 // Log the bot in.
 client.login(clientData.Token);
+
+
+// Process listeners 
+process.on('exit', (code) => {
+	console.log('Bot exited with code: ' + code);
+});
+
+process.on('unhandledRejection', err => {
+	console.error('Uncaught Promise Rejection: \n', err);
+});
