@@ -18,49 +18,47 @@ const discordBots = {};
 const isDir = source => lstatSync(source).isDirectory();
 const getDirs = source => readdirSync(source).map(name => join(source, name)).filter(isDir);
 
-var directories = getDirs("./");
+var directories = getDirs('./');
 
 directories.forEach(function( v ){
-    
-    // Search through each folder looking for app.js
-    console.log(COLOR_YELLOW, timeStamp(), "Searching for ./" + v + "/app.js", RESET_COLOR);
+	
+	// Search through each folder looking for app.js
+	console.log(COLOR_YELLOW, timeStamp(), 'Searching for ./' + v + '/app.js', RESET_COLOR);
 
-    if ( fs.existsSync("./"+v+"/app.js") ) {
+	if ( fs.existsSync('./'+v+'/app.js') ) {
 
-        // Make a new [object?] for each bot client
-        discordBots[v] = {};
-        discordBots[v].start = function () {
+		// Make a new [object?] for each bot client
+		discordBots[v] = {};
+		discordBots[v].start = function () {
 
-            // Start up a new bot client 
-            console.log(COLOR_GREEN, timeStamp(), "Starting Bot " + v, RESET_COLOR);
-            const ops = {
-                env: 'child'
-            }
-            const bot = discordBots[v].process = spawn('node', [ v + '/app.js'], {env: { Child: 1 }});
+			// Start up a new bot client 
+			console.log(COLOR_GREEN, timeStamp(), 'Starting Bot ' + v, RESET_COLOR);
+			
+			const bot = discordBots[v].process = spawn('node', [ v + '/app.js'], {env: { Child: 1 }});
 
-            // ????var
-            discordBots[v].process.stdout.on('data', (d) => {
-                console.log(timeStamp(), "DATA FROM " + v + ": " + d);
-            });
-            // ????            
-            discordBots[v].process.stderr.on('data', (data) => {
-                console.log(timeStamp(), "DATA FROM " + v + ': stderr: ' + data);
-            });
+			// ????var
+			discordBots[v].process.stdout.on('data', (d) => {
+				console.log( timeStamp(), 'DATA FROM ' + v + ': ' + d);
+			});
+			// ????            
+			discordBots[v].process.stderr.on('data', (data) => {
+				console.log(COLOR_CYAN, timeStamp(), 'DATA FROM ' + v + ': stderr: ' + data, RESET_COLOR);
+			});
 
-            // What to do when each bot child closes
-            discordBots[v].process.on('close', (code) => {
-                console.log(COLOR_RED, timeStamp(), "DATA FROM " + v + ': Process exited with code ' + code, RESET_COLOR);
-                discordBots[v].start();
-            });
-        };
-        // Start all bots 
-        discordBots[v].start();      
-    }
+			// What to do when each bot child closes
+			discordBots[v].process.on('close', (code) => {
+				console.log(COLOR_RED, timeStamp(), 'DATA FROM ' + v + ': Process exited with code ' + code, RESET_COLOR);
+				discordBots[v].start();
+			});
+		};
+		// Start all bots 
+		discordBots[v].start();      
+	}
 });
 
 function timeStamp() {
-    var now = new Date();
-    var hours = now.getHours();
-    var minutes = now.getMinutes();
-    return "[" + hours + ":" + minutes + "]";
+	var now = new Date();
+	var hours = now.getHours();
+	var minutes = now.getMinutes();
+	return '[' + hours + ':' + minutes + ']';
 }

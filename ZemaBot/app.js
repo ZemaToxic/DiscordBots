@@ -15,21 +15,21 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.modCommands = new Discord.Collection();
 
-var commandFiles; 
+var commandFiles;
 var modCommandFiles;
 
 // Check if spawned as a child, if so adjust the dir
 if (process.env.Child) {
 	console.log('Spawned as a child')
 	// Make a new const of all files in the commands folder which end in .js
-	 commandFiles = fs.readdirSync('./ZemaBot/commands').filter(file => file.endsWith('.js'));
+	commandFiles = fs.readdirSync('./ZemaBot/commands').filter(file => file.endsWith('.js'));
 	// Make a new const of all files in the modCommands folder which end in .js
-	 modCommandFiles = fs.readdirSync('./ZemaBot/modCommands').filter(file => file.endsWith('.js'));
+	modCommandFiles = fs.readdirSync('./ZemaBot/modCommands').filter(file => file.endsWith('.js'));
 } else {
 	// Make a new const of all files in the commands folder which end in .js
-	 commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+	commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 	// Make a new const of all files in the modCommands folder which end in .js
-	 modCommandFiles = fs.readdirSync('./modCommands').filter(file => file.endsWith('.js'));
+	modCommandFiles = fs.readdirSync('./modCommands').filter(file => file.endsWith('.js'));
 }
 
 // Iterate through and add them to the client.commands Collection.
