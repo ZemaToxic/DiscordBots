@@ -1,6 +1,3 @@
-// Set Console window title
-//process.stdout.write("\033]0;ZemaBot-Discord\007");
-
 // Bot Info
 var clientData = require('./jsonFiles/ClientData.json');
 
@@ -9,7 +6,7 @@ const eventHandler = require('./utility/eventHandler.js');
 require('./utility/utils.js')();
 
 // Imports and Declarations.
-let options = {};	// -- Used for prefix and activity etc.
+let options = {}; // -- Used for prefix and activity etc.
 const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -18,10 +15,22 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.modCommands = new Discord.Collection();
 
-// Make a new const of all files in the commands folder which end in .js
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-// Make a new const of all files in the modCommands folder which end in .js
-const modCommandFiles = fs.readdirSync('./modCommands').filter(file => file.endsWith('.js'));
+var commandFiles; 
+var modCommandFiles;
+
+// Check if spawned as a child, if so adjust the dir
+if (process.env.Child) {
+	console.log('Spawned as a child')
+	// Make a new const of all files in the commands folder which end in .js
+	 commandFiles = fs.readdirSync('./ZemaBot/commands').filter(file => file.endsWith('.js'));
+	// Make a new const of all files in the modCommands folder which end in .js
+	 modCommandFiles = fs.readdirSync('./ZemaBot/modCommands').filter(file => file.endsWith('.js'));
+} else {
+	// Make a new const of all files in the commands folder which end in .js
+	 commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+	// Make a new const of all files in the modCommands folder which end in .js
+	 modCommandFiles = fs.readdirSync('./modCommands').filter(file => file.endsWith('.js'));
+}
 
 // Iterate through and add them to the client.commands Collection.
 for (const file of commandFiles) {

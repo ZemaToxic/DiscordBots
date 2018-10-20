@@ -1,10 +1,10 @@
 // Console Colour Code
-var RESET_COLOR = '\x1b[0m';
-var COLOR_WHITE = '\x1b[1m\x1b[0m';
-var COLOR_RED = '\x1b[1m\x1b[31m';
-var COLOR_GREEN = '\x1b[1m\x1b[32m';
-var COLOR_CYAN = '\x1b[1m\x1b[36m';
-var COLOR_YELLOW = '\x1b[1m\x1b[33m';
+const RESET_COLOR = '\x1b[0m';
+const COLOR_WHITE = '\x1b[1m\x1b[0m';
+const COLOR_RED = '\x1b[1m\x1b[31m';
+const COLOR_GREEN = '\x1b[1m\x1b[32m';
+const COLOR_CYAN = '\x1b[1m\x1b[36m';
+const COLOR_YELLOW = '\x1b[1m\x1b[33m';
 
 const { spawn } = require('child_process');
 const { lstatSync, readdirSync } = require('fs');
@@ -33,9 +33,12 @@ directories.forEach(function( v ){
 
             // Start up a new bot client 
             console.log(COLOR_GREEN, timeStamp(), "Starting Bot " + v, RESET_COLOR);
-            const bot = discordBots[v].process = spawn('cmd.exe', ['/c', 'cd ./' + v + ' & start node app.js']);
+            const ops = {
+                env: 'child'
+            }
+            const bot = discordBots[v].process = spawn('node', [ v + '/app.js'], {env: { Child: 1 }});
 
-            // ????
+            // ????var
             discordBots[v].process.stdout.on('data', (d) => {
                 console.log(timeStamp(), "DATA FROM " + v + ": " + d);
             });
