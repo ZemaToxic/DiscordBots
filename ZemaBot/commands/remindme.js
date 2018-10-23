@@ -10,35 +10,31 @@ module.exports = {
 		var inputedTime = args[0].split('');
 
 		//	Variables for the time and the length (minutes, hours, days)
-		var timeValue = inputedTime[0];
-		var delayValue = inputedTime[1];
+		var delayValue = inputedTime.pop();
+		// Parse the Value as an (int)
+		var timeValue = parseInt(inputedTime.join(''));
 
 		var remindMeTime = 0;
 
-		console.log(timeValue, delayValue);
-		
-		if (delayValue === 'm') {
-			remindMeTime = moment(currentTime).add(timeValue, 'm');
-			message.reply(` you will be reminded in: ${timeValue} minute(s)`);
+		if ((isNumber(timeValue) === true) && (delayValue == 'm' || 'h' || 'd')) {
+			if (delayValue === 'm') {
+				remindMeTime = moment(currentTime).add(timeValue, 'm');
+				message.reply(` you will be reminded in: ${timeValue} minute(s)`);
 
-		}else if (delayValue === 'h') {
-			remindMeTime = moment(currentTime).add(timeValue, 'h');
-			message.reply(` you will be reminded in: ${timeValue} hour(s)`);
+			} else if (delayValue === 'h') {
+				remindMeTime = moment(currentTime).add(timeValue, 'h');
+				message.reply(` you will be reminded in: ${timeValue} hour(s)`);
 
-		}else if (delayValue === 'd') {
-			remindMeTime = moment(currentTime).add(timeValue, 'd');
-			message.reply(` you will be reminded in: ${timeValue} day(s)`);
-
-		}else if (delayValue === 'y') {
-			remindMeTime = moment(currentTime).add(timeValue, 'y');
-			message.reply(` you will be reminded in: ${timeValue} year(s)`);
-
+			} else if (delayValue === 'd') {
+				remindMeTime = moment(currentTime).add(timeValue, 'd');
+				message.reply(` you will be reminded in: ${timeValue} day(s)`);
+			}
 		} else {
 			message.reply(' that isn\'t a valid time period');
 		}
 
 		// Make a new variable of the stuff we want as a reminder.
-		args.splice(0,1);
+		args.splice(0, 1);
 		const response = args.join(' ');
 
 		// Make a value based on the time requested.
@@ -46,11 +42,16 @@ module.exports = {
 
 		// Send the message after x time.
 		setTimeout(timerThing, miliseconds, message, response);
-		
+
 	}
 };
 
 
 function timerThing(message, response) {
 	message.reply(response);
+}
+
+// Returns true (n) is a number and not (Nan)
+function isNumber(n) {
+	return (typeof n == 'number' && !isNaN(n));
 }
