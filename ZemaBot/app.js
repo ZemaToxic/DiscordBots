@@ -20,7 +20,7 @@ var modCommandFiles;
 
 // Check if spawned as a child, if so adjust the dir
 if (process.env.Child) {
-	console.log('Spawned as a child')
+	console.log('Spawned as a child');
 	// Make a new const of all files in the commands folder which end in .js
 	commandFiles = fs.readdirSync('./ZemaBot/commands').filter(file => file.endsWith('.js'));
 	// Make a new const of all files in the modCommands folder which end in .js
@@ -153,4 +153,8 @@ process.on('exit', (code) => {
 
 process.on('unhandledRejection', err => {
 	console.error('Uncaught Promise Rejection: \n', err);
+});
+
+process.on('error', err => {
+	console.error('Error happened: \n ', err);
 });

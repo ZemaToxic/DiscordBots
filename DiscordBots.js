@@ -36,11 +36,13 @@ directories.forEach(function( v ){
 			
 			const bot = discordBots[v].process = spawn('node', [ v + '/app.js'], {env: { Child: 1 }});
 
-			// ????var
+			console.log(COLOR_CYAN, timeStamp(), 'Bot: ' + v + ' is Dead: ' + bot.killed, RESET_COLOR);
+
+			// Console logging 
 			discordBots[v].process.stdout.on('data', (d) => {
-				console.log( timeStamp(), 'DATA FROM ' + v + ': ' + d);
+				console.log(COLOR_WHITE, timeStamp(), 'DATA FROM ' + v + ': ' + d, RESET_COLOR);
 			});
-			// ????            
+			// If the child has an error printed out            
 			discordBots[v].process.stderr.on('data', (data) => {
 				console.log(COLOR_CYAN, timeStamp(), 'DATA FROM ' + v + ': stderr: ' + data, RESET_COLOR);
 			});
@@ -58,7 +60,10 @@ directories.forEach(function( v ){
 
 function timeStamp() {
 	var now = new Date();
+	var date = now.getDate();
+	var month = now.getMonth();
+	var year = now.getFullYear();
 	var hours = now.getHours();
 	var minutes = now.getMinutes();
-	return '[' + hours + ':' + minutes + ']';
+	return '[' + date + '/' + month + '/' + year + ' - ' + hours + ':' + minutes + ']';
 }
