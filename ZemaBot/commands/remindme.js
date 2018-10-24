@@ -20,7 +20,7 @@ module.exports = {
 		args.splice(0, 1);
 		const response = args.join(' ');
 		
-		if ((isNumber(timeValue) === true) && (isValid(delayValue) === true)) {
+		if ((isNumber(timeValue) === true) && (timePeriod(delayValue) != false)) {
 			if (delayValue === 'm') {
 				remindMeTime = moment(currentTime).add(timeValue, 'm');
 			} else if (delayValue === 'h') {
@@ -49,19 +49,6 @@ module.exports = {
 	}
 };
 
-// Returns true if (delayValue) is a valid option.
-function isValid(delayValue) {
-	switch (delayValue) {
-		case 'm':
-			return true;
-		case 'h':
-			return true;
-		case 'd':
-			return true;
-		default:
-			return false;
-	}
-}
 // Returns the timePeriod.
 function timePeriod(delayValue) {
 	switch (delayValue) {
