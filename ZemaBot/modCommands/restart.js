@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'restart',
 	description: 'Restarts the bot if something is being funky',
-	execute(message) {
+	execute(client, options, message, args) {
 
 		message.reply('Restarting the bot... BRB');
 		setTimeout(execFunc, 1200);

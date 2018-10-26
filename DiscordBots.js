@@ -35,7 +35,6 @@ directories.forEach(function( v ){
 			console.log(COLOR_GREEN, timeStamp(), 'Starting Bot ' + v, RESET_COLOR);
 			
 			const bot = discordBots[v].process = spawn('node', [ v + '/app.js'], {env: { Child: 1 }});
-
 			
 			// Console logging 
 			discordBots[v].process.stdout.on('data', (d) => {
@@ -44,7 +43,6 @@ directories.forEach(function( v ){
 			// If the child has an error printed out            
 			discordBots[v].process.stderr.on('data', (data) => {
 				console.log(COLOR_CYAN, timeStamp(), 'DATA FROM ' + v + ': stderr: ' + data, RESET_COLOR);
-				console.log(COLOR_CYAN, timeStamp(), 'Bot: ' + v + ' is Dead: ' + bot.killed, RESET_COLOR);
 			});
 
 			// What to do when each bot child closes

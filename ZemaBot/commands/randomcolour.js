@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 module.exports = {
 	name: 'randomColour',
 	description: 'Make a new embed with a new random colour.',
-	execute(message) {
+	execute(client, options, message, args) {
 
 		const randomColor = '#000000'.replace(/0/g, function () {
 			return (~~(Math.random() * 16)).toString(16);

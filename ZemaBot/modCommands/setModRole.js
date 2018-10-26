@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'setModRole',
 	description: 'Sets the Mod Role.',
-	execute(message, options) {
+	execute(client, options, message, args) {
 
 		// if no ID Specified { } <------------- WORK ON THIS ------------- >
 

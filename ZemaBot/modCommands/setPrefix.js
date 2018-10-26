@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'setPrefix',
 	description: 'Set the Bot prefix.',
-	execute(message, args, options) {
+	execute(client, options, message, args) {
 		const newPrefix = args[0];
 
 		// Make sure the user has supplied a prefix.

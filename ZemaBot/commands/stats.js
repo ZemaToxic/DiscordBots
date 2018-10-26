@@ -5,13 +5,13 @@ require('moment-duration-format');
 module.exports = {
 	name: 'stats',
 	description: 'Display Bot status etc.',
-	execute(message, client) {
+	execute(client, options, message, args) {
 
 		const duration = moment.duration(client.uptime).format(' D [days], H [hrs], m [mins], s [secs]');
 
 		const embed = new Discord.RichEmbed()
 			.setTitle('Bot Statistics')
-			.setThumbnail(`${client.user.displayAvatarURL}`)
+			.setThumbnail(client.user.displayAvatarURL)
 			.setDescription('Statistics about the bot.')
 			.addField('Memory Usage', `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`, true)
 			.addField('Bot Uptime', duration, true)

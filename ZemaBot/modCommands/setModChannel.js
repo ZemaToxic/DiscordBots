@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'setModChannel',
 	description: 'Sets the mod channel to send mod logs.',
-	execute(message, args, options, client) {
+	execute(client, options, message, args) {
 
 		// if no ID Specified { } <------------- WORK ON THIS ------------- >
 

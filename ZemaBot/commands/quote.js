@@ -30,7 +30,7 @@ const Quotes = sequelize.define('quotes', {
 module.exports = {
 	name: 'quote',
 	description: 'Return quote\'s when requested.',
-	async execute(message, args, options, client) {
+	async execute(client, options, message, args) {
 		// Do command stuff here
 		if (!options.quoteNumber) {
 			options.quoteNumber = 0;

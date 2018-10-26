@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'modHelp',
 	description: 'List all of the modCommands or info about a specific command.',
-	execute(message, args, options) {
+	execute(client, options, message, args) {
 		// Do command stuff here
 		const data = [];
 		const {
@@ -12,7 +12,7 @@ module.exports = {
 		if (!args.length) {
 			data.push('Here\'s a list of all my modCommands: ');
 			data.push(modCommands.map(modCommand => modCommand.name).join(', '));
-			data.push(`\nYou can send \`${options.prefix}help [modCommand name]\` to get info on a specific modCommand!`);
+			data.push(`\nYou can send \`${options.prefix}modHelp [modCommand name]\` to get info on a specific modCommand!`);
 
 			// Send the message in a DM if user DM's the bot.
 			if (message.channel.type === 'dm') {

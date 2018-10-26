@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'help',
 	description: 'List all of the commands or info about a specific command.',
-	execute(message, args, options) {
+	execute(client, options, message, args) {
 		// Do command stuff here
 		const data = [];
 		const {

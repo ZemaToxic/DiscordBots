@@ -11,7 +11,7 @@ const status = {
 module.exports = {
 	name: 'userinfo',
 	description: 'Retrive information about a specific user.',
-	execute(message, args, options) {
+	execute(client, options, message, args) {
 		const member = message.mentions.members.first() || message.guild.members.get(args[0]) || message.member;
 		if (!member) return message.reply('Please provide a vaild Mention or USER ID');
 		let bot, mod;

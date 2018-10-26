@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'resetDefaults',
 	description: 'Reset the bot prefix and Activity to defualts.',
-	execute(message, args, options, client) {
+	execute(client, options, message, args) {
 		// Reset the default settings exist.
 		if (options.prefix) {
 			options.prefix = '~';

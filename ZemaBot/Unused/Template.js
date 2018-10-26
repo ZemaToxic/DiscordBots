@@ -1,7 +1,7 @@
 ﻿module.exports = {
 	name: ' ',
 	description: ' ',
-	execute(message, args, options, client) {
+	execute(client, options, message, args) {
 		// Do command stuff here
 	}
 };

@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'setActivity',
 	description: 'Set the text for what the Bot is doing.',
-	execute(message, args, options, client) {
+	execute(client, options, message, args) {
 		// Join the args together on space.
 		const newActivity = args.join(' ');
 		options.Activity = newActivity;

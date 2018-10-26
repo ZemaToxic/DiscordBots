@@ -1,7 +1,6 @@
 module.exports = {
     "env": {
-        "es6": true,
-        "node": true
+        "node": true,
     },
     "extends": "eslint:recommended",
     "parserOptions": {
@@ -25,6 +24,13 @@ module.exports = {
         "semi": [
             "error",
             "always"
+        ],
+        // Stuff I have added.
+        "no-unused-vars": [
+            "error",
+            {
+                "args": "none"
+            }
         ],
         "no-console": 0
     }
