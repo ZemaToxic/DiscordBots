@@ -1,5 +1,5 @@
 // Bot Info
-var clientData = require('./jsonFiles/ClientData.json');
+var clientData = require('./includes/jsonFiles/ClientData.json');
 
 // Utility Imports
 const eventHandler = require('./utility/eventHandler.js');
@@ -18,41 +18,41 @@ client.sillyStuff = new Discord.Collection();
 
 var commandFiles;
 var modCommandFiles;
-var sillyStuffFiles
+var sillyStuffFiles;
 
 // Check if spawned as a child, if so adjust the dir
 if (process.env.Child) {
 	console.log('Spawned as a child');
 	// Make a new const of all files in the commands folder which end in .js
-	commandFiles = fs.readdirSync('./ZemaBot/commands').filter(file => file.endsWith('.js'));
+	commandFiles = fs.readdirSync('./ZemaBot/includes/commands').filter(file => file.endsWith('.js'));
 	// Make a new const of all files in the modCommands folder which end in .js
-	modCommandFiles = fs.readdirSync('./ZemaBot/modCommands').filter(file => file.endsWith('.js'));
+	modCommandFiles = fs.readdirSync('./ZemaBot/includes/modCommands').filter(file => file.endsWith('.js'));
 	// Make a new const of all files in the sillyStuff folder which end in .js
-	sillyStuffFiles = fs.readdirSync('./ZemaBot/sillyStuff').filter(file => file.endsWith('.js'));
+	sillyStuffFiles = fs.readdirSync('./ZemaBot/includes/sillyStuff').filter(file => file.endsWith('.js'));
 } else {
 	// Make a new const of all files in the commands folder which end in .js
-	commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+	commandFiles = fs.readdirSync('./includes/commands').filter(file => file.endsWith('.js'));
 	// Make a new const of all files in the modCommands folder which end in .js
-	modCommandFiles = fs.readdirSync('./modCommands').filter(file => file.endsWith('.js'));
+	modCommandFiles = fs.readdirSync('./includes/modCommands').filter(file => file.endsWith('.js'));
 	// Make a new const of all files in the sillyStuff folder which end in .js
-	sillyStuffFiles = fs.readdirSync('./sillyStuff').filter(file => file.endsWith('.js'));
+	sillyStuffFiles = fs.readdirSync('./includes/sillyStuff').filter(file => file.endsWith('.js'));
 }
 
 // Iterate through and add them to the client.commands Collection.
 for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
+	const command = require(`./includes/commands/${file}`);
 	client.commands.set(command.name, command);
 }
 
 // Iterate through and add them to the client.modCommands Collection.
 for (const file of modCommandFiles) {
-	const command = require(`./modCommands/${file}`);
+	const command = require(`./includes/modCommands/${file}`);
 	client.modCommands.set(command.name, command);
 }
 
 // Iterate through and add them to the client.sillyStuff Collection.
 for (const file of sillyStuffFiles) {
-	const command = require(`./sillyStuff/${file}`);
+	const command = require(`./includes/sillyStuff/${file}`);
 	client.sillyStuff.set(command.name, command);
 }
 

@@ -3,13 +3,13 @@ const fs = require('fs');
 module.exports = function () {
 	this.saveOptions = function (options) { // Save options to File
 		if (process.env.Child) {
-			fs.writeFile('./ZemaBot/jsonFiles/options.json', JSON.stringify(options, null, 1), (err) => {
+			fs.writeFile('./ZemaBot/includes/jsonFiles/options.json', JSON.stringify(options, null, 1), (err) => {
 				if (err) {
 					return console.log(err);
 				}
 			});
 		} else {
-			fs.writeFile('./jsonFiles/options.json', JSON.stringify(options, null, 1), (err) => {
+			fs.writeFile('./includes/jsonFiles/options.json', JSON.stringify(options, null, 1), (err) => {
 				if (err) {
 					return console.log(err);
 				}
@@ -21,9 +21,9 @@ module.exports = function () {
 		try {
 			var optionsJson;
 			if (process.env.Child) {
-				optionsJson = fs.readFileSync('./ZemaBot/jsonFiles/options.json');
+				optionsJson = fs.readFileSync('./ZemaBot/includes/jsonFiles/options.json');
 			} else {
-				optionsJson = fs.readFileSync('./jsonFiles/options.json');
+				optionsJson = fs.readFileSync('./includes/jsonFiles/options.json');
 			}
 			const optionsFromFile = JSON.parse(optionsJson);
 

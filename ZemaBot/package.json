@@ -1,7 +1,7 @@
 {
-  "name": "test-bot",
-  "version": "0.0.0",
-  "description": "TestBot",
+  "name": "zemabot",
+  "version": "1.0.0",
+  "description": "ZemaBot",
   "main": "app.js",
   "author": {
     "name": "ZemaToxic"
