@@ -26,12 +26,7 @@ module.exports = {
             "always"
         ],
         // Stuff I have added.
-        "no-unused-vars": [
-            "error",
-            {
-                "args": "none"
-            }
-        ],
+        "no-unused-vars": [ "error", { "args": "none" } ],
         "no-console": 0
     }
 };

@@ -14,9 +14,11 @@ const client = new Discord.Client();
 // New collections of Commands
 client.commands = new Discord.Collection();
 client.modCommands = new Discord.Collection();
+client.sillyStuff = new Discord.Collection();
 
 var commandFiles;
 var modCommandFiles;
+var sillyStuffFiles
 
 // Check if spawned as a child, if so adjust the dir
 if (process.env.Child) {
@@ -25,11 +27,15 @@ if (process.env.Child) {
 	commandFiles = fs.readdirSync('./ZemaBot/commands').filter(file => file.endsWith('.js'));
 	// Make a new const of all files in the modCommands folder which end in .js
 	modCommandFiles = fs.readdirSync('./ZemaBot/modCommands').filter(file => file.endsWith('.js'));
+	// Make a new const of all files in the sillyStuff folder which end in .js
+	sillyStuffFiles = fs.readdirSync('./ZemaBot/sillyStuff').filter(file => file.endsWith('.js'));
 } else {
 	// Make a new const of all files in the commands folder which end in .js
 	commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 	// Make a new const of all files in the modCommands folder which end in .js
 	modCommandFiles = fs.readdirSync('./modCommands').filter(file => file.endsWith('.js'));
+	// Make a new const of all files in the sillyStuff folder which end in .js
+	sillyStuffFiles = fs.readdirSync('./sillyStuff').filter(file => file.endsWith('.js'));
 }
 
 // Iterate through and add them to the client.commands Collection.
@@ -44,6 +50,11 @@ for (const file of modCommandFiles) {
 	client.modCommands.set(command.name, command);
 }
 
+// Iterate through and add them to the client.sillyStuff Collection.
+for (const file of sillyStuffFiles) {
+	const command = require(`./sillyStuff/${file}`);
+	client.sillyStuff.set(command.name, command);
+}
 
 // ---------- Event Handlers ----------
 
@@ -110,6 +121,13 @@ client.on('error', error => {
 // Client recieves a message
 client.on('message', message => {
 
+	var stringToTest = message.content.toLowerCase();
+
+	if (stringToTest.includes('heck')) {
+		client.sillyStuff.get('heck').heck(message);
+	}
+
+
 	// Return if message does not start with the prefix.
 	if (!message.content.startsWith(options.prefix)) return;
 
@@ -132,7 +150,7 @@ client.on('message', message => {
 	}
 	// Check if its a normal command.
 	else if (client.commands.get(commands)) {
-	//	console.log(client)
+		//	console.log(client)
 		client.commands.get(commands).execute(client, options, message, args);
 		return;
 	}
