@@ -121,7 +121,7 @@ client.on('error', error => {
 // Client recieves a message
 client.on('message', message => {
 
-	if (message.channel === options.ignoreChannel) return;
+	if (message.channel.id === options.ignoreChannel) return;
 	if (message.author.bot) return;
 
 	var stringToTest = message.content.toLowerCase();
