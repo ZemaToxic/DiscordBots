@@ -121,9 +121,12 @@ client.on('error', error => {
 // Client recieves a message
 client.on('message', message => {
 
+	if (message.channel === options.ignoreChannel) return;
+	if (message.author.bot) return;
+
 	var stringToTest = message.content.toLowerCase();
 
-	if (stringToTest.includes('heck')) {
+	if (stringToTest.match(/(^| )heck($|.)/g)) {
 		client.sillyStuff.get('heck').heck(message);
 	}
 

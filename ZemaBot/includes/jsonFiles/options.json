@@ -1,7 +1,8 @@
 {
  "prefix": "!",
- "Activity": "with the Matix, Poking random things.",
+ "Activity": "Debugging Code",
  "modRole": "389029787005485067",
  "modChannelID": "402404101713035264",
+ "ignoreChannel": "506924428894928916",
  "quoteNumber": 3
 }
