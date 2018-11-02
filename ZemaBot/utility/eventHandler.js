@@ -55,7 +55,9 @@ module.exports = {
 			const embed = new Discord.RichEmbed()
 				.setTitle('User Nickname changed.')
 				.setThumbnail(`${oldMember.user.displayAvatarURL}`)
-				.setDescription('User: ' + oldMember.user.username + '\'s nickname changed, it was: ' + oldName + ', it is now: ' + newName)
+				.setDescription(`User: ${oldMember.user} username has changed.`)
+				.addField('Old Nickname', oldName, true)
+				.addField('New Nickname', newName, true)
 				.setColor(0xFF7700)
 				.setTimestamp(new Date());
 

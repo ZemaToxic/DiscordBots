@@ -20,9 +20,7 @@ function getRandomImage() {
 
 module.exports = {
 	name: 'heck',
-	async heck(message) {
-
-
+	heck(message) {
 		images = urlHandler.urlHandler('heck+dog');
 		getRandomImage();
 
