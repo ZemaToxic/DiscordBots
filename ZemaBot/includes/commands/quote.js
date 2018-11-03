@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const discord = require('discord.js');
+const Discord = require('discord.js');
 
 // Connection Information.
 const sequelize = new Sequelize('database', 'user', 'password', {
@@ -31,13 +31,14 @@ module.exports = {
 	name: 'quote',
 	description: 'Return quote\'s when requested.',
 	async execute(client, options, message, args) {
+		var personWhoSaid;
+		var resolvedUser;
 		// Do command stuff here
 		if (!options.quoteNumber) {
 			options.quoteNumber = 0;
 		}
 		// Sync/Make sure it exists.
 		Quotes.sync();
-
 		// Add quote
 		if (args[0] === 'add') {
 			// Remove (add)
@@ -56,7 +57,16 @@ module.exports = {
 					quoter: message.author.username,
 				});
 				saveOptions(options);
-				return message.reply(`Quote added, it is number: ${options.quoteNumber}`);
+				// Embed bit
+				const embed = new Discord.RichEmbed()
+					.setTitle('Quote added.')
+					.setDescription(`Quote added, it is number: ${options.quoteNumber}`)
+					.setColor('#45A166')
+					.addField('Quote added by:', message.author.username, true)
+					.addField('Quoted Person:', QuotedPerson, true)
+					.setTimestamp(new Date());
+
+				return message.channel.send(embed);
 			} catch (err) {
 				return message.reply('Error adding Quote.');
 			}
@@ -70,8 +80,25 @@ module.exports = {
 					number: quoteToGet
 				}
 			});
+			
+			if (quote.get('quotedPerson').match(/<|@|!|>/gm) === true) {
+				resolvedUser = await resolveUser(client, quote.get('quotedPerson'));
+				personWhoSaid =  resolvedUser['username'];
+				console.log('BLARGH: ', resolvedUser['avatar']);
+			} else {
+				personWhoSaid = quote.get('quotedPerson');
+			}
 			if (quote) {
-				return message.channel.send(quote.get('quoteText')); // ---- MAKE EMBED
+				const embed = new Discord.RichEmbed()
+					.setTitle(`Quote: ${quoteToGet}.`)
+					.setDescription(quote.get('quoteText'))
+					//.setThumbnail(resolvedUser['avatar'])
+					.setColor('#45A166')
+					.addField('Quote Said by:', personWhoSaid, true)
+					.addField('Added by:', quote.get('quoter'), true)
+					.setTimestamp(new Date());
+
+				return message.channel.send(embed); // ---- MAKE EMBED
 			}
 			return message.reply(` could not find quote: ${quoteToGet}`);
 		}
@@ -86,7 +113,13 @@ module.exports = {
 				}
 			});
 			options.quoteNumber -= 1;
-			if (!rowCount) return message.reply(`quote number: ${quoteNumber} couldn't be found.`);
+			saveOptions(options);
+			if (!rowCount) {
+				return message.reply(`quote number: ${quoteNumber} couldn't be found.`);
+			}
+			else {
+				return message.reply(`Quote: ${quoteNumber} has been deleted.`);
+			}
 		}
 		// Edit quote
 		else if (args[0] === 'edit') {
@@ -127,12 +160,39 @@ module.exports = {
 					number: RandomQuote
 				}
 			});
-			message.channel.send('Quote: ' + RandomQuote + ' -> ' + quote.get('quoteText'));
+
+			if (quote.get('quotedPerson').match(/<|@|!|>/gm) === true) {
+				resolvedUser = await resolveUser(client, quote.get('quotedPerson'));
+				personWhoSaid =  resolvedUser['username'];
+				console.log('BLARGH: ', resolvedUser['avatar']);
+			} else {
+				personWhoSaid = quote.get('quotedPerson');
+			}
+			if (quote) {
+				const embed = new Discord.RichEmbed()
+					.setTitle(`Quote: ${RandomQuote}.`)
+					.setDescription(quote.get('quoteText'))
+					//.setThumbnail(resolvedUser['avatar'])
+					.setColor('#45A166')
+					.addField('Quote Said by:', personWhoSaid, true)
+					.addField('Added by:', quote.get('quoter'), true)
+					.setTimestamp(new Date());
+
+				return message.channel.send(embed); // ---- MAKE EMBED
+			}
+			return message.reply(` could not find quote: ${RandomQuote}`); 
+			
 		}
+
 	}
 };
 
 // Returns true (n) is a number and not (Nan).
 function isNumber(n) {
 	return ((typeof n == 'number' && !isNaN(n)) && (n > 0));
+}
+
+function resolveUser(client, userID) {
+	var user = client.fetchUser(userID.replace(/<|@|!|>/gm,''));
+	return user;
 }
