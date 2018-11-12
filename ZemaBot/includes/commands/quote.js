@@ -27,6 +27,7 @@ const Quotes = sequelize.define('quotes', {
 	},
 });
 
+
 module.exports = {
 	name: 'quote',
 	description: 'Return quote\'s when requested.',

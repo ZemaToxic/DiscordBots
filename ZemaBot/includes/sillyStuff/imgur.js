@@ -1,4 +1,4 @@
-const urlHandler = require('./urlHandler');
+const urlHandler = require('../../utility/urlHandler.js');
 
 let images;
 var imageToSend;
@@ -33,3 +33,4 @@ module.exports = {
 		}
 	}
 };
+
