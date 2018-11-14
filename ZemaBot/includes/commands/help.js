@@ -4,9 +4,7 @@ module.exports = {
 	execute(client, options, message, args) {
 		// Do command stuff here
 		const data = [];
-		const {
-			commands
-		} = message.client;
+		const { commands } = message.client;
 
 		// If no command is specified then return list of commands.
 		if (!args.length) {

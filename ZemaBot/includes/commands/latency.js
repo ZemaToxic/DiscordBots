@@ -6,13 +6,10 @@ module.exports = {
 		var pings = [];
 
 		client.pings.forEach(element => {
-			pings.push(element);
+			pings.push(' ' + element);
 		});
 
-		console.log(client.pings);
-		console.log(pings);
-
-		return message.channel.send(`\`\`\`${pings}\`\`\``);
+		return message.channel.send(`\`\`\`xl\n${pings}\`\`\``);
 
 	}
 };

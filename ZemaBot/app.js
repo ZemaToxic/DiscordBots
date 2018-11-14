@@ -132,8 +132,6 @@ client.on('error', error => {
 // Client recieves a message
 client.on('message', message => {
 
-	//console.log(message);
-
 	if (message.channel.id === options.ignoreChannel) return;
 	if (message.author.bot) return;
 
