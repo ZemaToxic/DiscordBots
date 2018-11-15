@@ -9,9 +9,9 @@ module.exports = {
     },
     "rules": {
         "indent": [
-            "error",
+            "error", 
             "tab",
-            {"SwitchCase": 1}
+            {"SwitchCase": 1, "ArrayExpression": "first"}
         ],
         "linebreak-style": [
             "error",

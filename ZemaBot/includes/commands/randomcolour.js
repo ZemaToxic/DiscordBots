@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 module.exports = {
-	name: 'randomColour',
+	name: 'randomcolour',
 	description: 'Make a new embed with a new random colour.',
 	execute(client, options, message, args) {
 
