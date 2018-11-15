@@ -51,7 +51,6 @@ module.exports = {
 		getCreds()
 			.then(function ()
 			{
-
 				// Search for a song
 				if (args[0] === 'song')
 				{
@@ -61,7 +60,7 @@ module.exports = {
 					// search for the message
 					spotifyApi.searchTracks(searchQuery,
 						{
-							limit: 1
+							limit: 10, 
 						})
 						.then(function (data)
 						{
@@ -74,9 +73,9 @@ module.exports = {
 								messageToSend.push(track);
 							});
 
-							const returnedSong = messageToSend[0];
-							console.log('\n' + util.inspect(returnedSong));
+							messageToSend.sort((first, next) => first.popularity - next.popularity).reverse();
 
+							const returnedSong = messageToSend[0];
 							const embed = new Discord.RichEmbed()
 								.setTitle(returnedSong.name)
 								.setThumbnail(returnedSong.album.images[0].url)
@@ -102,11 +101,23 @@ module.exports = {
 					searchQuery = newArgs.join(' ');
 					spotifyApi.searchTracks(searchQuery,
 						{
-							limit: 1
+							limit: 10, 
 						})
 						.then(function (data)
 						{
-							artistID = data.body.tracks.items[0].album.artists[0].id;
+							// Go through the first page of results
+							const firstPage = data.body.tracks.items;
+
+							var messageToSend = [];
+							firstPage.forEach(function (track, index)
+							{
+								messageToSend.push(track);
+							});
+
+							messageToSend.sort((first, next) => first.popularity - next.popularity).reverse();
+
+							
+							artistID = messageToSend[0].album.artists[0].id;
 							return artistID;
 						})
 						.then(function ()
@@ -146,17 +157,6 @@ module.exports = {
 								});
 
 						});
-
-
-
-
-
-
-
-
-
-
-
 				}
 
 				// Search for tracks from a specific album
@@ -180,13 +180,11 @@ module.exports = {
 						});
 				}
 
-
-
 			}),
-			function (err)
-			{
-				console.error(err);
-			};
+		function (err)
+		{
+			console.error(err);
+		};
 	}
 };
 
