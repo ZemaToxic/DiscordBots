@@ -60,7 +60,7 @@ module.exports = {
 					// search for the message
 					spotifyApi.searchTracks(searchQuery,
 						{
-							limit: 10, 
+							limit: 25,
 						})
 						.then(function (data)
 						{
@@ -101,7 +101,7 @@ module.exports = {
 					searchQuery = newArgs.join(' ');
 					spotifyApi.searchTracks(searchQuery,
 						{
-							limit: 10, 
+							limit: 25,
 						})
 						.then(function (data)
 						{
@@ -116,7 +116,6 @@ module.exports = {
 
 							messageToSend.sort((first, next) => first.popularity - next.popularity).reverse();
 
-							
 							artistID = messageToSend[0].album.artists[0].id;
 							return artistID;
 						})
@@ -163,28 +162,64 @@ module.exports = {
 				else if (args[0] === 'album')
 				{
 					newArgs = args.slice(1);
+					var trackID;
+					var messageToSend = [];
 					// Join the incominng args
 					searchQuery = newArgs.join(' ');
 					// Get tracks in an album
-					spotifyApi.getAlbumTracks(searchQuery,
+					spotifyApi.searchTracks(searchQuery,
 						{
-							limit: 5,
-							offset: 1
+							limit: 25,
 						})
 						.then(function (data)
 						{
-							console.log(data.body);
-						}, function (err)
+							// Go through the first page of results
+							const firstPage = data.body.tracks.items;
+
+							firstPage.forEach(function (track, index)
+							{
+								messageToSend.push(track);
+							});
+
+							messageToSend.sort((first, next) => first.popularity - next.popularity).reverse();
+
+							trackID = messageToSend[0].album.id;
+							return trackID;
+						})
+						.then(function ()
 						{
-							console.log('Something went wrong!', err);
-						});
+							spotifyApi.getAlbumTracks(trackID,
+								{
+									limit: 20
+								})
+								.then(function (data)
+								{
+									const tracks = data.body.items;
+									const embed = new Discord.RichEmbed()
+										.setTitle(`Tracklist for album ${searchQuery}`)
+										.setDescription(`Album link: ${messageToSend[0].album.external_urls.spotify}`)
+										.setColor('#84bd00')
+										.setThumbnail(messageToSend[0].album.images[0].url)
+
+									tracks.forEach(function (track, index)
+									{
+										embed.addField(`Track ${track.track_number}:`, track.name + ' - ' + millisToMinutesAndSeconds(track.duration_ms));
+									});
+									message.channel.send(embed);
+								}, function (err)
+								{
+									console.log('Something went wrong!', err);
+								});
+
+						}),
+					function (err)
+					{
+						console.error(err);
+					};
 				}
 
-			}),
-		function (err)
-		{
-			console.error(err);
-		};
+			});
+
 	}
 };
 
