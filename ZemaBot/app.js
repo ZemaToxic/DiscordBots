@@ -24,7 +24,6 @@ client.sillyStuff = new Discord.Collection();
 
 var commandFiles, modCommandFiles, adminCommandFiles, sillyStuffFiles;
 
-
 // Make a new const of all files in the commands folder which end in .js
 commandFiles = fs.readdirSync('./includes/commands').filter(file => file.endsWith('.js'));
 // Make a new const of all files in the modCommands folder which end in .js
