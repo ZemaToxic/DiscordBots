@@ -4,8 +4,7 @@ const Discord = require('discord.js');
 const util = require('util');
 
 // credentials are optional
-const spotifyApi = new SpotifyWebApi(
-{
+const spotifyApi = new SpotifyWebApi({
 	clientId: spotifyCreds.Client_ID,
 	clientSecret: spotifyCreds.Client_Secret,
 });
@@ -46,9 +45,9 @@ var searchQuery;
 module.exports = {
 	name: 'spotify',
 	description: '',
-	execute(client, options, message, args)
+	async execute(client, options, message, args)
 	{
-		getCreds()
+		await getCreds()
 			.then(function ()
 			{
 				// Search for a song
@@ -81,7 +80,7 @@ module.exports = {
 								.setThumbnail(returnedSong.album.images[0].url)
 								.setColor('#84bd00')
 								.addField('Artist', returnedSong.artists[0].name, true)
-								.addField('Song Length', millisToMinutesAndSeconds(returnedSong.duration_ms), true)
+								.addField('Song Length', convertMilli(returnedSong.duration_ms), true)
 								.addField('Explicit ? ', returnedSong.explicit, true)
 								.addField('Orignal Relase Date', returnedSong.album.release_date, true)
 								.addField('Spotify Link', returnedSong.external_urls.spotify, true)
@@ -203,7 +202,7 @@ module.exports = {
 
 									tracks.forEach(function (track, index)
 									{
-										embed.addField(`Track ${track.track_number}:`, track.name + ' - ' + millisToMinutesAndSeconds(track.duration_ms));
+										embed.addField(`Track ${track.track_number}:`, track.name + ' - ' + convertMilli(track.duration_ms));
 									});
 									message.channel.send(embed);
 								}, function (err)
@@ -223,7 +222,7 @@ module.exports = {
 	}
 };
 
-function millisToMinutesAndSeconds(millis)
+function convertMilli(millis)
 {
 	var minutes = Math.floor(millis / 60000);
 	var seconds = ((millis % 60000) / 1000).toFixed(0);

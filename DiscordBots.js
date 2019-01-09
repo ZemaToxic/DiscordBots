@@ -21,7 +21,6 @@ const getDirs = source => readdirSync(source).map(name => join(source, name)).fi
 var directories = getDirs('./');
 
 directories.forEach(function( v ){
-	
 	// Search through each folder looking for app.js
 	console.log(COLOR_YELLOW, timeStamp(), 'Searching for ./' + v + '/app.js', RESET_COLOR);
 
@@ -34,19 +33,19 @@ directories.forEach(function( v ){
 			// Start up a new bot client 
 			console.log(COLOR_GREEN, timeStamp(), 'Starting Bot ' + v, RESET_COLOR);
 			
-			const bot = discordBots[v].process = spawn('node', [ v + '/app.js'], {env: { Child: 1 }});
-			
+			const bot = discordBots[v].process = spawn('node', [v + '/app.js']);
+
 			// Console logging 
-			discordBots[v].process.stdout.on('data', (d) => {
+			bot.stdout.on('data', (d) => {
 				console.log(COLOR_WHITE, timeStamp(), 'DATA FROM ' + v + ': ' + d, RESET_COLOR);
 			});
 			// If the child has an error printed out            
-			discordBots[v].process.stderr.on('data', (data) => {
+			bot.stderr.on('data', (data) => {
 				console.log(COLOR_CYAN, timeStamp(), 'DATA FROM ' + v + ': stderr: ' + data, RESET_COLOR);
 			});
 
 			// What to do when each bot child closes
-			discordBots[v].process.on('close', (code) => {
+			bot.on('close', (code) => {
 				console.log(COLOR_RED, timeStamp(), 'DATA FROM ' + v + ': Process exited with code ' + code, RESET_COLOR);
 				discordBots[v].start();
 			});
@@ -65,3 +64,19 @@ function timeStamp() {
 	var minutes = now.getMinutes();
 	return '[' + date + '/' + month + '/' + year + ' - ' + hours + ':' + minutes + ']';
 }
+
+// Process listeners 
+process.on('exit', (code) =>
+{
+	console.log('Process exited with code: ' + code);
+});
+
+process.on('unhandledRejection', err =>
+{
+	console.error('Unhandled Rejection: \n', err);
+});
+
+process.on('error', err =>
+{
+	console.error('Error happened: \n ', err);
+});
