@@ -7,8 +7,10 @@ const dbManager = require('./dbManager.js');
 const eventHandler = require('./utility/eventHandler.js');
 require('./utility/utils.js')();
 
+const path = require('path');
 // Change the Directory incase of spawned as child
-process.chdir(__dirname);
+process.chdir(__dirname); 
+process.title = `Discord/${path.basename(__dirname)}.js`;
 
 // Imports and Declarations.
 let options = {}; // -- Used for prefix and activity etc.

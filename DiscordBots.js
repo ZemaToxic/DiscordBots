@@ -29,7 +29,7 @@ directories.forEach(function( v ){
 		// Make a new [object?] for each bot client
 		discordBots[v] = {};
 		discordBots[v].start = function () {
-
+			
 			// Start up a new bot client 
 			console.log(COLOR_GREEN, timeStamp(), 'Starting Bot ' + v, RESET_COLOR);
 			
@@ -80,3 +80,4 @@ process.on('error', err =>
 {
 	console.error('Error happened: \n ', err);
 });
+
