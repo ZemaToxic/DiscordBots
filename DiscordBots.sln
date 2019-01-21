@@ -7,7 +7,13 @@ Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "ZemaBot", "ZemaBot\ZemaBot.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3F729BC7-4047-4A68-8CA4-381107457574}"
 	ProjectSection(SolutionItems) = preProject
+		.eslintrc.js = .eslintrc.js
+		.gitignore = .gitignore
+		.jsbeautifyrc = .jsbeautifyrc
+		database.sqlite = database.sqlite
 		DiscordBots.js = DiscordBots.js
+		enmap.js = enmap.js
+		package-lock.json = package-lock.json
 	EndProjectSection
 EndProject
 Global
