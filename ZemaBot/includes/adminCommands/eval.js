@@ -24,7 +24,8 @@ module.exports = {
 				evaled = require('util').inspect(evaled);
 
 			message.channel.send(clean(evaled), {
-				code: 'xl'
+				code: 'xl',
+				split: true,
 			});
 		} catch (err) {
 			message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);

@@ -201,7 +201,7 @@ module.exports = {
 			.setTimestamp(new Date());
 
 		// Send the message to the Mod Channel
-		client.channels.get(options.modChannelID).send(embed).catch(e => {
+		client.channels.get(options.modChannelID).send(embed, {split: true}).catch(e => {
 			console.log(e);
 		});
 	},
