@@ -4,7 +4,9 @@ module.exports = {
 	execute(client, options, message, args) {
 		// Do command stuff here
 		const data = [];
-		const { commands } = message.client;
+		const {
+			commands
+		} = message.client;
 
 		// If no command is specified then return list of commands.
 		if (!args.length) {
@@ -14,7 +16,9 @@ module.exports = {
 
 			// Send the message in a DM if user DM's the bot.
 			if (message.channel.type === 'dm') {
-				return message.author.send(data, {split: true})
+				return message.author.send(data, {
+						split: true
+					})
 					.then(() => {
 						if (message.channel.type === 'dm') return;
 					})

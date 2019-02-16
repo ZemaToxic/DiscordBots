@@ -9,7 +9,7 @@ require('./utility/utils.js')();
 
 const path = require('path');
 // Change the Directory incase of spawned as child
-process.chdir(__dirname); 
+process.chdir(__dirname);
 process.title = `Bot/Discord/${path.basename(__dirname)}`;
 
 // Imports and Declarations.
@@ -36,26 +36,22 @@ adminCommandFiles = fs.readdirSync('./includes/adminCommands').filter(file => fi
 sillyStuffFiles = fs.readdirSync('./includes/sillyStuff').filter(file => file.endsWith('.js'));
 
 // Iterate through and add them to the client.commands Collection.
-for (const file of commandFiles)
-{
+for (const file of commandFiles) {
 	const command = require(`./includes/commands/${file}`);
 	client.commands.set(command.name, command);
 }
 // Iterate through and add them to the client.modCommands Collection.
-for (const file of modCommandFiles)
-{
+for (const file of modCommandFiles) {
 	const command = require(`./includes/modCommands/${file}`);
 	client.modCommands.set(command.name, command);
 }
 // Iterate through and add them to the client.adminCommands Collection.
-for (const file of adminCommandFiles)
-{
+for (const file of adminCommandFiles) {
 	const command = require(`./includes/adminCommands/${file}`);
 	client.adminCommands.set(command.name, command);
 }
 // Iterate through and add them to the client.sillyStuff Collection.
-for (const file of sillyStuffFiles)
-{
+for (const file of sillyStuffFiles) {
 	const command = require(`./includes/sillyStuff/${file}`);
 	client.sillyStuff.set(command.name, command);
 }
@@ -63,13 +59,11 @@ for (const file of sillyStuffFiles)
 // ---------- Event Handlers ----------
 
 // Bot is Ready to communicate
-client.on('ready', () =>
-{
+client.on('ready', () => {
 	// Load the options.
 	loadOptions(options);
 	// Check if the options loaded.
-	if (Object.keys(options).length <= 1)
-	{
+	if (Object.keys(options).length <= 1) {
 		// Initalise defualt values if they arent there.
 		initValues(options);
 		// Save the changes.
@@ -78,72 +72,61 @@ client.on('ready', () =>
 	// Print to console that we have logged in.
 	console.log(`Logged in as ${client.user.tag}!`);
 	// Set the Activity to what is saved.
-	client.user.setActivity(options.Activity,
-	{
+	client.user.setActivity(options.Activity, {
 		name: 'game',
 		type: 0
 	});
 });
 
 // Member Joins
-client.on('guildMemberAdd', member =>
-{
+client.on('guildMemberAdd', member => {
 	eventHandler.memberAdd(client, options, member);
 });
 
 // Member leaves or is kicked
-client.on('guildMemberRemove', member =>
-{
+client.on('guildMemberRemove', member => {
 	eventHandler.memberRemove(client, options, member);
 });
 
 // Client Name change / new roles
-client.on('guildMemberUpdate', (oldMember, newMember) =>
-{
+client.on('guildMemberUpdate', (oldMember, newMember) => {
 	eventHandler.memberUpdate(client, options, oldMember, newMember);
 });
 
 // Member Banned
-client.on('guildBanAdd', member =>
-{
+client.on('guildBanAdd', member => {
 	eventHandler.banAdd(client, options, member);
 });
 
 // Message gets deleted
-client.on('messageDelete', message =>
-{
+client.on('messageDelete', message => {
 	eventHandler.messageDelete(client, options, message);
 });
 
 // Message edited
-client.on('messageUpdate', (oldMessage, newMessage) =>
-{
+client.on('messageUpdate', (oldMessage, newMessage) => {
 	eventHandler.messageUpdate(client, options, oldMessage, newMessage);
 });
 
 // Bulk Message deleted.f
-client.on('messageDeleteBulk', messages =>
-{
+client.on('messageDeleteBulk', messages => {
 	eventHandler.bulkDelete(client, options, messages);
 });
 
 // Client experiances an error
-client.on('error', error =>
-{
+client.on('error', error => {
 	eventHandler.errorHandler(client, options, error);
 });
 
 // Client recieves a message
-client.on('message', message =>
-{
+client.on('message', message => {
 
 	if (message.channel.id === options.ignoreChannel) return;
 	if (message.author.bot) return;
 
 	var stringToTest = message.content.toLowerCase();
 
-	if (stringToTest.match(/(^| )heck($|.)/g))
-	{
+	if (stringToTest.match(/(^| )heck($|.)/g)) {
 		client.sillyStuff.get('heck').heck(message);
 	}
 
@@ -158,32 +141,27 @@ client.on('message', message =>
 	let args = message.content.split(' ').slice(1);
 
 	// Check if the command is in the commands or modCommands object.
-	if (!client.commands.has(commands) && !client.modCommands.has(commands) && !client.adminCommands.has(commands))
-	{
+	if (!client.commands.has(commands) && !client.modCommands.has(commands) && !client.adminCommands.has(commands)) {
 		message.reply('that is not a command use ' + options.prefix + 'help, to see the list of commands.');
 		return;
 	}
 	// Check if its an Admin command.
-	else if (client.adminCommands.get(commands) && (message.author.id === clientData.OwnerID))
-	{
+	else if (client.adminCommands.get(commands) && (message.author.id === clientData.OwnerID)) {
 		client.adminCommands.get(commands).execute(client, options, message, args);
 		return;
 	}
 	// Check if its in a Mod command.
-	else if (client.modCommands.get(commands) && (message.member.roles.has(options.modRole) || (message.guild.owner.user.username === message.author.username)))
-	{
+	else if (client.modCommands.get(commands) && (message.member.roles.has(options.modRole) || (message.guild.owner.user.username === message.author.username))) {
 		client.modCommands.get(commands).execute(client, options, message, args);
 		return;
 	}
 	// Check if its a normal command.
-	else if (client.commands.get(commands))
-	{
+	else if (client.commands.get(commands)) {
 		client.commands.get(commands).execute(client, options, message, args);
 		return;
 	}
 	// Else error out.
-	else
-	{
+	else {
 		message.reply('either there was an error, or you dont have permission to use that command.');
 	}
 });
@@ -192,17 +170,14 @@ client.on('message', message =>
 client.login(clientData.Token);
 
 // Process listeners 
-process.on('exit', (code) =>
-{
+process.on('exit', (code) => {
 	console.log('Bot exited with code: ' + code);
 });
 
-process.on('unhandledRejection', err =>
-{
+process.on('unhandledRejection', err => {
 	console.error('Unhandled Rejection: \n', err);
 });
 
-process.on('error', err =>
-{
+process.on('error', err => {
 	console.error('Error happened: \n ', err);
 });
