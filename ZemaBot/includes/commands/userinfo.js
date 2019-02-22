@@ -19,7 +19,8 @@ module.exports = {
 			const member = (message.mentions.members.first() || message.guild.members.get(args[0]) || message.member);
 			if (!member) return message.reply('Please provide a vaild Mention or USER ID');
 
-			let bot, mod = 'No'
+			let bot = 'No'
+			let mod = 'No'
 			if (member.user.bot === true) {
 				bot = 'Yes';
 			}

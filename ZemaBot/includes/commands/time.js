@@ -18,15 +18,9 @@ module.exports = {
 			.addField('Europe', '<-------------------------------------------------------------------->')
 			.addField('London UK', `${moment.tz(currentDate, 'Europe/London').format('llll')}`, true)
 			.addField('Berlin DE', `${moment.tz(currentDate, 'Europe/Berlin').format('llll')}`, true)
-			.addField('Asia', '<-------------------------------------------------------------------->')
-			.addField('Seoul SK', `${moment.tz(currentDate, 'Asia/Seoul').format('llll')}`, true)
-			.addField('Tokyo JP', `${moment.tz(currentDate, 'Asia/Tokyo').format('llll')}`, true)
 			.addField('Americas', '<-------------------------------------------------------------------->')
 			.addField('Los Angeles US', `${moment.tz(currentDate, 'America/Los_Angeles').format('llll')}`, true)
 			.addField('Toronto CA', `${moment.tz(currentDate, 'America/Toronto').format('llll')}`, true)
-			.addField('Africa', '<-------------------------------------------------------------------->')
-			.addField('Johannesburg SA', `${moment.tz(currentDate, 'Africa/Johannesburg').format('llll')}`, true)
-			.addField('Namibia SA', `${moment.tz(currentDate, 'Africa/Windhoek').format('llll')}`, true)
 			.setColor(0x42F4AA)
 			.setTimestamp(new Date());
 
