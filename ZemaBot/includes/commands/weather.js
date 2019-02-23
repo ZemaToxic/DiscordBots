@@ -17,7 +17,7 @@ module.exports = {
             }
 
             let alert = result[0].location.alert
-            if (alert === 'undefined') {
+            if (!alert) {
                 alert = 'No Alerts'
             }
 
