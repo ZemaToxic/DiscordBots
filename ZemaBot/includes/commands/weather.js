@@ -29,7 +29,7 @@ module.exports = {
                 .addField('Temperature', `${result[0].current.temperature}°C`, true)
                 .addField('Feels Like', `${result[0].current.feelslike}°C`, true)
                 .addField('Humidity', `${result[0].current.humidity}%`, true)
-                .addField('Wind speed', result[0].currentv.winddisplay, true)
+                .addField('Wind speed', result[0].current.winddisplay, true)
                 .addField(`Alerts: ${alert}`)
 
                 message.channel.send(embed)            
