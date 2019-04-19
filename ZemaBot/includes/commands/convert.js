@@ -2,7 +2,7 @@ const Discord = require("discord.js")
 const url = require("../../utility/urlHandler.js");
 
 module.exports = {
-    name: "converts",
+    name: "convert",
     description: "Convert currency from one type to another.",
     async execute(client, options, message, args) {
         
