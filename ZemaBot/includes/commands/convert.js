@@ -2,7 +2,7 @@ const Discord = require("discord.js")
 const url = require("../../utility/urlHandler.js");
 
 module.exports = {
-    name: "convert",
+    name: "converts",
     description: "Convert currency from one type to another.",
     async execute(client, options, message, args) {
         
@@ -13,29 +13,19 @@ module.exports = {
         
         let returnVar = await url.urlHandler(sendURL)
 
-        sleep(50)
-
         if(!returnVar) { message.channel.send('Something went wrong, please try again.');
          return; }
         else{
+  
             amount = amount * returnVar[convertCode]['rate']
 
             const embed = new Discord.RichEmbed()
             .setTitle("Converted Currency.")
             .addField(args[1].toUpperCase(), args[0], true)
-            .addField(args[2].toUpperCase(), amount, true)
+            .addField(args[2].toUpperCase(), amount.toFixed(2), true)
             .setColor("006400");
 
             message.channel.send(embed)
-            sleep(50)
-            amount = null;
-            countryCode = null;
-            convertCode = null;
-            returnVar = null;
         }
     }
 };
-
-function sleep(millis) {
-    return new Promise(resolve => setTimeout(resolve, millis));
-}

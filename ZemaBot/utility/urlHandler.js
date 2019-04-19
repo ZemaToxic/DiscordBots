@@ -31,61 +31,57 @@ function extractURLData(url) {
     return data;
 }
 
-module.exports = {
-    urlHandler: async function(url) {
-        var data = extractURLData(url);
-        var options = {
-            'host': data.domain,
-            'port': data.port,
-            'path': "/" + data.path,
-            'method': "GET"
-        };
-    
-        var req = await https.request(options,
-            async function(res) {
-                var decoder = new StringDecoder("utf8");
-                var body = "";
-                res.setEncoding("utf8");
-                res.on("data",
-                    function(chunk) {
-                        body += decoder.write(chunk);
-                    });
-                res.on("end",
-                    function() {
-                        dataOut = JSON.parse(body);
-                    });
-            });
-        req.end();
-    
-        return dataOut;
-    },
-    
+module.exports = {  
     imgurDecoder: function(searchValue) {
-        var options = {
-            'method': "GET",
-            'hostname': "api.imgur.com",
-            'path': `/3/gallery/search/?q_all=${searchValue}`,
-            'headers': {
-                'Authorization': `Client-ID ${imgurClient.ClientID}`
-            }
-        };
-    
-        var req = http.request(options,
-            function(res) {
-                var decoder = new StringDecoder("utf8");
-                var body = "";
-                res.setEncoding("utf8");
-                res.on("data",
-                    function(chunk) {
-                        body += decoder.write(chunk);
-                    });
-                res.on("end",
-                    function() {
-                        dataOut = JSON.parse(body);
-                    });
-            });
-        req.end();
-    
-        return dataOut;
+        return new Promise((resolve, reject) => {
+            var options = {
+                'method': "GET",
+                'hostname': "api.imgur.com",
+                'path': `/3/gallery/search/?q_all=${searchValue}`,
+                'headers': {
+                    'Authorization': `Client-ID ${imgurClient.ClientID}`
+                }
+            };
+            var req = https.request(options, function(results) {
+                var decoder = new StringDecoder("utf8")
+                var body = " ";
+                results
+                    .setEncoding("utf8")
+                    .on('data', (chunk) => body += decoder.write(chunk))
+                    .on('end', () => {
+                        const json = JSON.parse(body)
+                        results.statusCode === 200
+                            ? resolve(json)
+                            : reject(json)
+                    })
+                }).on('error', reject)
+            req.end();
+        })
+    },
+    urlHandler: function(url) {
+        return new Promise((resolve, reject) => {
+            var data = extractURLData(url);
+            var options = 
+            {
+                'host': data.domain,
+                'port': data.port,
+                'path': "/" + data.path,
+                'method': "GET"
+            };
+            var req = https.request(options, function(results) {
+                var decoder = new StringDecoder("utf8")
+                var body = " ";
+                results
+                    .setEncoding("utf8")
+                    .on('data', (chunk) => body += decoder.write(chunk))
+                    .on('end', () => {
+                        const json = JSON.parse(body)
+                        results.statusCode === 200
+                            ? resolve(json)
+                            : reject(json)
+                    })
+                }).on('error', reject)
+            req.end();
+        })
     }
 }
