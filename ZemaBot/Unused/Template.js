@@ -1,10 +1,9 @@
 ﻿module.exports = {
-	name: ' ',
-	description: ' ',
-	execute(client, options, message, args)
-	{
-		// Do command stuff here
-	}
+    name: " ",
+    description: " ",
+    execute(client, options, message, args) {
+        // Do command stuff here
+    }
 };
 
 //if (command === "updateUsers") {

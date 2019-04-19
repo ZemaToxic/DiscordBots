@@ -9,9 +9,9 @@ module.exports = {
     },
     "rules": {
         "indent": [
-            "error", 
+            "error",
             "tab",
-            {"SwitchCase": 1}
+            { "SwitchCase": 1 }
         ],
         "linebreak-style": [
             "error",
@@ -26,7 +26,7 @@ module.exports = {
             "always"
         ],
         // Stuff I have added.
-        "no-unused-vars": [ 0, { "args": "none" } ],
+        "no-unused-vars": [0, { "args": "none" }],
         "no-undef": 0,
         "no-console": 0
     }
