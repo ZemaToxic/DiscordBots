@@ -31,9 +31,8 @@ function extractURLData(url) {
     return data;
 }
 
-
 module.exports = {
-    urlHandler: function(url) {
+    urlHandler: async function(url) {
         var data = extractURLData(url);
         var options = {
             'host': data.domain,
@@ -42,8 +41,8 @@ module.exports = {
             'method': "GET"
         };
     
-        var req = https.request(options,
-            function(res) {
+        var req = await https.request(options,
+            async function(res) {
                 var decoder = new StringDecoder("utf8");
                 var body = "";
                 res.setEncoding("utf8");
