@@ -22,12 +22,16 @@ module.exports = {
 
             const embed = new Discord.RichEmbed()
             .setTitle("Converted Currency.")
-            .addField(args[1], args[0], true)
-            .addField(args[2], amount, true)
+            .addField(args[1].toUpperCase(), args[0], true)
+            .addField(args[2].toUpperCase(), amount, true)
             .setColor("006400");
 
             message.channel.send(embed)
-            amount, countryCode, convertCode, returnVar = null;
+            sleep(50)
+            amount = null;
+            countryCode = null;
+            convertCode = null;
+            returnVar = null;
         }
     }
 };
