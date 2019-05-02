@@ -20,8 +20,8 @@ function getRandomImage() {
 
 module.exports = {
     name: "heck",
-    heck(message) {
-        images = url.imgurDecoder("heck+dog");
+    async execute(message) {
+        images = await url.imgurDecoder("heck+dog");
         getRandomImage();
 
         if (!images) {

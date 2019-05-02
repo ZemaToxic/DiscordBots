@@ -138,7 +138,7 @@ client.on("message",
         var stringToTest = message.content.toLowerCase();
 
         if (stringToTest.match(/(^| )heck($|.)/g)) {
-            client.sillyStuff.get("heck").heck(message);
+            client.sillyStuff.get("heck").execute(message);
         }
 
         // Return if message does not start with the prefix.
