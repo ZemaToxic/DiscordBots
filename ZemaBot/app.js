@@ -16,6 +16,9 @@ process.title = `Bot/Discord/${path.basename(__dirname)}`;
 let options = {}; // -- Used for prefix and activity etc.
 const fs = require("fs");
 const Discord = require("discord.js");
+const Express = require("express");
+const app = Express();
+app.set('json spaces','2');
 const client = new Discord.Client();
 
 // New collections of Commands
@@ -199,3 +202,13 @@ process.on("error",
     err => {
         console.error("Error happened: \n ", err);
     });
+
+
+app.get('/botinfo', (req, res) => {
+    res.json({
+        name:client.user.username,
+        users: client.users.size
+    })
+})
+
+app.listen(3001, () => console.log('started'))
