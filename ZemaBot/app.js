@@ -1,8 +1,6 @@
 // Bot Info
 const clientData = require("./includes/jsonFiles/ClientData.json");
 
-const dbManager = require("./dbManager.js");
-
 // Utility Imports
 const eventHandler = require("./utility/eventHandler.js");
 require("./utility/utils.js")();
@@ -15,10 +13,15 @@ process.title = `Bot/Discord/${path.basename(__dirname)}`;
 // Imports and Declarations.
 let options = {}; // -- Used for prefix and activity etc.
 const fs = require("fs");
+const moment = require("moment");
+require("moment-duration-format");
 const Discord = require("discord.js");
-const Express = require("express");
-const app = Express();
-app.set('json spaces','2');
+const express = require("express");
+const cors = require('cors');
+const app = express();
+app.set('json spaces',2);
+app.use(cors())
+
 const client = new Discord.Client();
 
 // New collections of Commands
@@ -131,6 +134,7 @@ client.on("error",
         eventHandler.errorHandler(client, options, error);
     });
 
+
 // Client recieves a message
 client.on("message",
     message => {
@@ -203,12 +207,19 @@ process.on("error",
         console.error("Error happened: \n ", err);
     });
 
+const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
 
 app.get('/botinfo', (req, res) => {
     res.json({
-        name:client.user.username,
-        users: client.users.size
+        name: client.user.username,
+        users: client.users.size,
+        MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2),
+        BotUptime: duration,
+        Servers: client.guilds.size,
+        Channels: client.channels.size,
+        DiscordjsVersion: Discord.version,
+        NodejsVersion: process.version
     })
 })
 
-app.listen(3001, () => console.log('started'))
+app.listen(3001, () => console.log('Express Started'))
