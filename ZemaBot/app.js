@@ -207,9 +207,9 @@ process.on("error",
         console.error("Error happened: \n ", err);
     });
 
-const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
-
+    
 app.get('/botinfo', (req, res) => {
+    const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     res.json({
         name: client.user.username,
         users: client.users.size,
@@ -219,6 +219,12 @@ app.get('/botinfo', (req, res) => {
         Channels: client.channels.size,
         DiscordjsVersion: Discord.version,
         NodejsVersion: process.version
+    })
+})
+
+app.get('/commands', (req,res) => {
+    res.json({
+        commands: client.commands
     })
 })
 
