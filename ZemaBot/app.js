@@ -213,7 +213,7 @@ app.get('/botinfo', (req, res) => {
     res.json({
         name: client.user.username,
         users: client.users.size,
-        MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2),
+        MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + 'MB',
         BotUptime: duration,
         Servers: client.guilds.size,
         Channels: client.channels.size,
@@ -223,9 +223,12 @@ app.get('/botinfo', (req, res) => {
 })
 
 app.get('/commands', (req,res) => {
+    const commands = client.commands.map(command => command.name);
+    const description = client.commands.map(command => command.description);
+
     res.json({
-        commands: client.commands.map(command => command.name),
-        description: client.commands.map(command => command.description)
+        commands: commands,
+        description: description
     })
 })
 
