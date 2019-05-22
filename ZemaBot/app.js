@@ -224,8 +224,8 @@ app.get('/botinfo', (req, res) => {
 
 app.get('/commands', (req,res) => {
     res.json({
-        commands: commands.map(command => command.name),
-        description: commands.map(command => command.description)
+        commands: client.commands.map(command => command.name),
+        description: client.commands.map(command => command.description)
     })
 })
 
