@@ -223,12 +223,11 @@ app.get('/botinfo', (req, res) => {
 })
 
 app.get('/commands', (req,res) => {
-    const commands = client.commands.map(command => command.name);
-    const description = client.commands.map(command => command.description);
 
+    const commands = client.commands.map(command => command.name + ': ' + command.description);
+    console.log(typeof(commands))
     res.json({
-        commands: commands,
-        description: description
+        commands: commands
     })
 })
 
