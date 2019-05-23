@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "bluebird": "^3.5.3",
+    "cors": "^2.8.5",
     "discord.js": "^11.4.2",
+    "express": "^4.17.0",
     "moment": "^2.23.0",
     "moment-duration-format": "^2.2.2",
     "moment-timezone": "^0.5.23",

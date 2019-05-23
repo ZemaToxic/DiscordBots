@@ -89,49 +89,49 @@ client.on("ready",
 // Member Joins
 client.on("guildMemberAdd",
     member => {
-        eventHandler.memberAdd(client, options, member);
+//        eventHandler.memberAdd(client, options, member);
     });
 
 // Member leaves or is kicked
 client.on("guildMemberRemove",
     member => {
-        eventHandler.memberRemove(client, options, member);
+//        eventHandler.memberRemove(client, options, member);
     });
 
 // Client Name change / new roles
 client.on("guildMemberUpdate",
     (oldMember, newMember) => {
-        eventHandler.memberUpdate(client, options, oldMember, newMember);
+  //      eventHandler.memberUpdate(client, options, oldMember, newMember);
     });
 
 // Member Banned
 client.on("guildBanAdd",
     member => {
-        eventHandler.banAdd(client, options, member);
+    //    eventHandler.banAdd(client, options, member);
     });
 
 // Message gets deleted
 client.on("messageDelete",
     message => {
-        eventHandler.messageDelete(client, options, message);
+      //  eventHandler.messageDelete(client, options, message);
     });
 
 // Message edited
 client.on("messageUpdate",
     (oldMessage, newMessage) => {
-        eventHandler.messageUpdate(client, options, oldMessage, newMessage);
+     //   eventHandler.messageUpdate(client, options, oldMessage, newMessage);
     });
 
 // Bulk Message deleted.f
 client.on("messageDeleteBulk",
     messages => {
-        eventHandler.bulkDelete(client, options, messages);
+     //   eventHandler.bulkDelete(client, options, messages);
     });
 
 // Client experiances an error
 client.on("error",
     error => {
-        eventHandler.errorHandler(client, options, error);
+      //  eventHandler.errorHandler(client, options, error);
     });
 
 
@@ -224,7 +224,7 @@ app.get('/botinfo', (req, res) => {
 
 app.get('/commands', (req,res) => {
 
-    const commands = client.commands.map(command => command.name + ': ' + command.description);
+    const commands = client.commands.map(command => ({command: command.name, description: command.description})) 
     console.log(typeof(commands))
     res.json({
         commands: commands
