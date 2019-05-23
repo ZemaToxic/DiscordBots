@@ -21,8 +21,22 @@ const Discord = require("discord.js");
 const express = require("express");
 const cors = require('cors');
 const app = express();
+
+
+var whitelist = ['www.zematoxic.com', 'zematoxic.com']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
+
 app.set('json spaces',2);
-app.use(cors())
+app.use(cors(corsOptions))
 
 const client = new Discord.Client();
 
@@ -231,9 +245,9 @@ process.on("error",
 app.get('/botinfo', (req, res) => {
     const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     res.json({
-        name: client.user.username,
-        users: client.users.size,
-        MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + 'MB',
+        Name: client.user.username,
+        Users: client.users.size,
+        MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + ' MB',
         BotUptime: duration,
         Servers: client.guilds.size,
         Channels: client.channels.size,
@@ -245,10 +259,7 @@ app.get('/botinfo', (req, res) => {
 app.get('/commands', (req,res) => {
 
     const commands = client.commands.map(command => ({command: command.name, description: command.description})) 
-    console.log(typeof(commands))
-    res.json({
-        commands: commands
-    })
+    res.json(commands)
 })
 
 app.listen(3001, () => console.log('Express Started'))
