@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 
 module.exports = {
     // guildMemberAdd function.
-    memberAdd: function(client, options, member) {
+    memberAdd: function(client, clientSettings, member) {
         console.log("Member Joined");
         // Make a new RichEmbed
         const embed = new Discord.RichEmbed()
@@ -14,11 +14,11 @@ module.exports = {
             .setTimestamp(new Date());
 
         // Send the message to the Mod Channel
-        client.channels.get(options.modChannelID).send(embed);
+        client.channels.get(clientSettings.get(member.guild.id).modLogChannel).send(embed);
     },
 
     // guildMemberRemove function.
-    memberRemove: function(client, options, member) {
+    memberRemove: function(client, clientSettings, member) {
         console.log("Member Left");
         // Make a new RichEmbed
         const embed = new Discord.RichEmbed()
@@ -29,11 +29,11 @@ module.exports = {
             .setTimestamp(new Date());
 
         // Send the message to the Mod Channel
-        client.channels.get(options.modChannelID).send(embed);
+        client.channels.get(clientSettings.get(member.guild.id).modLogChannel).send(embed);
     },
 
     // guildMemberUpdate function.
-    memberUpdate: function(client, options, oldMember, newMember) {
+    memberUpdate: function(client, clientSettings, oldMember, newMember) {
         console.log("Guild Member Changed something");
 
         // If user nickname changes.
@@ -62,7 +62,7 @@ module.exports = {
                 .setTimestamp(new Date());
 
             // Send the message to the Mod Channel
-            client.channels.get(options.modChannelID).send(embed);
+            client.channels.get(clientSettings.get(oldMember.guild.id).modLogChannel).send(embed);
             return;
         }
 
@@ -94,7 +94,7 @@ module.exports = {
                     .setTimestamp(new Date());
 
                 // Send the message to the Mod Channel
-                client.channels.get(options.modChannelID).send(embed);
+        client.channels.get(clientSettings.get(oldMember.guild.id).modLogChannel).send(embed);
             }
             // If a role was Removed.
             else {
@@ -109,14 +109,14 @@ module.exports = {
                     .setTimestamp(new Date());
 
                 // Send the message to the Mod Channel
-                client.channels.get(options.modChannelID).send(embed);
+        client.channels.get(clientSettings.get(member.guild.id).modLogChannel).send(embed);
             }
             return;
         }
     },
 
     // guildBanAdd function.
-    banAdd: function(client, options, member) {
+    banAdd: function(client, clientSettings, member) {
         console.log("Member Banned");
         // Make a new RichEmbed
         const embed = new Discord.RichEmbed()
@@ -127,11 +127,11 @@ module.exports = {
             .setTimestamp(new Date());
 
         // Send the message to the Mod Channel
-        client.channels.get(options.modChannelID).send(embed);
+        client.channels.get(clientSettings.get(member.guild.id).modLogChannel).send(embed);
     },
 
     // messageDelete function.
-    messageDelete: function(client, options, message) {
+    messageDelete: function(client, clientSettings, message) {
         console.log("Message Deleted");
         // Make sure the message isnt from the Bot.
         if (message.author === client.user) return;
@@ -145,11 +145,11 @@ module.exports = {
             .setTimestamp(new Date());
 
         // Send the message to the Mod Channel
-        client.channels.get(options.modChannelID).send(embed);
+        client.channels.get(clientSettings.get(message.guild.id).modLogChannel).send(embed);
     },
 
     // messageUpdate function.
-    messageUpdate: function(client, options, oldMessage, newMessage) {
+    messageUpdate: function(client, clientSettings, oldMessage, newMessage) {
 
         // return if the message came from the bot.
         if (oldMessage.author.tag === client.user.tag) return;
@@ -168,11 +168,11 @@ module.exports = {
             .setTimestamp(new Date());
 
         // Send the message to the Mod Channel
-        client.channels.get(options.modChannelID).send(embed);
+        client.channels.get(clientSettings.get(oldMessage.guild.id).modLogChannel).send(embed);
     },
 
     // bulkDelete function
-    bulkDelete: function(client, options, messages) {
+    bulkDelete: function(client, clientSettings, messages) {
 
         // Grab the purged messages and who sent them.
         var purgedMessages = messages.map(c => `${c.author.username}: ${c.content || c.embeds[0].title} \n`).reverse();
@@ -201,13 +201,13 @@ module.exports = {
             .setTimestamp(new Date());
 
         // Send the message to the Mod Channel
-        client.channels.get(options.modChannelID).send(embed, { split: true }).catch(e => {
+        client.channels.get(client.settings.get(messages.guild.id)).send(embed, { split: true }).catch(e => {
             console.log(e);
         });
     },
 
     // error Handler.
-    errorHandler: function(client, options, error) {
+    errorHandler: function(client, clientSettings, error) {
 
         // Make a new RichEmbed
         const embed = new Discord.RichEmbed()
@@ -218,7 +218,7 @@ module.exports = {
             .setTimestamp(new Date());
 
         // Send the message to the Mod Channel
-        client.channels.get(options.modChannelID).send(embed);
+        client.channels.get(clientSettings.get(member.guild.id).modLogChannel).send(embed);
     }
 };
 

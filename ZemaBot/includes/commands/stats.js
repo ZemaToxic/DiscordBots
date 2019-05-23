@@ -5,7 +5,7 @@ require("moment-duration-format");
 module.exports = {
     name: "stats",
     description: "Display Bot status etc.",
-    execute(client, options, message, args) {
+    execute(client, guildConf, message, args) {
 
         const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
 

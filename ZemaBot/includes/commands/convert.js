@@ -4,7 +4,7 @@ const url = require("../../utility/urlHandler.js");
 module.exports = {
     name: "convert",
     description: "Convert currency from one type to another.",
-    async execute(client, options, message, args) {
+    async execute(client, guildConf, message, args) {
         
         let amount = args [0]
         let countryCode = args[1].toLowerCase()

@@ -3,7 +3,7 @@ var moment = require("moment");
 module.exports = {
     name: "remindme",
     description: 'Reminds the user to do "something" after a set time.',
-    execute(client, options, message, args) {
+    execute(client, guildConf, message, args) {
         // Make a variable of the time the command was called.
         var currentTime = moment();
         // Split the inputed value.

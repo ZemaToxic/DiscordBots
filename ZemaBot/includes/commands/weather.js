@@ -5,7 +5,7 @@ const weather = require("weather-js");
 module.exports = {
     name: "weather",
     description: "Sends an embed with weather data for a location.",
-    execute(client, options, message, args) {
+    execute(client, guildConf, message, args) {
 
         weather.find({ search: args, degreeType: "C" },
             function(err, result) {

@@ -1,7 +1,7 @@
 module.exports = {
     name: "help",
     description: "List all of the commands or info about a specific command.",
-    execute(client, options, message, args) {
+    execute(client, guildConf, message, args) {
         // Do command stuff here
         const data = [];
         const {
@@ -12,7 +12,7 @@ module.exports = {
         if (!args.length) {
             data.push("Here's a list of all my commands: ");
             data.push(commands.map(command => command.name).join(", "));
-            data.push(`\nYou can send \`${options.prefix}help [command name]\` to get info on a specific command!`);
+            data.push(`\nYou can send \`${guildConf.prefix}help [command name]\` to get info on a specific command!`);
 
             // Send the message in a DM if user DM's the bot.
             if (message.channel.type === "dm") {
@@ -55,7 +55,7 @@ module.exports = {
         // If the command has a Description.
         if (command.description) data.push(`**Description:** ${command.description}`);
         // If the command has a Usage variable.
-        if (command.usage) data.push(`**Usage:** ${options.prefix}${command.name} ${command.usage}`);
+        if (command.usage) data.push(`**Usage:** ${guildConf.prefix}${command.name} ${command.usage}`);
         // If the command has a cooldown.
         if (command.cooldown) data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`);
 

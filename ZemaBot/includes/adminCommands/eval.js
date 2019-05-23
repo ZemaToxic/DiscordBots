@@ -11,7 +11,7 @@ function clean(text) {
 module.exports = {
     name: "eval",
     description: "NodeJs Eval command, only works for @ZemaToxic",
-    execute(client, options, message, args) {
+    execute(client, guildConf, message, args) {
         // Do command stuff here
         if (message.author.id !== clientData.OwnerID) {
             return message.channel.send("You aren't allowed to do that.");

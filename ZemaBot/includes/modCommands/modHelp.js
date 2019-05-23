@@ -1,7 +1,7 @@
 module.exports = {
     name: "modHelp",
     description: "List all of the modCommands or info about a specific command.",
-    execute(client, options, message, args) {
+    execute(client, guildConf, message, args) {
         // Do command stuff here
         const data = [];
         const {
@@ -13,7 +13,7 @@ module.exports = {
             data.push("Here's a list of all my modCommands: ");
             data.push(modCommands.map(modCommand => modCommand.name).join(", "));
             data.push(
-                `\nYou can send \`${options.prefix}modHelp [modCommand name]\` to get info on a specific modCommand!`);
+                `\nYou can send \`${guildConf.prefix}modHelp [modCommand name]\` to get info on a specific modCommand!`);
 
             // Send the message in a DM if user DM's the bot.
             if (message.channel.type === "dm") {
@@ -55,7 +55,7 @@ module.exports = {
         // If the modCommand has a Description.
         if (modCommand.description) data.push(`**Description:** ${modCommand.description}`);
         // If the modCommand has a Usage variable.
-        if (modCommand.usage) data.push(`**Usage:** ${options.prefix}${modCommand.name} ${modCommand.usage}`);
+        if (modCommand.usage) data.push(`**Usage:** ${guildConf.prefix}${modCommand.name} ${modCommand.usage}`);
         // If the modCommand has a cooldown.
         if (modCommand.cooldown) data.push(`**Cooldown:** ${modCommand.cooldown || 3} second(s)`);
 

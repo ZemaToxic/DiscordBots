@@ -11,42 +11,57 @@ const status = {
 module.exports = {
     name: "userinfo",
     description: "Retrive information about a specific user.",
-    execute(client, options, message, args) {
+    execute(client, guildConf, message, args) {
         if (!message.channel) {
             return;
         } else {
-            const member = (message.mentions.members.first() || message.guild.members.get(args[0]) || message.member);
-            if (!member) return message.reply("Please provide a vaild Mention or USER ID");
+            //const member = (message.mentions.members.first() || message.guild.members.get(args[0]) || message.member);
+            
+            const r = /^<@!?(\d+)>$/;
+            const resolveMember = (message, value) => {
+              const e = r.exec(value);
+              if (e !== null) {
+                return msg.channel.guild.members.get(e[1]);
+              }
+              const v = value.toLowerCase();
+              for (const member of msg.channel.guild.members.values()) {
+                if (member.user.username.toLowerCase().includes(v) ||
+                  member.nick !== null && member.nick.toLowerCase().includes(v)) {
+                  return member;
+                }
+              }
+            }
+            if (!resolveMember) return message.reply("Please provide a vaild Mention or USER ID");
 
             let bot = "No";
             let mod = "No";
-            if (member.user.bot === true) {
+            if (resolveMember.user.bot === true) {
                 bot = "Yes";
             }
-            if (member.roles.has(options.modRole) === true) {
+            if (resolveMember.roles.has(guildConf.modRole) === true) {
                 mod = "Yes";
             }
 
             const embed = new Discord.RichEmbed()
                 .setColor("#45DE15")
-                .setThumbnail(`${member.user.displayAvatarURL}`)
-                .setAuthor(`${member.user.tag} (${member.id})`, `${member.user.displayAvatarURL}`)
+                .setThumbnail(`${resolveMember.user.displayAvatarURL}`)
+                .setAuthor(`${resolveMember.user.tag} (${resolveMember.id})`, `${resolveMember.user.displayAvatarURL}`)
                 .addField("Nickname:",
-                    `${member.nickname !== null ? `Nickname: ${member.nickname}` : "No nickname"}`,
+                    `${resolveMember.nickname !== null ? `Nickname: ${resolveMember.nickname}` : "No nickname"}`,
                     true)
                 .addField("Bot?", `${bot}`, true)
                 .addField("Moderator?", `${mod}`, true)
                 .addField("Playing",
-                    `${member.user.presence.game ? `${member.user.presence.game.name}` : "not playing anything."}`,
+                    `${resolveMember.user.presence.game ? `${resolveMember.user.presence.game.name}` : "not playing anything."}`,
                     true)
-                .addField("Status", `${status[member.user.presence.status]}`, true)
+                .addField("Status", `${status[resolveMember.user.presence.status]}`, true)
                 .addField("Roles",
-                    `${member.roles.filter(r => r.id !== message.guild.id).map(roles => `\`[ ${roles.name} ]\``)
+                    `${resolveMember.roles.filter(r => r.id !== message.guild.id).map(roles => `\`[ ${roles.name} ]\``)
                     .join(" **|** ") ||
                     "No Roles"}`,
                     true)
-                .addField("Joined At", `${moment.utc(member.joinedAt).format("llll")}`, true)
-                .addField("Created At", `${moment.utc(member.user.createdAt).format("llll")}`, true);
+                .addField("Joined At", `${moment.utc(resolveMember.joinedAt).format("llll")}`, true)
+                .addField("Created At", `${moment.utc(resolveMember.user.createdAt).format("llll")}`, true);
 
             message.channel.send(embed);
         }

@@ -16,6 +16,8 @@ const fs = require("fs");
 const moment = require("moment");
 require("moment-duration-format");
 const Discord = require("discord.js");
+
+// Express set up
 const express = require("express");
 const cors = require('cors');
 const app = express();
@@ -23,6 +25,25 @@ app.set('json spaces',2);
 app.use(cors())
 
 const client = new Discord.Client();
+
+// Enmap setup 
+const Enmap = require('enmap')
+
+client.settings = new Enmap({
+    name: 'settings',
+    fetchAll: false,
+    autoFetch: true,
+    cloneLevel: 'deep'
+})
+
+// Just setting up a default configuration object here, to have somethign to insert.
+const defaultSettings = {
+    prefix: "!",
+    modLogChannel: "mod-log",
+    modRole: "Moderator",
+    adminRole: "Administrator",
+    ignoreChannel: "IgnoreThis"
+}
 
 // New collections of Commands
 client.commands = new Discord.Collection();
@@ -89,49 +110,49 @@ client.on("ready",
 // Member Joins
 client.on("guildMemberAdd",
     member => {
-//        eventHandler.memberAdd(client, options, member);
+        eventHandler.memberAdd(client, client.settings, member);
     });
 
 // Member leaves or is kicked
 client.on("guildMemberRemove",
     member => {
-//        eventHandler.memberRemove(client, options, member);
+        eventHandler.memberRemove(client, client.settings, member);
     });
 
 // Client Name change / new roles
 client.on("guildMemberUpdate",
     (oldMember, newMember) => {
-  //      eventHandler.memberUpdate(client, options, oldMember, newMember);
+      eventHandler.memberUpdate(client, client.settings, oldMember, newMember);
     });
 
 // Member Banned
 client.on("guildBanAdd",
     member => {
-    //    eventHandler.banAdd(client, options, member);
+       eventHandler.banAdd(client, client.settings, member);
     });
 
 // Message gets deleted
 client.on("messageDelete",
     message => {
-      //  eventHandler.messageDelete(client, options, message);
+       eventHandler.messageDelete(client, client.settings, message);
     });
 
 // Message edited
 client.on("messageUpdate",
     (oldMessage, newMessage) => {
-     //   eventHandler.messageUpdate(client, options, oldMessage, newMessage);
+      eventHandler.messageUpdate(client, client.settings, oldMessage, newMessage);
     });
 
 // Bulk Message deleted.f
 client.on("messageDeleteBulk",
     messages => {
-     //   eventHandler.bulkDelete(client, options, messages);
+        eventHandler.bulkDelete(client, client.settings, messages);
     });
 
 // Client experiances an error
 client.on("error",
     error => {
-      //  eventHandler.errorHandler(client, options, error);
+      eventHandler.errorHandler(client, client.settings, error);
     });
 
 
@@ -139,47 +160,46 @@ client.on("error",
 client.on("message",
     message => {
 
-        if (message.channel.id === options.ignoreChannel) return;
+        if (message.channel.id === client.settings.ignoreChannel) return;
         if (message.author.bot) return;
+        
+                var stringToTest = message.content.toLowerCase();
+        
+                if (stringToTest.match(/(^| )heck($|.)/g)) {
+                    client.sillyStuff.get("heck").execute(message);
+                }
 
-        var stringToTest = message.content.toLowerCase();
-
-        if (stringToTest.match(/(^| )heck($|.)/g)) {
-            client.sillyStuff.get("heck").execute(message);
-        }
+        const guildConf = client.settings.ensure(message.guild.id, defaultSettings);
 
         // Return if message does not start with the prefix.
-        if (!message.content.startsWith(options.prefix)) return;
+        if (message.content.indexOf(guildConf.prefix) !== 0) return;
 
         // Split the message up then remove the prefix
-        let commands = message.content.split(" ")[0];
-        commands = commands.slice(options.prefix.length);
-
-        // Split the remaining message into 'args'
-        let args = message.content.split(" ").slice(1);
+        const args = message.content.split(/\s+/g);
+        const commands = args.shift().slice(guildConf.prefix.length).toLowerCase();
 
         // Check if the command is in the commands or modCommands object.
         if (!client.commands.has(commands) &&
             !client.modCommands.has(commands) &&
             !client.adminCommands.has(commands)) {
-            message.reply("that is not a command use " + options.prefix + "help, to see the list of commands.");
+            message.reply("that is not a command use " + guildConf.prefix + "help, to see the list of commands.");
             return;
         }
         // Check if its an Admin command.
         else if (client.adminCommands.get(commands) && (message.author.id === clientData.OwnerID)) {
-            client.adminCommands.get(commands).execute(client, options, message, args);
+            client.adminCommands.get(commands).execute(client, guildConf, message, args);
             return;
         }
         // Check if its in a Mod command.
         else if (client.modCommands.get(commands) &&
-        (message.member.roles.has(options.modRole) ||
+        (message.member.roles.has(guildConf.modRole) ||
             (message.guild.owner.user.username === message.author.username))) {
-            client.modCommands.get(commands).execute(client, options, message, args);
+            client.modCommands.get(commands).execute(client, guildConf, message, args);
             return;
         }
         // Check if its a normal command.
         else if (client.commands.get(commands)) {
-            client.commands.get(commands).execute(client, options, message, args);
+            client.commands.get(commands).execute(client, guildConf, message, args);
             return;
         }
         // Else error out.

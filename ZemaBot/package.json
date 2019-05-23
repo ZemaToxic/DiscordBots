@@ -7,9 +7,11 @@
     "name": "ZemaToxic"
   },
   "dependencies": {
-    "bluebird": "^3.5.3",
+    "better-sqlite-pool": "^0.2.2",
+    "bluebird": "^3.5.4",
     "cors": "^2.8.5",
     "discord.js": "^11.4.2",
+    "enmap": "^4.8.7",
     "express": "^4.17.0",
     "moment": "^2.23.0",
     "moment-duration-format": "^2.2.2",

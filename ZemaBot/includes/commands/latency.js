@@ -1,7 +1,7 @@
 module.exports = {
     name: "latency",
     description: "",
-    execute(client, options, message, args) {
+    execute(client, guildConf, message, args) {
         let start = Date.now();
         message.channel.send("Pinging...").then(message => {
             message.delete();

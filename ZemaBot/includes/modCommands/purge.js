@@ -1,7 +1,7 @@
 module.exports = {
     name: "purge",
     description: "Purge a channel of messages, Maximum of 100 messages to be purged at a time.",
-    execute(client, options, message, args) {
+    execute(client, guildConf, message, args) {
         // Check if a user was specified
         const user = message.mentions.users.first();
 

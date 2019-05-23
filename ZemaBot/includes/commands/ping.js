@@ -1,7 +1,7 @@
 module.exports = {
     name: "ping",
     description: "Ping~ Pong!",
-    execute(client, options, message, args) {
+    execute(client, guildConf, message, args) {
         message.channel.send("Pong.");
     }
 };

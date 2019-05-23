@@ -40,7 +40,7 @@ var searchQuery;
 module.exports = {
     name: "spotify",
     description: "",
-    async execute(client, options, message, args) {
+    async execute(client, guildConf, message, args) {
         await getCreds()
             .then(function() {
                 // Search for a song

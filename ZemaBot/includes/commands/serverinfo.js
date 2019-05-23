@@ -4,7 +4,7 @@ var moment = require("moment-timezone");
 module.exports = {
     name: "serverinfo",
     description: "Display Information about the current server.",
-    execute(client, options, message, args) {
+    execute(client, guildConf, message, args) {
 
         // Get the server roles, sort via the [position] and then reverse the entire thing so it counts down 3, 2, 1 ... etc
         var serverRoles = message.guild.roles.sort((first, next) => first.position - next.position)
