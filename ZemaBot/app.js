@@ -22,19 +22,19 @@ const express = require("express");
 const cors = require('cors');
 const app = express();
 
-// var whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com']
-// var corsOptions = {
-//   origin: function (origin, callback) {
-//       console.log(origin)
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   }
-// }
+const whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com']
+const corsOptions = {
+  origin: function (origin, callback) {
+      console.log(origin)
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
 
-// app.use(cors(corsOptions))
+app.use(cors(corsOptions))
 app.set('json spaces',2);
 
 const client = new Discord.Client();
