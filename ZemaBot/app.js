@@ -22,11 +22,19 @@ const express = require("express");
 const cors = require('cors');
 const app = express();
 
-app.use(cors())
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    next();
-  });
+const whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com']
+const corsOptions = {
+  origin: function (origin, callback) {
+      console.log(origin)
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
+app.use(cors(corsOptions))
 app.set('json spaces',2);
 
 const client = new Discord.Client();
@@ -233,7 +241,7 @@ process.on("error",
     });
 
     
-app.get('/botinfo', (req, res) => {
+app.get('/botinfo', cors(corsOptions), (req, res) => {
     const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     res.json({
         Name: client.user.username,
@@ -247,7 +255,7 @@ app.get('/botinfo', (req, res) => {
     })
 })
 
-app.get('/commands', (req,res) => {
+app.get('/commands', cors(corsOptions), (req,res) => {
 
     const commands = client.commands.map(command => ({command: command.name, description: command.description})) 
     res.json(commands)
