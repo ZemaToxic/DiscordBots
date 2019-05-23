@@ -23,7 +23,7 @@ const cors = require('cors');
 const app = express();
 
 
-var whitelist = ['www.zematoxic.com', 'zematoxic.com']
+var whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
