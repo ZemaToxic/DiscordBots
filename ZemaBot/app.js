@@ -22,10 +22,10 @@ const express = require("express");
 const cors = require('cors');
 const app = express();
 
-
 var whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com']
 var corsOptions = {
   origin: function (origin, callback) {
+      console.log(origin)
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
@@ -33,7 +33,6 @@ var corsOptions = {
     }
   }
 }
-
 
 app.set('json spaces',2);
 app.use(cors(corsOptions))
