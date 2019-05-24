@@ -19,6 +19,7 @@ const Discord = require("discord.js");
 
 // Express set up
 const express = require("express");
+const https = require('https');
 const cors = require('cors');
 const app = express();
 
@@ -176,11 +177,11 @@ client.on("message",
         if (message.channel.id === client.settings.ignoreChannel) return;
         if (message.author.bot) return;
         
-                var stringToTest = message.content.toLowerCase();
-        
-                if (stringToTest.match(/(^| )heck($|.)/g)) {
-                    client.sillyStuff.get("heck").execute(message);
-                }
+        var stringToTest = message.content.toLowerCase();
+
+        if (stringToTest.match(/(^| )heck($|.)/g)) {
+            client.sillyStuff.get("heck").execute(message);
+        }
 
         const guildConf = client.settings.ensure(message.guild.id, defaultSettings);
 
@@ -261,4 +262,9 @@ app.get('/commands', cors(corsOptions), (req,res) => {
     res.json(commands)
 })
 
-app.listen(3001, () => console.log('Express Started'))
+https.createServer({
+    key: fs.readFileSync('./key.pem'),
+    cert: fs.readFileSync('./cert.pem'),
+    passphrase: 'Crystal'
+    }, app)
+.listen(3001, () => console.log('Express Started'))
