@@ -36,13 +36,12 @@ const corsOptions = {
   }
 }
 
-app.use(cors(corsOptions))
 // Set up https for express
 https.createServer({
     key: fs.readFileSync('./key.pem'),
     cert: fs.readFileSync('./cert.pem'),
     passphrase: 'Crystal'
-    }, app)
+}, app)
 .listen(3002, () => console.log('Express Started'))
 // Also set up http
 http.createServer(app).listen(3001);
@@ -52,12 +51,13 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     if (req.secure) {
-    next();
+        next();
     } else {
-    res.redirect('https://' + req.headers.host + req.url);
+        res.redirect('https://' + req.headers.host + req.url);
     }
 });
 
+app.use(cors(corsOptions))
 app.set('json spaces',2);
 
 const client = new Discord.Client();
