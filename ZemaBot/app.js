@@ -38,7 +38,6 @@ app.use(cors({
     }
   }));
 
-app.use(cors(corsOptions))
 app.set('json spaces', 2);
 
 const client = new Discord.Client();
