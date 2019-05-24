@@ -48,6 +48,8 @@ https.createServer({
 http.createServer(app).listen(3001);
 // Redirect http to https
 app.all(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     if (req.secure) {
     next();
     } else {
@@ -260,7 +262,12 @@ process.on("error",
         console.error("Error happened: \n ", err);
     });
 
-    
+app.get('/', cors(corsOptions), (req,res) => {
+    res.json({
+        Info: 'Discord Bots by Zematoxic'
+    })
+})
+
 app.get('/botinfo', cors(corsOptions), (req, res) => {
     const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     res.json({
@@ -280,4 +287,7 @@ app.get('/commands', cors(corsOptions), (req,res) => {
     const commands = client.commands.map(command => ({command: command.name, description: command.description})) 
     res.json(commands)
 })
+
+
+
 
