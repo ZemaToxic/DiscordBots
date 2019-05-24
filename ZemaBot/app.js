@@ -19,8 +19,6 @@ const Discord = require("discord.js");
 
 // Express set up
 const express = require("express");
-const https = require('https');
-const http = require('http');
 const cors = require('cors');
 const app = express();
 
@@ -36,11 +34,6 @@ const corsOptions = {
   }
 }
 
-// Also set up http
-app.listen(3001, () => console.log('Express HTTP Started'));
-// Set up https for express
-//https.createServer(app).listen(3002, () => console.log('Express HTTPS Started'))
-// Redirect http to https
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -279,6 +272,7 @@ app.get('/commands', (req,res) => {
     res.json(commands)
 })
 
-
-
-
+// Also set up http
+app.listen(3001, () => console.log('Express HTTP Started'));
+// Set up https for express
+//https.createServer(app).listen(3002, () => console.log('Express HTTPS Started'))
