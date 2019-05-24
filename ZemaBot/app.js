@@ -24,17 +24,17 @@ const http = require('http');
 const cors = require('cors');
 const app = express();
 
-const whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com']
-const corsOptions = {
-  origin: function (origin, callback) {
-      console.log(origin)
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS - Please use an allowed url'))
-    }
-  }
-}
+// const whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com']
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//       console.log(origin)
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS - Please use an allowed url'))
+//     }
+//   }
+// }
 
 // Also set up http
 http.createServer(app).listen(3001, () => console.log('Express HTTP Started'));
@@ -47,7 +47,7 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 });
 
-app.use(cors(corsOptions))
+app.use(cors(/*corsOptions*/))
 app.set('json spaces',2);
 
 const client = new Discord.Client();
