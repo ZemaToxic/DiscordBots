@@ -37,9 +37,9 @@ const corsOptions = {
 }
 
 // Also set up http
-http.createServer(app).listen(3001, () => console.log('Express HTTP Started'));
+app.listen(3001, () => console.log('Express HTTP Started'));
 // Set up https for express
-https.createServer(app).listen(3002, () => console.log('Express HTTPS Started'))
+//https.createServer(app).listen(3002, () => console.log('Express HTTPS Started'))
 // Redirect http to https
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
