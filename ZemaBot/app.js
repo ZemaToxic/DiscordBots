@@ -24,22 +24,22 @@ const http = require('http');
 const cors = require('cors');
 const app = express();
 
-// const whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com']
-// const /*corsOptions*/ = {
-//   origin: function (origin, callback) {
-//       console.log(origin)
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS - Please use an allowed url'))
-//     }
-//   }
-// }
+const whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com', '27.252.146.165']
+const corsOptions = {
+  origin: function (origin, callback) {
+      console.log(origin)
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS - Please use an allowed url'))
+    }
+  }
+}
 
 // Also set up http
 http.createServer(app).listen(3001, () => console.log('Express HTTP Started'));
 // Set up https for express
-//https.createServer(app).listen(3002, () => console.log('Express HTTPS Started'))
+https.createServer(app).listen(3002, () => console.log('Express HTTPS Started'))
 // Redirect http to https
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -47,8 +47,8 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 });
 
-app.use(cors(/*corsOptions*/))
-app.set('json spaces',2);
+app.use(cors(corsOptions))
+app.set('json spaces', 2);
 
 const client = new Discord.Client();
 
@@ -253,13 +253,13 @@ process.on("error",
         console.error("Error happened: \n ", err);
     });
 
-app.get('/', cors(/*corsOptions*/), (req,res) => {
+app.get('/', cors(corsOptions), (req,res) => {
     res.json({
         Info: 'Discord Bots by Zematoxic'
     })
 })
 
-app.get('/botinfo', cors(/*corsOptions*/), (req, res) => {
+app.get('/botinfo', cors(corsOptions), (req, res) => {
     const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     res.json({
         Name: client.user.username,
@@ -273,7 +273,7 @@ app.get('/botinfo', cors(/*corsOptions*/), (req, res) => {
     })
 })
 
-app.get('/commands', cors(/*corsOptions*/), (req,res) => {
+app.get('/commands', cors(corsOptions), (req,res) => {
 
     const commands = client.commands.map(command => ({command: command.name, description: command.description})) 
     res.json(commands)
