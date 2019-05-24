@@ -40,7 +40,7 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 });
 
-app.use(cors(corsOptions))
+app.use(cors())
 app.set('json spaces', 2);
 
 const client = new Discord.Client();
@@ -246,7 +246,7 @@ process.on("error",
         console.error("Error happened: \n ", err);
     });
 
-app.get('/info', (req,res) => {
+app.get('/info', (req, res) => {
     res.json({
         Info: 'Discord Bots by Zematoxic'
     })
@@ -267,7 +267,6 @@ app.get('/botinfo', (req, res) => {
 })
 
 app.get('/commands', (req,res) => {
-
     const commands = client.commands.map(command => ({command: command.name, description: command.description})) 
     res.json(commands)
 })
