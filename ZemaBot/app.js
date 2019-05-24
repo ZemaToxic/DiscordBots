@@ -40,7 +40,7 @@ const corsOptions = {
 //     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 // });
 
-app.use(cors())
+app.use(cors(corsOptions))
 app.set('json spaces', 2);
 
 const client = new Discord.Client();
