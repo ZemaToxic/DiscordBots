@@ -253,13 +253,13 @@ process.on("error",
         console.error("Error happened: \n ", err);
     });
 
-app.get('/', cors(corsOptions), (req,res) => {
+app.get('/', (req,res) => {
     res.json({
         Info: 'Discord Bots by Zematoxic'
     })
 })
 
-app.get('/botinfo', cors(corsOptions), (req, res) => {
+app.get('/botinfo', (req, res) => {
     const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     res.json({
         Name: client.user.username,
@@ -273,7 +273,7 @@ app.get('/botinfo', cors(corsOptions), (req, res) => {
     })
 })
 
-app.get('/commands', cors(corsOptions), (req,res) => {
+app.get('/commands', (req,res) => {
 
     const commands = client.commands.map(command => ({command: command.name, description: command.description})) 
     res.json(commands)
