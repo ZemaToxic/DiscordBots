@@ -36,20 +36,15 @@ const corsOptions = {
   }
 }
 
-// Set up https for express
-https.createServer(app).listen(3002, () => console.log('Express Started'))
 // Also set up http
-http.createServer(app).listen(3001);
+http.createServer(app).listen(3001, () => console.log('Express HTTP Started'));
+// Set up https for express
+//https.createServer(app).listen(3002, () => console.log('Express HTTPS Started'))
 // Redirect http to https
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    if (req.secure) {
-        next();
-    } else {
-        res.redirect('https://' + req.headers.host + req.url);
-    }
 });
 
 app.use(cors(corsOptions))
