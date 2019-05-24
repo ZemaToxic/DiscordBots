@@ -23,22 +23,20 @@ const cors = require('cors');
 const app = express();
 
 const whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com', '27.252.146.165']
-const corsOptions = {
-  origin: function (origin, callback) {
-      console.log(origin)
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS - Please use an allowed url'))
-    }
-  }
-}
 
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-// });
+app.use(cors({
+    origin: function(origin, callback){
+      // allow requests with no origin 
+      // (like mobile apps or curl requests)
+      if(!origin) return callback(null, true);
+      if(whitelist.indexOf(origin) === -1){
+        var msg = 'The CORS policy for this site does not ' +
+                  'allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    }
+  }));
 
 app.use(cors(corsOptions))
 app.set('json spaces', 2);
