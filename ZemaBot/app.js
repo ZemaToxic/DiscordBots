@@ -20,6 +20,7 @@ const Discord = require("discord.js");
 // Express set up
 const express = require("express");
 const https = require('https');
+const http = require('http');
 const cors = require('cors');
 const app = express();
 
@@ -36,6 +37,24 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
+// Set up https for express
+https.createServer({
+    key: fs.readFileSync('./key.pem'),
+    cert: fs.readFileSync('./cert.pem'),
+    passphrase: 'Crystal'
+    }, app)
+.listen(443, () => console.log('Express Started'))
+// Also set up http
+http.createServer(app).listen(80);
+// Redirect http to https
+app.all(function(req, res, next) {
+    if (req.secure) {
+    next();
+    } else {
+    res.redirect('https://' + req.headers.host + req.url);
+    }
+});
+
 app.set('json spaces',2);
 
 const client = new Discord.Client();
@@ -262,9 +281,3 @@ app.get('/commands', cors(corsOptions), (req,res) => {
     res.json(commands)
 })
 
-https.createServer({
-    key: fs.readFileSync('./key.pem'),
-    cert: fs.readFileSync('./cert.pem'),
-    passphrase: 'Crystal'
-    }, app)
-.listen(3001, () => console.log('Express Started'))
