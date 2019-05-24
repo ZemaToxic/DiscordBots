@@ -43,9 +43,9 @@ https.createServer({
     cert: fs.readFileSync('./cert.pem'),
     passphrase: 'Crystal'
     }, app)
-.listen(443, () => console.log('Express Started'))
+.listen(3001, () => console.log('Express Started'))
 // Also set up http
-http.createServer(app).listen(80);
+//http.createServer(app).listen(3001);
 // Redirect http to https
 app.all(function(req, res, next) {
     if (req.secure) {
