@@ -31,7 +31,7 @@ const corsOptions = {
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
-      callback(new Error('Not allowed by CORS'))
+      callback(new Error('Not allowed by CORS - Please use an allowed url'))
     }
   }
 }
@@ -47,9 +47,10 @@ https.createServer({
 // Also set up http
 http.createServer(app).listen(3001);
 // Redirect http to https
-app.all(function(req, res, next) {
+app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     if (req.secure) {
     next();
     } else {
