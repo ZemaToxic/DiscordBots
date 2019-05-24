@@ -25,7 +25,7 @@ const cors = require('cors');
 const app = express();
 
 // const whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com']
-// const corsOptions = {
+// const /*corsOptions*/ = {
 //   origin: function (origin, callback) {
 //       console.log(origin)
 //     if (whitelist.indexOf(origin) !== -1) {
@@ -253,13 +253,13 @@ process.on("error",
         console.error("Error happened: \n ", err);
     });
 
-app.get('/', cors(corsOptions), (req,res) => {
+app.get('/', cors(/*corsOptions*/), (req,res) => {
     res.json({
         Info: 'Discord Bots by Zematoxic'
     })
 })
 
-app.get('/botinfo', cors(corsOptions), (req, res) => {
+app.get('/botinfo', cors(/*corsOptions*/), (req, res) => {
     const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     res.json({
         Name: client.user.username,
@@ -273,7 +273,7 @@ app.get('/botinfo', cors(corsOptions), (req, res) => {
     })
 })
 
-app.get('/commands', cors(corsOptions), (req,res) => {
+app.get('/commands', cors(/*corsOptions*/), (req,res) => {
 
     const commands = client.commands.map(command => ({command: command.name, description: command.description})) 
     res.json(commands)
