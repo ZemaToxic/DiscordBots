@@ -37,12 +37,7 @@ const corsOptions = {
 }
 
 // Set up https for express
-https.createServer({
-    key: fs.readFileSync('./key.pem'),
-    cert: fs.readFileSync('./cert.pem'),
-    passphrase: 'Crystal'
-}, app)
-.listen(3002, () => console.log('Express Started'))
+https.createServer(app).listen(3002, () => console.log('Express Started'))
 // Also set up http
 http.createServer(app).listen(3001);
 // Redirect http to https
