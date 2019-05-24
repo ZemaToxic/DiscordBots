@@ -246,7 +246,7 @@ process.on("error",
         console.error("Error happened: \n ", err);
     });
 
-app.get('/', (req,res) => {
+app.get('/info', (req,res) => {
     res.json({
         Info: 'Discord Bots by Zematoxic'
     })
