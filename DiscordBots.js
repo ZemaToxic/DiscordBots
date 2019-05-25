@@ -78,19 +78,18 @@ directories.forEach(function (v) {
 				})
 
 				app.get('/botinfo', (req, res) => {
-						const client = m;
-						const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
-						res.json({
-							Test: 'test',
-							Name: client.user.username,
-							Users: client.users.size,
-							MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + ' MB',
-							BotUptime: duration,
-							Servers: client.guilds.size,
-							Channels: client.channels.size,
-							DiscordjsVersion: Discord.version,
-							NodejsVersion: process.version
-						})
+					const client = m;
+					const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
+					res.json({
+						Test: 'test',
+						Name: client.user.username,
+						Users: client.users.size,
+						MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + ' MB',
+						BotUptime: duration,
+						Servers: client.guilds.size,
+						Channels: client.channels.size,
+						DiscordjsVersion: Discord.version,
+						NodejsVersion: process.version
 					})
 				})
 
