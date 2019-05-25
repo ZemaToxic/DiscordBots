@@ -64,6 +64,7 @@ directories.forEach(function (v) {
 				})
 
 				app.get('/botinfo', (req, res) => {
+					bot.send('Ready');
 					res.json(m.botinfo)
 				})
 
