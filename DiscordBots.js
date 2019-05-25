@@ -4,7 +4,7 @@ const cors = require('cors');
 const app = express();
 
 const {
-	spawn
+	fork
 } = require('child_process');
 const {
 	lstatSync,
@@ -50,21 +50,19 @@ directories.forEach(function (v) {
 		discordBots[v] = {};
 		discordBots[v].start = function () {
 
-			// Start up a new bot client 
+			// Start up a new bot client
 			console.log(timeStamp(), 'Starting Bot ' + v);
 
-			const bot = discordBots[v].process = spawn('node', [v + '/app.js'], {
-				shell: true
-			});
-
-			// Console logging 
-			bot.stdout.on('data', (d) => {
-				console.log(timeStamp(), 'DATA FROM ' + v + ': ' + d);
-			});
-			// If the child has an error printed out            
-			bot.stderr.on('data', (data) => {
-				console.log(timeStamp(), 'DATA FROM ' + v + ': stderr: ' + data);
-			});
+			const bot = discordBots[v].process = fork(v + '/app.js')
+			// console.log(bot)
+			// // Console logging
+			// bot.stdout.on('data', (d) => {
+			// 	console.log(timeStamp(), 'DATA FROM ' + v + ': ' + d);
+			// });
+			// // If the child has an error printed out
+			// bot.stderr.on('data', (data) => {
+			// 	console.log(timeStamp(), 'DATA FROM ' + v + ': stderr: ' + data);
+			// });
 
 			// What to do when each bot child closes
 			bot.on('close', (code) => {
@@ -72,7 +70,7 @@ directories.forEach(function (v) {
 				discordBots[v].start();
 			});
 		};
-		// Start all bots 
+		// Start all bots
 		discordBots[v].start();
 
 
@@ -102,7 +100,7 @@ directories.forEach(function (v) {
 		})
 
 		app.get('/commands', (req, res) => {
-			//const commands = client.commands.map(command => ({command: command.name, description: command.description})) 
+			//const commands = client.commands.map(command => ({command: command.name, description: command.description}))
 			//res.json(commands)
 		})
 
