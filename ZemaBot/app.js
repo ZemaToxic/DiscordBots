@@ -224,7 +224,7 @@ process.on('message', () => {
         NodejsVersion: process.version
     }
     process.send({
-        commands: {ZemaBot: commands},
+        commands: /*{ZemaBot:*/ commands/*}*/,
         botinfo: botinfo
     })
 })
