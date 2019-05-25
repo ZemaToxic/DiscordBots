@@ -64,13 +64,13 @@ directories.forEach(function (v) {
 				})
 
 				app.get('/botinfo', (req, res) => {
-					bot.send('Ready');
 					res.json(m.botinfo)
 				})
 
 				app.get('/commands', (req, res) => {
 					res.json(m.commands)
 				})
+				bot.send('Ready');
 			})
 		}
 		// Start all bots

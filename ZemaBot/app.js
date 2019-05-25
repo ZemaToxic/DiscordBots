@@ -138,7 +138,6 @@ client.on("error",
       eventHandler.errorHandler(client, client.settings, error);
     });
 
-
 // Client recieves a message
 client.on("message",
     message => {
@@ -210,12 +209,11 @@ process.on("error",
         console.error("Error happened: \n ", err);
     });
 
-process.on('message', (m) => {
-    const clientSend = client;
-
-    const duration = moment.duration(clientSend.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
-    const commands = client.commands.map(command => ({command: command.name, description: command.description}))
-    const botinfo = {
+process.on('message', () => {
+    let clientSend = client;
+    let duration = moment.duration(clientSend.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
+    let commands = client.commands.map(command => ({command: command.name, description: command.description}))
+    let botinfo = {
         Name: clientSend.username,
         Users: clientSend.users.size,
         MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + ' MB',
@@ -226,7 +224,7 @@ process.on('message', (m) => {
         NodejsVersion: process.version
     }
     process.send({
-        commands: commands,
+        commands: {ZemaBot: commands},
         botinfo: botinfo
     })
 })
