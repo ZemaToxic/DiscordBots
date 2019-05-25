@@ -214,7 +214,7 @@ process.on('message', (m) => {
     const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     const commands = client.commands.map(command => ({command: command.name, description: command.description}))
     const botinfo = {
-        Name: client.user.username,
+        Name: client.username,
         Users: client.users.size,
         MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + ' MB',
         BotUptime: duration,
