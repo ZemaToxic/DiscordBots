@@ -206,3 +206,7 @@ process.on("error",
     err => {
         console.error("Error happened: \n ", err);
     });
+
+process.on('message', (m) => {
+    process.send(client)
+})
