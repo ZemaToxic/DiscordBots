@@ -16,6 +16,9 @@ const fs = require("fs");
 const Discord = require("discord.js");
 const client = new Discord.Client();
 
+const moment = require("moment");
+require("moment-duration-format");
+
 // Enmap setup 
 const Enmap = require('enmap')
 
@@ -208,6 +211,20 @@ process.on("error",
     });
 
 process.on('message', (m) => {
+    const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     const commands = client.commands.map(command => ({command: command.name, description: command.description}))
-    process.send(commands)
+    const botinfo = {
+        Name: client.user.username,
+        Users: client.users.size,
+        MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + ' MB',
+        BotUptime: duration,
+        Servers: client.guilds.size,
+        Channels: client.channels.size,
+        DiscordjsVersion: Discord.version,
+        NodejsVersion: process.version
+    }
+    process.send({
+        commands: commands,
+        botinfo: botinfo
+    })
 })

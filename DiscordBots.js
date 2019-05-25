@@ -3,19 +3,11 @@ const express = require("express");
 const cors = require('cors');
 const app = express();
 
-const {
-	fork
-} = require('child_process');
-const {
-	lstatSync,
-	readdirSync
-} = require('fs');
-const {
-	join
-} = require('path');
+const { fork } = require('child_process');
+const { lstatSync, readdirSync } = require('fs');
+const { join } = require('path');
 const fs = require('fs');
-const moment = require("moment");
-require("moment-duration-format");
+
 
 // Directory Navigation
 const isDir = source => lstatSync(source).isDirectory();
@@ -54,23 +46,16 @@ directories.forEach(function (v) {
 			console.log(timeStamp(), 'Starting Bot ' + v);
 
 			const bot = discordBots[v].process = fork(v + '/app.js')
-			// console.log(bot)
-			// // Console logging
-			// bot.stdout.on('data', (d) => {
-			// 	console.log(timeStamp(), 'DATA FROM ' + v + ': ' + d);
-			// });
-			// // If the child has an error printed out
-			// bot.stderr.on('data', (data) => {
-			// 	console.log(timeStamp(), 'DATA FROM ' + v + ': stderr: ' + data);
-			// });
 
 			// What to do when each bot child closes
 			bot.on('close', (code) => {
 				console.log(timeStamp(), 'DATA FROM ' + v + ': Process exited with code ' + code);
 				discordBots[v].start();
 			});
+			// Tell the bot we are ready to recieve data
 			bot.send('Ready');
-			
+
+			// On recieved data
 			bot.on('message', (m) => {
 				app.get('/', (req, res) => {
 					res.json({
@@ -79,23 +64,11 @@ directories.forEach(function (v) {
 				})
 
 				app.get('/botinfo', (req, res) => {
-					const client = m;
-					const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
-					res.json({
-						Test: 'test',
-						Name: client.user.username,
-						Users: client.users.size,
-						MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + ' MB',
-						BotUptime: duration,
-						Servers: client.guilds.size,
-						Channels: client.channels.size,
-						DiscordjsVersion: Discord.version,
-						NodejsVersion: process.version
-					})
+					res.json(m.botinfo)
 				})
 
 				app.get('/commands', (req, res) => {
-					res.json(m)
+					res.json(m.commands)
 				})
 			})
 		}
