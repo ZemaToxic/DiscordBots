@@ -69,6 +69,8 @@ directories.forEach(function (v) {
 				console.log(timeStamp(), 'DATA FROM ' + v + ': Process exited with code ' + code);
 				discordBots[v].start();
 			});
+			bot.send('Ready');
+			
 			bot.on('message', (m) => {
 				app.get('/', (req, res) => {
 					res.json({
