@@ -69,42 +69,40 @@ directories.forEach(function (v) {
 				console.log(timeStamp(), 'DATA FROM ' + v + ': Process exited with code ' + code);
 				discordBots[v].start();
 			});
+			bot.on('message', (m) => {
 
-			app.get('/', (req, res) => {
-				res.json({
-					Info: 'Discord Bots by Zematoxic'
-				})
-			})
-	
-			app.get('/botinfo', (req, res) => {
-				bot.send({api: 'info'})
-				bot.on('message', (m) => {
-					const client = m;
-					const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
+				app.get('/', (req, res) => {
 					res.json({
-						Test: 'test',
-						Name: client.user.username,
-						Users: client.users.size,
-						MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + ' MB',
-						BotUptime: duration,
-						Servers: client.guilds.size,
-						Channels: client.channels.size,
-						DiscordjsVersion: Discord.version,
-						NodejsVersion: process.version
+						Info: 'Discord Bots by Zematoxic'
 					})
 				})
-			})
-	
-			app.get('/commands', (req, res) => {
-				bot.on('message', (m) => {
+
+				app.get('/botinfo', (req, res) => {
+						const client = m;
+						const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
+						res.json({
+							Test: 'test',
+							Name: client.user.username,
+							Users: client.users.size,
+							MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + ' MB',
+							BotUptime: duration,
+							Servers: client.guilds.size,
+							Channels: client.channels.size,
+							DiscordjsVersion: Discord.version,
+							NodejsVersion: process.version
+						})
+					})
+				})
+
+				app.get('/commands', (req, res) => {
 					res.json(m)
 				})
 			})
+		}
 
-		};
-		// Start all bots
-		discordBots[v].start();
-	}
+	};
+	// Start all bots
+	discordBots[v].start();
 });
 
 // Sset up http
