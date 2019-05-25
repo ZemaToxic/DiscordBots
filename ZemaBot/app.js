@@ -13,33 +13,7 @@ process.title = `Bot/Discord/${path.basename(__dirname)}`;
 // Imports and Declarations.
 let options = {}; // -- Used for prefix and activity etc.
 const fs = require("fs");
-const moment = require("moment");
-require("moment-duration-format");
 const Discord = require("discord.js");
-
-// Express set up
-const express = require("express");
-const cors = require('cors');
-const app = express();
-
-const whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com', '27.252.146.165']
-
-app.use(cors({
-    origin: function(origin, callback){
-      // allow requests with no origin 
-      // (like mobile apps or curl requests)
-      if(!origin) return callback(null, true);
-      if(whitelist.indexOf(origin) === -1){
-        var msg = 'The CORS policy for this site does not ' +
-                  'allow access from the specified Origin.';
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    }
-  }));
-
-app.set('json spaces', 2);
-
 const client = new Discord.Client();
 
 // Enmap setup 
@@ -102,17 +76,7 @@ for (const file of sillyStuffFiles) {
 // ---------- Event Handlers ----------
 
 // Bot is Ready to communicate
-client.on("ready",
-    () => {
-        // Load the options.
-        loadOptions(options);
-        // Check if the options loaded.
-        if (Object.keys(options).length <= 1) {
-            // Initalise defualt values if they arent there.
-            initValues(options);
-            // Save the changes.
-            saveOptions(options);
-        }
+client.on("ready", () => {
         // Print to console that we have logged in.
         console.log(`Logged in as ${client.user.tag}!`);
         // Set the Activity to what is saved.
@@ -242,33 +206,3 @@ process.on("error",
     err => {
         console.error("Error happened: \n ", err);
     });
-
-app.get('/', (req, res) => {
-    res.json({
-        Info: 'Discord Bots by Zematoxic'
-    })
-})
-
-app.get('/botinfo', (req, res) => {
-    const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
-    res.json({
-        Name: client.user.username,
-        Users: client.users.size,
-        MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + ' MB',
-        BotUptime: duration,
-        Servers: client.guilds.size,
-        Channels: client.channels.size,
-        DiscordjsVersion: Discord.version,
-        NodejsVersion: process.version
-    })
-})
-
-app.get('/commands', (req,res) => {
-    const commands = client.commands.map(command => ({command: command.name, description: command.description})) 
-    res.json(commands)
-})
-
-// Also set up http
-app.listen(3001, () => console.log('Express HTTP Started'));
-// Set up https for express
-//https.createServer(app).listen(3002, () => console.log('Express HTTPS Started'))
