@@ -208,5 +208,6 @@ process.on("error",
     });
 
 process.on('message', (m) => {
-    process.send(client)
+    const commands = client.commands.map(command => ({command: command.name, description: command.description}))
+    process.send(commands)
 })

@@ -97,9 +97,7 @@ directories.forEach(function (v) {
 	
 			app.get('/commands', (req, res) => {
 				bot.on('message', (m) => {
-					const client = m;
-					const commands = client.commands.map(command => ({command: command.name, description: command.description}))
-					res.json(commands)
+					res.json(m)
 				})
 			})
 
