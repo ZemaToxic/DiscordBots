@@ -70,7 +70,6 @@ directories.forEach(function (v) {
 				discordBots[v].start();
 			});
 			bot.on('message', (m) => {
-
 				app.get('/', (req, res) => {
 					res.json({
 						Info: 'Discord Bots by Zematoxic'
@@ -98,10 +97,9 @@ directories.forEach(function (v) {
 				})
 			})
 		}
-
+		// Start all bots
+		discordBots[v].start();
 	};
-	// Start all bots
-	discordBots[v].start();
 });
 
 // Sset up http
