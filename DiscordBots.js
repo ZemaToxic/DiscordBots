@@ -5,8 +5,8 @@ const cors = require('cors');
 const app = express();
 
 const bodyParser = require('body-parser');
-const jwt = require('_helpers/jwt');
-const errorHandler = require('_helpers/error-handler');
+const jwt = require('_helpers/jwt.js');
+const errorHandler = require('_helpers/error-handler.js');
 
 const { fork } = require('child_process');
 const { lstatSync, readdirSync } = require('fs');
