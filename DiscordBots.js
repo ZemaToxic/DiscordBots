@@ -1,7 +1,12 @@
 // Express set up
+require('rootpath')();
 const express = require("express");
 const cors = require('cors');
 const app = express();
+
+const bodyParser = require('body-parser');
+const jwt = require('_helpers/jwt');
+const errorHandler = require('_helpers/error-handler');
 
 const { fork } = require('child_process');
 const { lstatSync, readdirSync } = require('fs');
@@ -18,6 +23,8 @@ const directories = getDirs('./');
 
 const whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com', '27.252.146.165']
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(cors({
 	origin: function (origin, callback) {
 		// Allow requests with no origin like mobile apps and CURL
@@ -31,6 +38,15 @@ app.use(cors({
 }));
 
 app.set('json spaces', 2);
+
+// use JWT auth to secure the api
+app.use(jwt());
+
+// api routes
+app.use('/users', require('./users/users.controller'));
+
+// global error handler
+app.use(errorHandler);
 
 directories.forEach(function (v) {
 	// Search through each folder looking for app.js
