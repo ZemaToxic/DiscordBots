@@ -1,11 +1,6 @@
 const express = require('express');
-const cors = require('cors')
 const router = express.Router();
 const userService = require('./user.service.js');
-
-router.use(cors({
-    origin: "https://www.zematoxic.com"
-}));
 
 // routes
 router.post('/authenticate', authenticate);

@@ -23,10 +23,7 @@ const directories = getDirs('./');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(cors({
-	origin: "https://www.zematoxic.com"
-}));
-
+app.use(cors();
 // Turn on JWT
 app.use(jwt())
 
