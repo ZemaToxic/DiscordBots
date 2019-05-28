@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 // Turn on JWT
 app.use(jwt())
 
-app.use(function(req, res, next) {
+app.all('/', function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST, OPTIONS');
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
