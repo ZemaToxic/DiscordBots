@@ -1,6 +1,12 @@
 const express = require('express');
+const cors = require('cors')
 const router = express.Router();
 const userService = require('./user.service.js');
+
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
+
+router.use(cors());
 
 // routes
 router.post('/authenticate', authenticate);
