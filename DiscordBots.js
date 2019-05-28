@@ -20,10 +20,16 @@ const getDirs = source => readdirSync(source).map(name => join(source, name)).fi
 const discordBots = {};
 const directories = getDirs('./');
 
+app.use(function(req, res, next) {
+	console.log(req.headers);
+	next();
+})
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(cors());
+
 // Turn on JWT
 app.use(jwt())
 
