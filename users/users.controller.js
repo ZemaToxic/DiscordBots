@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors');
 const router = express.Router();
 const userService = require('./user.service.js');
 
@@ -11,8 +10,6 @@ router.get('/current', getCurrent);
 router.get('/:id', getById);
 router.put('/:id', update);
 router.delete('/:id', _delete);
-
-router.all('*', cors)
 
 module.exports = router;
 

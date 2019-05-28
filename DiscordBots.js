@@ -22,6 +22,7 @@ const directories = getDirs('./');
 
 const whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com', '27.252.146.165']
 
+app.options('*', cors()) // include before other routes
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors({
