@@ -20,12 +20,12 @@ const getDirs = source => readdirSync(source).map(name => join(source, name)).fi
 const discordBots = {};
 const directories = getDirs('./');
 
-const whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com', '27.252.146.165']
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(cors());
+app.use(cors({
+	origin: "*.zematoxic.com"
+}));
 
 // Turn on JWT
 app.use(jwt())
