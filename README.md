@@ -1,7 +1,7 @@
-﻿## Discord Bot code and API
+﻿# Discord Bot code and API
 - ZemaBot
 
-# Features of ZemaBot
+## Features of ZemaBot
 - Individual Guild options
 - Message edit logging
 - Message delete logging
