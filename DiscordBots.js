@@ -37,7 +37,9 @@ app.use(cors({
 			return callback(new Error(msg), false);
 		}
 		return callback(null, true);
-	}
+	},
+	methods: "GET, HEAD, PUT, POST",
+	allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept"
 }));
 
 app.set('json spaces', 2);
