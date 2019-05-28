@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(cors({
-	origin: "*.zematoxic.com"
+	origin: "https://*.zematoxic.com"
 }));
 
 // Turn on JWT
