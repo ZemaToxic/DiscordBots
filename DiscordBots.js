@@ -22,7 +22,6 @@ const directories = getDirs('./');
 
 const whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com', '27.252.146.165']
 
-app.options('*', cors()) // include before other routes
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors({
@@ -42,6 +41,12 @@ app.set('json spaces', 2);
 // use JWT auth to secure the api
 app.use(jwt());
 
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+  });
+  
 // api routes
 app.use('/users', require('./users/users.controller'));
 
