@@ -4,7 +4,7 @@ const router = express.Router();
 const userService = require('./user.service.js');
 
 router.use(cors({
-    origin: "https://*.zematoxic.com"
+    origin: "https://www.zematoxic.com"
 }));
 
 // routes
