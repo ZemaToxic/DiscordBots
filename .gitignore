@@ -25,3 +25,4 @@ node_modules/
 /sqlite3/
 
 *.json
+!package.json
