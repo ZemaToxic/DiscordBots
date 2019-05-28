@@ -24,3 +24,5 @@ bld/
 
 # SQL issues
 /sqlite3/
+
+*.json
