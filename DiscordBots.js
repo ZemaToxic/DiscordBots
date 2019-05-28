@@ -25,6 +25,9 @@ const whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com', '27.252
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Turn on JWT
+app.use(jwt())
+
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST, OPTIONS');
@@ -42,10 +45,11 @@ app.use(cors({
 		}
 		return callback(null, true);
 	}
-}),jwt());
+}));
 
 
- app.set('json spaces', 2);
+
+app.set('json spaces', 2);
 
 // api routes
 app.use('/users', require('./users/users.controller'));
