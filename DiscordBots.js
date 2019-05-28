@@ -24,6 +24,14 @@ const whitelist = ['https://www.zematoxic.com', 'https://zematoxic.com', '27.252
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+ });
+
 app.use(cors({
 	origin: function (origin, callback) {
 		// Allow requests with no origin like mobile apps and CURL
@@ -34,19 +42,10 @@ app.use(cors({
 		}
 		return callback(null, true);
 	}
-}));
+}),jwt());
 
-app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
- });
 
  app.set('json spaces', 2);
-
- // use JWT auth to secure the api
- app.use(jwt()); 
 
 // api routes
 app.use('/users', require('./users/users.controller'));

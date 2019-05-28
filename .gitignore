@@ -15,8 +15,7 @@ bld/
 [Bb]in/
 [Oo]bj/
 
-# Keep these just incase
-!*/node_modules/debug*
+node_modules/
 
 # Visual Studio cache/options directory
 .vs/
