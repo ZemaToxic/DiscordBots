@@ -25,11 +25,8 @@ module.exports = {
 			let color;
 			const start = process.hrtime();
 			try {
-                console.log('1')
 				evaled = eval(args.join(' '));
-				if (evaled instanceof Promise) {
-                console.log('2')
-                    
+				if (evaled instanceof Promise) {                  
                     evaled = await evaled;
 					type = `Promise<${evaled != null ? evaled.constructor.name : 'None'}>`;
 				}
@@ -42,7 +39,6 @@ module.exports = {
 			const end = process.hrtime(start);
 			if (type === undefined) type = evaled != null ? evaled.constructor.name : 'None';
 			const output = util.inspect(evaled);
-            console.log('4')            
 			message.channel.send({
 				embed: {
 					title: 'Output',
