@@ -82,6 +82,7 @@ for (const file of sillyStuffFiles) {
 client.on("ready", () => {
         // Print to console that we have logged in.
         console.log(`Logged in as ${client.user.tag}!`);
+        loadOptions(options);
         // Set the Activity to what is saved.
         client.user.setActivity(options.Activity,
             {

@@ -30,7 +30,7 @@ module.exports = {
             .setColor(0xF44242)
             .setTimestamp(new Date());
 
-        if (clientSettings.get(member.guild.id).modLogChannel) {
+        if (client.channels.get(clientSettings.get(member.guild.id).modLogChannel)) {
             // Send the message to the Mod Channel
             client.channels.get(clientSettings.get(member.guild.id).modLogChannel).send(embed);
         }
