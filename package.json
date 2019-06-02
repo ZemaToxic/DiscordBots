@@ -1,5 +1,5 @@
 {
-  "name": "zemabot",
+  "name": "Discord_Bots",
   "version": "1.0.0",
   "description": "ZemaBot",
   "main": "app.js",
@@ -7,17 +7,13 @@
     "name": "ZemaToxic"
   },
   "dependencies": {
-    "better-sqlite-pool": "^0.2.2",
-    "bluebird": "^3.5.5",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "discord.js": "^11.5.1",
-    "enmap": "^4.8.7",
     "express": "^4.17.1",
-    "moment": "^2.24.0",
-    "moment-duration-format": "^2.2.2",
-    "moment-timezone": "^0.5.25",
-    "sequelize": "^5.8.7",
-    "spotify-web-api-node": "^4.0.0",
+    "express-jwt": "^5.3.1",
+    "mongoose": "^5.5.12",
+    "rootpath": "^0.1.2",
     "sqlite3": "^4.0.8",
     "weather-js": "^2.0.0",
     "websocket": "^1.0.28"
