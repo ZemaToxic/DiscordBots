@@ -12,10 +12,11 @@ module.exports = {
             .setColor(0x4EF442)
             .setTimestamp(new Date());
 
-        if (clientSettings.get(member.guild.id).modLogChannel) {
-            // Send the message to the Mod Channel
-            client.channels.get(clientSettings.get(member.guild.id).modLogChannel).send(embed);
-        }
+
+            if (client.channels.get(clientSettings.get(member.guild.id).modLogChannel)) {
+                // Send the message to the Mod Channel
+                client.channels.get(clientSettings.get(member.guild.id).modLogChannel).send(embed);
+            }
 
     },
 
@@ -66,10 +67,11 @@ module.exports = {
                 .setColor(0xFF7700)
                 .setTimestamp(new Date());
 
-            if (clientSettings.get(oldMember.guild.id).modLogChannel) {
-                // Send the message to the Mod Channel
-                client.channels.get(clientSettings.get(oldMember.guild.id).modLogChannel).send(embed);
-            }
+
+                if (client.channels.get(clientSettings.get(member.guild.id).modLogChannel)) {
+                    // Send the message to the Mod Channel
+                    client.channels.get(clientSettings.get(member.guild.id).modLogChannel).send(embed);
+                }
 
             return;
         }
@@ -101,10 +103,11 @@ module.exports = {
                     .setColor(0xFF7700)
                     .setTimestamp(new Date());
 
-                if (clientSettings.get(oldMember.guild.id).modLogChannel) {
-                    // Send the message to the Mod Channel
-                    client.channels.get(clientSettings.get(oldMember.guild.id).modLogChannel).send(embed);
-                }
+
+                    if (client.channels.get(clientSettings.get(member.guild.id).modLogChannel)) {
+                        // Send the message to the Mod Channel
+                        client.channels.get(clientSettings.get(member.guild.id).modLogChannel).send(embed);
+                    }
 
             }
             // If a role was Removed.
@@ -118,10 +121,11 @@ module.exports = {
                     .setDescription("User: " + oldMember + " has lost the role: " + removedChange)
                     .setColor(0xFF7700)
                     .setTimestamp(new Date());
-                if (clientSettings.get(member.guild.id).modLogChannel) {
-                    // Send the message to the Mod Channel
-                    client.channels.get(clientSettings.get(oldMember.guild.id).modLogChannel).send(embed);
-                }
+
+                    if (client.channels.get(clientSettings.get(member.guild.id).modLogChannel)) {
+                        // Send the message to the Mod Channel
+                        client.channels.get(clientSettings.get(member.guild.id).modLogChannel).send(embed);
+                    }
 
             }
             return;
@@ -139,11 +143,11 @@ module.exports = {
             .setColor(0xF442DC)
             .setTimestamp(new Date());
 
-        if (clientSettings.get(member.guild.id).modLogChannel) {
-            // Send the message to the Mod Channel
-            client.channels.get(clientSettings.get(member.guild.id).modLogChannel).send(embed);
-        }
 
+            if (client.channels.get(clientSettings.get(member.guild.id).modLogChannel)) {
+                // Send the message to the Mod Channel
+                client.channels.get(clientSettings.get(member.guild.id).modLogChannel).send(embed);
+            }
     },
 
     // messageDelete function.
@@ -160,10 +164,11 @@ module.exports = {
             .setColor(0xF44242)
             .setTimestamp(new Date());
 
-        if (clientSettings.get(message.guild.id).modLogChannel) {
-            // Send the message to the Mod Channel
-            client.channels.get(clientSettings.get(message.guild.id).modLogChannel).send(embed);
-        }
+
+            if (client.channels.get(clientSettings.get(message.guild.id).modLogChannel)) {
+                // Send the message to the Mod Channel
+                client.channels.get(clientSettings.get(message.guild.id).modLogChannel).send(embed);
+            }
 
     },
 
@@ -186,10 +191,11 @@ module.exports = {
             .addField("After: ", newMessage.content)
             .setTimestamp(new Date());
 
-        if (clientSettings.get(oldMessage.guild.id).modLogChannel) {
-            // Send the message to the Mod Channel
-            client.channels.get(clientSettings.get(oldMessage.guild.id).modLogChannel).send(embed);
-        }
+
+            if (client.channels.get(clientSettings.get(oldMessage.guild.id).modLogChannel)) {
+                // Send the message to the Mod Channel
+                client.channels.get(clientSettings.get(oldMessage.guild.id).modLogChannel).send(embed);
+            }
 
     },
 
@@ -223,7 +229,7 @@ module.exports = {
             .setTimestamp(new Date());
 
         // Send the message to the Mod Channel
-        client.channels.get(client.settings.get(messages.guild.id)).send(embed, {
+        client.channels.get(client.settings.get('402404101713035264')).send(embed, {
             split: true
         }).catch(e => {
             console.log(e);
