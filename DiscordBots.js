@@ -94,3 +94,19 @@ function timeStamp() {
 	var minutes = now.getMinutes();
 	return '[' + date + '/' + month + '/' + year + ' - ' + hours + ':' + minutes + ']';
 }
+
+// Process listeners 
+process.on("exit",
+    (code) => {
+        console.log("Bot exited with code: " + code);
+    });
+
+process.on("unhandledRejection",
+    err => {
+        console.error("Unhandled Rejection: \n", err);
+    });
+
+process.on("error",
+    err => {
+        console.error("Error happened: \n ", err);
+    });
