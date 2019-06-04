@@ -37,11 +37,11 @@ app.use('/users', require('./users/users.controller'));
 app.use(errorHandler);
 
 const bots = directories.reduce((bots, dir) => {
-	if (fs.existsSync('./' + v + '/app.js')) {
+	if (fs.existsSync('./' + dir + '/app.js')) {
 	  bots.push({
-		name: v,
+		name: dir,
 		onClose: (code) => {
-		  console.log(timeStamp(), 'DATA FROM ' + v + ': Process exited with code ' + code)
+		  console.log(timeStamp(), 'DATA FROM ' + bot.name + ': Process exited with code ' + code)
 		  bot.process.removeListener('close', bot.onClose)
 		  bot.start()
 		},
