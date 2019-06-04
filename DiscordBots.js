@@ -38,7 +38,7 @@ app.use(errorHandler);
 
 const bots = directories.reduce((bots, dir) => {
 	if (fs.existsSync('./' + dir + '/app.js')) {
-	  bots.push({
+	  const bot = {
 		name: dir,
 		onClose: (code) => {
 		  console.log(timeStamp(), 'DATA FROM ' + bot.name + ': Process exited with code ' + code)
@@ -46,12 +46,12 @@ const bots = directories.reduce((bots, dir) => {
 		  bot.start()
 		},
 		start: () => {
-		  bot.process = fork(dir + '/app.js')
+		  bot.process = fork(bot.name + '/app.js')
 		  bot.process.on('close', bot.onClose)
 		  bot.sendMessage = (message) => {
 			return new Promise((resolve, reject) => {
 			  bot.onMessage = (message) => {
-				children[i].removeListener('message', bot.onMessage)
+				bot.process.removeListener('message', bot.onMessage)
 				resolve(message)
 			  }
 			  bot.process.on('message', bot.onMessage)
@@ -59,7 +59,8 @@ const bots = directories.reduce((bots, dir) => {
 			})
 		  }
 		}
-	  })
+	  }
+	  bots.push(bot)
 	}
 	return bots
   }, [])
