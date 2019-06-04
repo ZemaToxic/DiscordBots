@@ -56,26 +56,20 @@ directories.forEach(function (v) {
 				console.log(timeStamp(), 'DATA FROM ' + v + ': Process exited with code ' + code);
 				discordBots[v].start();
 			});
-			// Tell the bot we are ready to recieve data
-			bot.send('Ready');
 
-			// On recieved data
-			bot.on('message', (m) => {
-				app.get('/', (req, res) => {
-					res.json({
-						Info: 'Discord Bots by Zematoxic'
-					})
+			bot.sendMessage = (message) => {
+				return new Promise((resolve, reject) => {
+					bot.messageListener = (message) => {
+						bot.removeListener('message', bot.messageListener)
+						resolve(message)
+					}
+					bot.on('message', bot.messageListener)
+					bot.send(message)
 				})
+			}
 
-				app.get('/botinfo', (req, res) => {
-					res.json(m.botinfo)
-				})
-
-				app.get('/commands', (req, res) => {
-					res.json(m.commands)
-				})
-				bot.send('Ready');
-			})
+			Promise.all(bot.map((bots, i) => bots.sendMessage(i)))
+				.then((results) => console.log('Results: ', results))
 		}
 		// Start all bots
 		discordBots[v].start();
