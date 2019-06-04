@@ -210,22 +210,25 @@ process.on("error",
         console.error("Error happened: \n ", err);
     });
 
-process.on('message', () => {
-    let clientSend = client;
-    let duration = moment.duration(clientSend.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
+process.on('message', (m) => {
+    let response;
+    let duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     let commands = client.commands.map(command => ({command: command.name, description: command.description}))
     let botinfo = {
-        Name: clientSend.username,
-        Users: clientSend.users.size,
+        Name: client.username,
+        Users: client.users.size,
         MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + ' MB',
         BotUptime: duration,
-        Servers: clientSend.guilds.size,
-        Channels: clientSend.channels.size,
+        Servers: client.guilds.size,
+        Channels: client.channels.size,
         DiscordjsVersion: Discord.version,
         NodejsVersion: process.version
     }
-    process.send({
-        commands: /*{ZemaBot:*/ commands/*}*/,
-        botinfo: botinfo
-    })
+    switch (m) {
+        case 'botinfo': response = { botinfo }
+        case 'commands': response = { commands }
+        default: response = { m: 'no u' }
+      }
+    process.send(response)
+
 })

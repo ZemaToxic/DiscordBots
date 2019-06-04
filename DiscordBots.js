@@ -67,6 +67,20 @@ const bots = directories.reduce((bots, dir) => {
   
   bots.forEach((bot) => bot.start())
 
+  app.get('/', (req, res) => {
+	res.json({
+		Info: 'Discord Bots by Zematoxic'
+	})
+  })
+
+  app.get('/botinfo', async (req, res) => {
+	res.json(await Promise.all(bots.map((bot) => bot.sendMessage('botinfo'))))
+  })
+  app.get('/commands', async (req, res) => {
+	res.json(await Promise.all(bots.map((bot) => bot.sendMessage('comands'))))
+  })
+
+
 // Sset up http
 app.listen(3001, () => console.log('Express HTTP Started'));
 
