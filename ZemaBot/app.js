@@ -226,8 +226,10 @@ process.on('message', (m) => {
     }
     switch (m) {
         case 'botinfo': response = { botinfo }
+            break;
         case 'commands': response = { commands }
-        default: response = { m: 'no u' }
+            break;
+        default: response = { response: 'is not a valid api route' }
       }
     process.send(response)
 
