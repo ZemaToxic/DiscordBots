@@ -11,10 +11,8 @@ function jwt() {
             // public routes that don't require authentication
             '/users/authenticate',
             '/users/register',
-            '/zemabot/botinfo',
-            '/cy_net/botinfo',
-            '/zemabot/commands',
-            '/cy_net/commands'
+            '/botinfo',
+            '/commands'
         ]
     });
 }

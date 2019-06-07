@@ -36,52 +36,52 @@ app.use('/users', require('./users/users.controller'));
 // global error handler
 app.use(errorHandler);
 
-directories.forEach(function (v) {
-	// Search through each folder looking for app.js
-	console.log(timeStamp(), 'Searching for ./' + v + '/app.js');
-
-	if (fs.existsSync('./' + v + '/app.js')) {
-
-		// Make a new [object?] for each bot client
-		discordBots[v] = {};
-		discordBots[v].start = function () {
-
-			// Start up a new bot client
-			console.log(timeStamp(), 'Starting Bot ' + v);
-
-			const bot = discordBots[v].process = fork(v + '/app.js')
-
-			// What to do when each bot child closes
-			bot.on('close', (code) => {
-				console.log(timeStamp(), 'DATA FROM ' + v + ': Process exited with code ' + code);
-				discordBots[v].start();
-			});
-			// Tell the bot we are ready to recieve data
-			bot.send('Ready');
-
-			// On recieved data
-			bot.on('message', (m) => {
-				v.toLowerCase();
-				app.get('/', (req, res) => {
-					res.json({
-						Info: 'Discord Bots by Zematoxic'
-					})
-				})
-
-				app.get(`${v}/botinfo`, (req, res) => {
-					res.json(m.botinfo)
-				})
-
-				app.get(`${v}/commands`, (req, res) => {
-					res.json(m.commands)
-				})
-				bot.send('Ready');
+const bots = directories.reduce((bots, dir) => {
+	if (fs.existsSync('./' + dir + '/app.js')) {
+	  const bot = {
+		name: dir,
+		onClose: (code) => {
+		  console.log(timeStamp(), 'DATA FROM ' + bot.name + ': Process exited with code ' + code)
+		  bot.process.removeListener('close', bot.onClose)
+		  bot.start()
+		},
+		start: () => {
+		  bot.process = fork(bot.name + '/app.js')
+		  bot.process.on('close', bot.onClose)
+		  bot.sendMessage = (message) => {
+			return new Promise((resolve, reject) => {
+			  bot.onMessage = (message) => {
+				bot.process.removeListener('message', bot.onMessage)
+				resolve(message)
+			  }
+			  bot.process.on('message', bot.onMessage)
+			  bot.process.send(message)
 			})
+		  }
 		}
-		// Start all bots
-		discordBots[v].start();
-	};
-});
+	  }
+	  bots.push(bot)
+	}
+	return bots
+  }, [])
+  
+  bots.forEach((bot) => bot.start());
+
+  dir.toLowerCase();
+
+  app.get('/', (req, res) => {
+	res.json({
+		Info: 'Discord Bots by Zematoxic'
+	})
+  })
+
+  app.get('/botinfo', async (req, res) => {
+	res.json(await Promise.all(bots.map((bot) => bot.sendMessage('botinfo'))))
+  })
+  app.get('/commands', async (req, res) => {
+	res.json(await Promise.all(bots.map((bot) => bot.sendMessage('commands'))))
+  })
+
 
 // Sset up http
 app.listen(3001, () => console.log('Express HTTP Started'));
