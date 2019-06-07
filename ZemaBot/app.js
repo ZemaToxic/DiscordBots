@@ -214,7 +214,7 @@ process.on('message', (m) => {
     let response;
     let duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     let ZemaBot = client.commands.map(command => ({name: command.name, description: command.description}))
-    let botinfo = {
+    let ZemaBot_Info = {
         Name: client.username,
         Users: client.users.size,
         MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + ' MB',
@@ -225,7 +225,7 @@ process.on('message', (m) => {
         NodejsVersion: process.version
     }
     switch (m) {
-        case 'botinfo': response = { botinfo }
+        case 'botinfo': response = { ZemaBot_Info }
             break;
         case 'commands': response = { ZemaBot }
             break;
