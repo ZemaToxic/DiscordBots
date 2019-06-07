@@ -67,8 +67,6 @@ const bots = directories.reduce((bots, dir) => {
   
   bots.forEach((bot) => bot.start());
 
-  dir.toLowerCase();
-
   app.get('/', (req, res) => {
 	res.json({
 		Info: 'Discord Bots by Zematoxic'
