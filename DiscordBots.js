@@ -74,10 +74,12 @@ const bots = directories.reduce((bots, dir) => {
   })
 
   app.get('/botinfo', async (req, res) => {
-	res.json(await Promise.all(bots.map((bot) => bot.sendMessage('botinfo'))))
+	let response = await Promise.all(bots.map((bot) => bot.sendMessage('botinfo')))
+	res.json(response[0])
   })
   app.get('/commands', async (req, res) => {
-	res.json(await Promise.all(bots.map((bot) => bot.sendMessage('commands'))))
+	  let response = await Promise.all(bots.map((bot) => bot.sendMessage('commands')))
+	  res.json(response[0])
   })
 
 

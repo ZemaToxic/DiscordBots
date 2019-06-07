@@ -213,7 +213,7 @@ process.on("error",
 process.on('message', (m) => {
     let response;
     let duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
-    let commands = client.commands.map(command => ({command: command.name, description: command.description}))
+    let ZemaBot = client.commands.map(command => ({name: command.name, description: command.description}))
     let botinfo = {
         Name: client.username,
         Users: client.users.size,
@@ -227,7 +227,7 @@ process.on('message', (m) => {
     switch (m) {
         case 'botinfo': response = { botinfo }
             break;
-        case 'commands': response = { commands }
+        case 'commands': response = { ZemaBot }
             break;
         default: response = { response: 'is not a valid api route' }
       }
