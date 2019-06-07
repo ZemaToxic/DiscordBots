@@ -225,12 +225,11 @@ process.on('message', (m) => {
         NodejsVersion: process.version
     }
     switch (m) {
-        case 'botinfo': response = botinfo
+        case 'botinfo': response = { botinfo }
             break;
-        case 'commands': response = commands
+        case 'commands': response = { commands }
             break;
         default: response = { response: 'is not a valid api route' }
       }
     process.send(response)
-
 })
