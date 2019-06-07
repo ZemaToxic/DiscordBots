@@ -61,17 +61,18 @@ directories.forEach(function (v) {
 
 			// On recieved data
 			bot.on('message', (m) => {
+				v.toLowerCase();
 				app.get('/', (req, res) => {
 					res.json({
 						Info: 'Discord Bots by Zematoxic'
 					})
 				})
 
-				app.get('/botinfo', (req, res) => {
+				app.get(`${v}/botinfo`, (req, res) => {
 					res.json(m.botinfo)
 				})
 
-				app.get('/commands', (req, res) => {
+				app.get(`${v}/commands`, (req, res) => {
 					res.json(m.commands)
 				})
 				bot.send('Ready');
