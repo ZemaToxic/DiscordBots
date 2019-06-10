@@ -228,12 +228,10 @@ module.exports = {
 			.addField("Purged by:", purger[0], true)
 			.setTimestamp(new Date());
 
-		// Send the message to the Mod Channel
-		client.channels.get(client.settings.get('402404101713035264')).send(embed, {
-			split: true
-		}).catch(e => {
-			console.log(e);
-		});
+		if (client.channels.get(clientSettings.get(firstChannel.guild.id).modLogChannel)) {
+			// Send the message to the Mod Channel
+			client.channels.get(clientSettings.get(firstChannel.guild.id).modLogChannel).send(embed, { split: true }).catch(e => { console.log(e); });
+		}
 	},
 
 	// error Handler.

@@ -15,27 +15,13 @@ module.exports = {
         if (!message.channel) {
             return;
         } else {
-            //const member = (message.mentions.members.first() || message.guild.members.get(args[0]) || message.member);
-            
-            const r = /^<@!?(\d+)>$/;
-            const resolveMember = (message, value) => {
-              const e = r.exec(value);
-              if (e !== null) {
-                return msg.channel.guild.members.get(e[1]);
-              }
-              const v = value.toLowerCase();
-              for (const member of msg.channel.guild.members.values()) {
-                if (member.user.username.toLowerCase().includes(v) ||
-                  member.nick !== null && member.nick.toLowerCase().includes(v)) {
-                  return member;
-                }
-              }
-            }
+            const resolveMember = (message, (message.mentions.members.first() || message.guild.members.get(args[0]) || message.member));            
+
             if (!resolveMember) return message.reply("Please provide a vaild Mention or USER ID");
 
             let bot = "No";
             let mod = "No";
-            if (resolveMember.user.bot === true) {
+            if (resolveMember.bot === true) {
                 bot = "Yes";
             }
             if (resolveMember.roles.has(guildConf.modRole) === true) {
