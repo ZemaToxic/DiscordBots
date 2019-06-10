@@ -174,8 +174,8 @@ client.on("message",
             return;
         }
         // Check if its in a Mod command.
-        else if ((client.modCommands.get(commands) && (message.member.roles.has(guildConf.modRole)) 
-        || ((message.guild.owner.user.username === message.author.username) || (message.author.id === clientData.OwnerID)))) {
+        else if ((client.modCommands.get(commands)) && 
+        (message.member.roles.has(guildConf.modRole) || (message.guild.owner.user.username === message.author.username) || (message.author.id === clientData.OwnerID))) {
             client.modCommands.get(commands).execute(client, guildConf, message, args);
             return;
         }
