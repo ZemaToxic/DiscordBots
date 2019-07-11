@@ -148,12 +148,19 @@ client.on('message', message => {
 		}
 	}
 
+
+
 	// Return if message does not start with the prefix.
 	if (message.content.indexOf(guildConf.prefix) !== 0) return;
 
 	// Split the message up then remove the prefix
 	const args = message.content.split(/\s+/g);
-	const commands = args.shift().slice(guildConf.prefix.length).toLowerCase();
+	const commands = args.shift().slice(guildConf.prefix.length);
+
+	console.log(commands);
+	console.log(client.modCommands);
+	console.log(client.modCommands.get(commands));
+	console.log(message.member.roles.has(guildConf.modRole));
 
 	console.log(args);
 	console.log(commands);
