@@ -162,11 +162,6 @@ client.on('message', message => {
 	console.log(client.modCommands.get(commands));
 	console.log(message.member.roles.has(guildConf.modRole));
 
-	console.log(args);
-	console.log(commands);
-	console.log(client.modCommands.get(commands));
-	console.log(message.member.roles.has(guildConf.modRole));
-
 	// Check if its an Admin command.
 	if (client.adminCommands.get(commands) && (message.author.id === clientData.OwnerID)) {
 		client.adminCommands.get(commands).execute(client, guildConf, message, args);
