@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -18,85 +17,56 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
-    <Compile Include="commands\help.js" />
-    <Compile Include="commands\ping.js" />
-    <Compile Include="commands\randomcolour.js" />
-    <Compile Include="commands\serverinfo.js" />
-    <Compile Include="commands\stats.js" />
-    <Compile Include="commands\time.js" />
-    <Compile Include="commands\userinfo.js" />
-    <Compile Include="dbManager.js" />
     <Compile Include="includes\adminCommands\eval.js" />
-    <Compile Include="includes\adminCommands\resetDefaults.js" />
     <Compile Include="includes\adminCommands\restart.js" />
     <Compile Include="includes\adminCommands\setActivity.js" />
-    <Compile Include="includes\adminCommands\setPrefix.js" />
     <Compile Include="includes\commands\help.js" />
     <Compile Include="includes\commands\latency.js" />
     <Compile Include="includes\commands\ping.js" />
-    <Compile Include="includes\commands\quote.js" />
     <Compile Include="includes\commands\randomcolour.js" />
     <Compile Include="includes\commands\remindme.js" />
     <Compile Include="includes\commands\serverinfo.js" />
     <Compile Include="includes\commands\spotify.js" />
     <Compile Include="includes\commands\stats.js" />
-    <Compile Include="includes\commands\test.js" />
     <Compile Include="includes\commands\time.js" />
     <Compile Include="includes\commands\userinfo.js" />
     <Compile Include="includes\modCommands\modHelp.js" />
     <Compile Include="includes\modCommands\purge.js" />
-    <Compile Include="includes\modCommands\setModChannel.js" />
     <Compile Include="includes\modCommands\setModRole.js" />
     <Compile Include="includes\sillyStuff\imgur.js" />
-    <Compile Include="modCommands\modHelp.js" />
-    <Compile Include="modCommands\purge.js" />
-    <Compile Include="modCommands\resetDefaults.js" />
-    <Compile Include="modCommands\setActivity.js" />
-    <Compile Include="modCommands\setModChannel.js" />
-    <Compile Include="modCommands\setModRole.js" />
-    <Compile Include="modCommands\setPrefix.js" />
-    <Compile Include="Template.js" />
-    <Compile Include="Unused\Template.js" />
     <Compile Include="utility\eventHandler.js" />
     <Compile Include="utility\urlHandler.js" />
     <Compile Include="utility\utils.js" />
-    <Compile Include="utils.js" />
     <Content Include="database.sqlite" />
-    <Content Include="error.json" />
+    <Content Include="includes\adminCommands\admin.js" />
+    <Content Include="includes\commands\convert.js" />
+    <Content Include="includes\commands\weather.js" />
     <Content Include="includes\jsonFiles\ClientData.json" />
     <Content Include="includes\jsonFiles\imgur.json" />
     <Content Include="includes\jsonFiles\options.json" />
     <Content Include="includes\jsonFiles\spotify.json" />
-    <Content Include="jsonFiles\ClientData.json" />
-    <Content Include="jsonFiles\options.json" />
-    <Content Include="options.json" />
-    <Compile Include="eventHandler.js" />
-    <Compile Include="quote.js" />
     <Compile Include="app.js" />
+    <Content Include="includes\modCommands\toggleSillyStuff.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="includes\modCommands\setPrefix.js" />
+    <Content Include="includes\modCommands\setSettings.js" />
     <Content Include="package-lock.json" />
     <Content Include="package.json" />
-    <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="commands\" />
     <Folder Include="includes\" />
     <Folder Include="includes\adminCommands\" />
     <Folder Include="includes\commands\" />
     <Folder Include="includes\jsonFiles\" />
     <Folder Include="includes\modCommands\" />
     <Folder Include="includes\sillyStuff\" />
-    <Folder Include="jsonFiles\" />
-    <Folder Include="modCommands\" />
-    <Folder Include="Unused\" />
     <Folder Include="utility\" />
     <Folder Include="ZemaBot" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets"
-          Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
-  <Import
-    Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets"
-    Condition="False" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
   <ProjectExtensions>
     <VisualStudio>

@@ -12,8 +12,6 @@ module.exports = {
         // Update the prefix to the requested one.
         guildConf.prefix = newPrefix;
         // Tell the client the Prefix has been updated.
-        message.channel.send("The Bot's prefix has been changed to: " + newPrefix);
-       
-
+		message.channel.send("The Bot's prefix has been changed to: " + newPrefix);
     }
 };
