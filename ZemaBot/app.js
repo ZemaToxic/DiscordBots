@@ -93,6 +93,9 @@ client.on('ready', () => {
 	// Print to console that we have logged in.
 	console.log(`Logged in as ${client.user.tag}!`);
 	loadOptions(options);
+	// Set the activity
+	_setActivity();
+	// Make sure the activity is always there, by resetting it every 12 hours
 	setInterval(_setActivity, 43200); // 43200 -> 12 Hours
 });
 
