@@ -93,7 +93,7 @@ client.on('ready', () => {
 	// Print to console that we have logged in.
 	console.log(`Logged in as ${client.user.tag}!`);
 	loadOptions(options);
-	setInterval(_setActivity(), 43200); // 43200 -> 12 Hours
+	setInterval(_setActivity, 43200); // 43200 -> 12 Hours
 });
 
 // Member Joins
