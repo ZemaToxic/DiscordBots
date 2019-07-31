@@ -77,6 +77,15 @@ for (const file of sillyStuffFiles) {
 	client.sillyStuff.set(sillycommand.name, sillycommand);
 }
 
+function _setActivity() {
+	// Set the Activity to what is saved.
+	client.user.setActivity(options.Activity,
+		{
+			name: 'game',
+			type: 0
+		});
+}
+
 // ---------- Event Handlers ----------
 
 // Bot is Ready to communicate
@@ -84,12 +93,7 @@ client.on('ready', () => {
 	// Print to console that we have logged in.
 	console.log(`Logged in as ${client.user.tag}!`);
 	loadOptions(options);
-	// Set the Activity to what is saved.
-	client.user.setActivity(options.Activity,
-		{
-			name: 'game',
-			type: 0
-		});
+	setInterval(_setActivity(), 43200); // 43200 -> 12 Hours
 });
 
 // Member Joins
