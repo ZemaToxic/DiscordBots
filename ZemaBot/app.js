@@ -21,13 +21,7 @@ require('moment-duration-format');
 
 // Enmap setup 
 const Enmap = require('enmap');
-
-client.settings = new Enmap({
-	name: 'settings',
-	fetchAll: false,
-	autoFetch: true,
-	cloneLevel: 'deep'
-});
+client.settings = new Enmap({ name: 'settings', fetchAll: false, autoFetch: true, cloneLevel: 'deep' });
 
 // Just setting up a default configuration object here, to have somethign to insert.
 const defaultSettings = {
@@ -57,33 +51,17 @@ adminCommandFiles = fs.readdirSync('./includes/adminCommands').filter(file => fi
 sillyStuffFiles = fs.readdirSync('./includes/sillyStuff').filter(file => file.endsWith('.js'));
 
 // Iterate through and add them to the client.commands Collection.
-for (const file of commandFiles) {
-	const command = require(`./includes/commands/${file}`);
-	client.commands.set(command.name, command);
-}
+for (const file of commandFiles) { const command = require(`./includes/commands/${file}`); client.commands.set(command.name, command); }
 // Iterate through and add them to the client.modCommands Collection.
-for (const file of modCommandFiles) {
-	const modcommand = require(`./includes/modCommands/${file}`);
-	client.modCommands.set(modcommand.name, modcommand);
-}
+for (const file of modCommandFiles) { const modcommand = require(`./includes/modCommands/${file}`); client.modCommands.set(modcommand.name, modcommand); }
 // Iterate through and add them to the client.adminCommands Collection.
-for (const file of adminCommandFiles) {
-	const admincommand = require(`./includes/adminCommands/${file}`);
-	client.adminCommands.set(admincommand.name, admincommand);
-}
+for (const file of adminCommandFiles) { const admincommand = require(`./includes/adminCommands/${file}`); client.adminCommands.set(admincommand.name, admincommand); }
 // Iterate through and add them to the client.sillyStuff Collection.
-for (const file of sillyStuffFiles) {
-	const sillycommand = require(`./includes/sillyStuff/${file}`);
-	client.sillyStuff.set(sillycommand.name, sillycommand);
-}
+for (const file of sillyStuffFiles) { const sillycommand = require(`./includes/sillyStuff/${file}`); client.sillyStuff.set(sillycommand.name, sillycommand); }
 
 function _setActivity() {
 	// Set the Activity to what is saved.
-	client.user.setActivity(options.Activity,
-		{
-			name: 'game',
-			type: 0
-		});
+	client.user.setActivity(options.Activity, { name: 'game', type: 0 }); 
 }
 
 // ---------- Event Handlers ----------
@@ -100,44 +78,21 @@ client.on('ready', () => {
 });
 
 // Member Joins
-client.on('guildMemberAdd', member => {
-	eventHandler.memberAdd(client, client.settings, member);
-});
-
+client.on('guildMemberAdd', member => { eventHandler.memberAdd(client, client.settings, member); });
 // Member leaves or is kicked
-client.on('guildMemberRemove', member => {
-	eventHandler.memberRemove(client, client.settings, member);
-});
-
+client.on('guildMemberRemove', member => { eventHandler.memberRemove(client, client.settings, member); });
 // Client Name change / new roles
-client.on('guildMemberUpdate', (oldMember, newMember) => {
-	eventHandler.memberUpdate(client, client.settings, oldMember, newMember);
-});
-
+client.on('guildMemberUpdate', (oldMember, newMember) => { eventHandler.memberUpdate(client, client.settings, oldMember, newMember); });
 // Member Banned
-client.on('guildBanAdd', member => {
-	eventHandler.banAdd(client, client.settings, member);
-});
-
+client.on('guildBanAdd', member => { eventHandler.banAdd(client, client.settings, member); });
 // Message gets deleted
-client.on('messageDelete', message => {
-	eventHandler.messageDelete(client, client.settings, message);
-});
-
+client.on('messageDelete', message => { eventHandler.messageDelete(client, client.settings, message); });
 // Message edited
-client.on('messageUpdate', (oldMessage, newMessage) => {
-	eventHandler.messageUpdate(client, client.settings, oldMessage, newMessage);
-});
-
-// Bulk Message deleted.f
-client.on('messageDeleteBulk', messages => {
-	eventHandler.bulkDelete(client, client.settings, messages);
-});
-
+client.on('messageUpdate', (oldMessage, newMessage) => { eventHandler.messageUpdate(client, client.settings, oldMessage, newMessage); });
+// Bulk Message deleted.
+client.on('messageDeleteBulk', messages => { eventHandler.bulkDelete(client, client.settings, messages); });
 // Client experiances an error
-client.on('error', error => {
-	eventHandler.errorHandler(client, client.settings, error);
-});
+client.on('error', error => { eventHandler.errorHandler(client, client.settings, error); });
 
 // Client recieves a message
 client.on('message', message => {
@@ -147,15 +102,7 @@ client.on('message', message => {
 
 	const guildConf = client.settings.ensure(message.guild.id, defaultSettings);
 
-	if (guildConf.sillyStuff == 'true') {
-		var stringToTest = message.content.toLowerCase();
-
-		if (stringToTest.match(/(^| )heck($|.)/g)) {
-			client.sillyStuff.get('heck').execute(message);
-		}
-	}
-
-
+	if (guildConf.sillyStuff == 'true') { var stringToTest = message.content.toLowerCase(); if (stringToTest.match(/(^| )heck($|.)/g)) { client.sillyStuff.get('heck').execute(message); } }
 
 	// Return if message does not start with the prefix.
 	if (message.content.indexOf(guildConf.prefix) !== 0) return;
@@ -165,63 +112,19 @@ client.on('message', message => {
 	const commands = args.shift().slice(guildConf.prefix.length);
 
 	// Check if its an Admin command.
-	if (client.adminCommands.get(commands) && (message.author.id === clientData.OwnerID)) {
-		client.adminCommands.get(commands).execute(client, guildConf, message, args);
-		return;
-	}
+	if (client.adminCommands.get(commands) && (message.author.id === clientData.OwnerID)) { client.adminCommands.get(commands).execute(client, guildConf, message, args); return; }
 	// Check if its in a Mod command.
-	if (client.modCommands.get(commands) && (message.member.roles.has(guildConf.modRole))) {
-		client.modCommands.get(commands).execute(client, guildConf, message, args);
-		return;
-	}
+	if (client.modCommands.get(commands) && (message.member.roles.has(guildConf.modRole))) { client.modCommands.get(commands).execute(client, guildConf, message, args); return; }
 	// Check if its a normal command.
-	if (client.commands.get(commands)) {
-		client.commands.get(commands).execute(client, guildConf, message, args);
-		return;
-	}
+	if (client.commands.get(commands)) { client.commands.get(commands).execute(client, guildConf, message, args); return; }
 	// Else error out.
-	else {
-		message.reply('that is not a command use ' + guildConf.prefix + 'help, to see the list of commands.');
-		return;
-	}
+	else { message.reply('that is not a command use ' + guildConf.prefix + 'help, to see the list of commands.'); return; }
 });
 
 // Log the bot in.
 client.login(clientData.Token);
 
 // Process listeners 
-process.on('exit', (code) => {
-	console.log('Bot exited with code: ' + code);
-});
-
-process.on('unhandledRejection', err => {
-	console.error('Unhandled Rejection: \n', err);
-});
-
-process.on('error', err => {
-	console.error('Error happened: \n ', err);
-});
-
-process.on('message', (m) => {
-	let response;
-	let duration = moment.duration(client.uptime).format(' D [days], H [hrs], m [mins], s [secs]');
-	let ZemaBot = client.commands.map(command => ({ name: command.name, description: command.description }));
-	let ZemaBot_Info = {
-		Name: client.user.tag,
-		Users: client.users.size,
-		MemoryUsage: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + ' MB',
-		BotUptime: duration,
-		Servers: client.guilds.size,
-		Channels: client.channels.size,
-		DiscordjsVersion: Discord.version,
-		NodejsVersion: process.version
-	};
-	switch (m) {
-		case 'botinfo': response = { ZemaBot_Info };
-			break;
-		case 'commands': response = { ZemaBot };
-			break;
-		default: response = { response: 'is not a valid api route' };
-	}
-	process.send(response);
-});
+process.on('exit', (code) => { console.log('Bot exited with code: ' + code); }); 
+process.on('unhandledRejection', err => { console.error('Unhandled Rejection: \n', err); });
+process.on('error', err => { console.error('Error happened: \n ', err); });
