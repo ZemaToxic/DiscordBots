@@ -9,18 +9,11 @@ module.exports = {
 
         weather.find({ search: args, degreeType: "C" },
             function(err, result) {
-                if (result === undefined || result.length === 0) {
-                    message.reply("please enter in a location");
-                    return;
-                } else if (err) {
-                    console.log(err);
-                    return;
-                }
+                if (result === undefined || result.length === 0) { message.reply("please enter in a location"); return; } 
+                else if (err) { console.log(err); return; }
 
                 let alert = result[0].location.alert;
-                if (!alert) {
-                    alert = "No Alerts";
-                }
+                if (!alert) { alert = "No Alerts"; }
 
                 const embed = new Discord.RichEmbed()
                     .setDescription(`**Weather for ${result[0].current.observationpoint}**`)

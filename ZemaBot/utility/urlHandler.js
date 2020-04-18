@@ -31,8 +31,8 @@ function extractURLData(url) {
     return data;
 }
 
-module.exports = {  
-    imgurDecoder: function(searchValue) {
+module.exports = {
+    imgurDecoder: function (searchValue) {
         return new Promise((resolve, reject) => {
             var options = {
                 'method': "GET",
@@ -42,7 +42,7 @@ module.exports = {
                     'Authorization': `Client-ID ${imgurClient.ClientID}`
                 }
             };
-            var req = https.request(options, function(results) {
+            var req = https.request(options, function (results) {
                 var decoder = new StringDecoder("utf8")
                 var body = " ";
                 results
@@ -54,21 +54,21 @@ module.exports = {
                             ? resolve(json)
                             : reject(json)
                     })
-                }).on('error', reject)
+            }).on('error', reject)
             req.end();
         })
     },
-    urlHandler: function(url) {
+    urlHandler: function (url) {
         return new Promise((resolve, reject) => {
             var data = extractURLData(url);
-            var options = 
+            var options =
             {
                 'host': data.domain,
                 'port': data.port,
                 'path': "/" + data.path,
                 'method': "GET"
             };
-            var req = https.request(options, function(results) {
+            var req = https.request(options, function (results) {
                 var decoder = new StringDecoder("utf8")
                 var body = " ";
                 results
@@ -80,7 +80,7 @@ module.exports = {
                             ? resolve(json)
                             : reject(json)
                     })
-                }).on('error', reject)
+            }).on('error', reject)
             req.end();
         })
     }

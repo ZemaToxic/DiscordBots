@@ -4,32 +4,22 @@ const Discord = require("discord.js");
 const util = require("util");
 
 // credentials are optional
-const spotifyApi = new SpotifyWebApi({
-    clientId: spotifyCreds.Client_ID,
-    clientSecret: spotifyCreds.Client_Secret,
-});
+const spotifyApi = new SpotifyWebApi({ clientId: spotifyCreds.Client_ID, clientSecret: spotifyCreds.Client_Secret, });
 
 // Retrieve an access token
-spotifyApi.clientCredentialsGrant().then(
-    function(data) {
-        // Save the access token so that it's used in future calls
-        spotifyApi.setAccessToken(data.body["access_token"]);
-    },
-    function(err) {
-        console.log("Something went wrong when retrieving an access token", err.message);
-    }
-);
+spotifyApi.clientCredentialsGrant().then(function (data) {
+    // Save the access token so that it's used in future calls
+    spotifyApi.setAccessToken(data.body["access_token"]);
+}, function (err) { console.log("Something went wrong when retrieving an access token", err.message); });
 
 async function getCreds() {
     // Retrieve an access token
     spotifyApi.clientCredentialsGrant().then(
-        function(data) {
+        function (data) {
             // Save the access token so that it's used in future calls
             spotifyApi.setAccessToken(data.body["access_token"]);
         },
-        function(err) {
-            console.log("Something went wrong when retrieving an access token", err.message);
-        }
+        function (err) { console.log("Something went wrong when retrieving an access token", err.message); }
     );
     return "Complete";
 }
@@ -42,26 +32,20 @@ module.exports = {
     description: "",
     async execute(client, guildConf, message, args) {
         await getCreds()
-            .then(function() {
+            .then(function () {
                 // Search for a song
                 if (args[0] === "song") {
                     newArgs = args.slice(1);
                     // Join the incominng args
                     searchQuery = newArgs.join(" ");
                     // search for the message
-                    spotifyApi.searchTracks(searchQuery,
-                            {
-                                limit: 25,
-                            })
-                        .then(function(data) {
+                    spotifyApi.searchTracks(searchQuery, { limit: 25, })
+                        .then(function (data) {
                             // Go through the first page of results
                             const firstPage = data.body.tracks.items;
 
                             var messageToSend = [];
-                            firstPage.forEach(function(track, index) {
-                                messageToSend.push(track);
-                            });
-
+                            firstPage.forEach(function (track, index) { messageToSend.push(track); });
                             messageToSend.sort((first, next) => first.popularity - next.popularity).reverse();
 
                             const returnedSong = messageToSend[0];
@@ -86,56 +70,40 @@ module.exports = {
                     newArgs = args.slice(1);
                     // Join the incominng args
                     searchQuery = newArgs.join(" ");
-                    spotifyApi.searchTracks(searchQuery,
-                            {
-                                limit: 25,
-                            })
-                        .then(function(data) {
+                    spotifyApi.searchTracks(searchQuery, { limit: 25, })
+                        .then(function (data) {
                             // Go through the first page of results
                             const firstPage = data.body.tracks.items;
 
                             var messageToSend = [];
-                            firstPage.forEach(function(track, index) {
-                                messageToSend.push(track);
-                            });
+                            firstPage.forEach(function (track, index) { messageToSend.push(track); });
 
                             messageToSend.sort((first, next) => first.popularity - next.popularity).reverse();
 
                             artistID = messageToSend[0].album.artists[0].id;
                             return artistID;
                         })
-                        .then(function() {
+                        .then(function () {
                             // Get albums by a certain artist
-                            spotifyApi.getArtistAlbums(artistID,
-                                    {
-                                        type: "album",
-                                        limit: "25"
-                                    })
-                                .then(function(data) {
-                                        var albums = data.body.items;
-                                        var albumNames = "";
-                                        albums.forEach(element => {
-                                            albumNames = albumNames + element.name + "\n";
-                                        });
+                            spotifyApi.getArtistAlbums(artistID, { type: "album", limit: "25" })
+                                .then(function (data) {
+                                    var albums = data.body.items;
+                                    var albumNames = "";
+                                    albums.forEach(element => { albumNames = albumNames + element.name + "\n"; });
 
-                                        var arr = albumNames.split("\n");
+                                    var arr = albumNames.split("\n");
 
-                                        albumNames = arr.filter(function(value, index, self) {
-                                            return self.indexOf(value) === index;
-                                        }).join("\n");
+                                    albumNames = arr.filter(function (value, index, self) { return self.indexOf(value) === index; }).join("\n");
 
-                                        const embed = new Discord.RichEmbed()
-                                            .setTitle(`Abums from: ${searchQuery}`)
-                                            .setColor("#84bd00")
-                                            .addField("Albums", albumNames)
-                                            .setTimestamp(new Date());
+                                    const embed = new Discord.RichEmbed()
+                                        .setTitle(`Abums from: ${searchQuery}`)
+                                        .setColor("#84bd00")
+                                        .addField("Albums", albumNames)
+                                        .setTimestamp(new Date());
 
-                                        message.channel.send(embed);
-                                    },
-                                    function(err) {
-                                        console.error(err);
-                                    });
-
+                                    message.channel.send(embed);
+                                },
+                                    function (err) { console.error(err); });
                         });
                 }
                 // Search for tracks from a specific album
@@ -146,55 +114,33 @@ module.exports = {
                     // Join the incominng args
                     searchQuery = newArgs.join(" ");
                     // Get tracks in an album
-                    spotifyApi.searchTracks(searchQuery,
-                                {
-                                    limit: 25,
-                                })
-                            .then(function(data) {
-                                // Go through the first page of results
-                                const firstPage = data.body.tracks.items;
+                    spotifyApi.searchTracks(searchQuery, { limit: 25, })
+                        .then(function (data) {
+                            // Go through the first page of results
+                            const firstPage = data.body.tracks.items;
+                            firstPage.forEach(function (track, index) { messageToSend.push(track); });
+                            messageToSend.sort((first, next) => first.popularity - next.popularity).reverse();
+                            trackID = messageToSend[0].album.id;
+                            return trackID;
+                        })
+                        .then(function () {
+                            spotifyApi.getAlbumTracks(trackID, { limit: 20 })
+                                .then(function (data) {
+                                    const tracks = data.body.items;
+                                    const embed = new Discord.RichEmbed()
+                                        .setTitle(`Tracklist for album ${searchQuery}`)
+                                        .setDescription(`Album link: ${messageToSend[0].album.external_urls.spotify}`)
+                                        .setColor("#84bd00")
+                                        .setThumbnail(messageToSend[0].album.images[0].url);
 
-                                firstPage.forEach(function(track, index) {
-                                    messageToSend.push(track);
-                                });
-
-                                messageToSend.sort((first, next) => first.popularity - next.popularity).reverse();
-
-                                trackID = messageToSend[0].album.id;
-                                return trackID;
-                            })
-                            .then(function() {
-                                spotifyApi.getAlbumTracks(trackID,
-                                        {
-                                            limit: 20
-                                        })
-                                    .then(function(data) {
-                                            const tracks = data.body.items;
-                                            const embed = new Discord.RichEmbed()
-                                                .setTitle(`Tracklist for album ${searchQuery}`)
-                                                .setDescription(
-                                                    `Album link: ${messageToSend[0].album.external_urls.spotify}`)
-                                                .setColor("#84bd00")
-                                                .setThumbnail(messageToSend[0].album.images[0].url);
-
-                                            tracks.forEach(function(track, index) {
-                                                embed.addField(`Track ${track.track_number}:`,
-                                                    track.name + " - " + convertMilli(track.duration_ms));
-                                            });
-                                            message.channel.send(embed);
-                                        },
-                                        function(err) {
-                                            console.log("Something went wrong!", err);
-                                        });
-
-                            }),
-                        function(err) {
-                            console.error(err);
-                        };
+                                    tracks.forEach(function (track, index) { embed.addField(`Track ${track.track_number}:`, track.name + " - " + convertMilli(track.duration_ms)); });
+                                    message.channel.send(embed);
+                                },
+                                    function (err) { console.log("Something went wrong!", err); });
+                        }),
+                        function (err) { console.error(err); };
                 }
-
             });
-
     }
 };
 

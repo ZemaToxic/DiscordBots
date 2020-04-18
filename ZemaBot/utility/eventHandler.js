@@ -68,9 +68,9 @@ module.exports = {
 				.setTimestamp(new Date());
 
 
-			if (client.channels.get(clientSettings.get(member.guild.id).modLogChannel)) {
+			if (client.channels.get(clientSettings.get(oldMember.guild.id).modLogChannel)) {
 				// Send the message to the Mod Channel
-				client.channels.get(clientSettings.get(member.guild.id).modLogChannel).send(embed);
+				client.channels.get(clientSettings.get(oldMember.guild.id).modLogChannel).send(embed);
 			}
 
 			return;
@@ -104,9 +104,9 @@ module.exports = {
 					.setTimestamp(new Date());
 
 
-				if (client.channels.get(clientSettings.get(member.guild.id).modLogChannel)) {
+				if (client.channels.get(clientSettings.get(oldMember.guild.id).modLogChannel)) {
 					// Send the message to the Mod Channel
-					client.channels.get(clientSettings.get(member.guild.id).modLogChannel).send(embed);
+					client.channels.get(clientSettings.get(oldMember.guild.id).modLogChannel).send(embed);
 				}
 
 			}
@@ -122,9 +122,9 @@ module.exports = {
 					.setColor(0xFF7700)
 					.setTimestamp(new Date());
 
-				if (client.channels.get(clientSettings.get(member.guild.id).modLogChannel)) {
+				if (client.channels.get(clientSettings.get(oldMember.guild.id).modLogChannel)) {
 					// Send the message to the Mod Channel
-					client.channels.get(clientSettings.get(member.guild.id).modLogChannel).send(embed);
+					client.channels.get(clientSettings.get(oldMember.guild.id).modLogChannel).send(embed);
 				}
 
 			}
@@ -251,16 +251,8 @@ module.exports = {
 
 // Custom function used in memberUpdate.
 function filterArray(src, filt) {
-	var temp = {},
-		i,
-		result = [];
-	for (i = 0; i < filt.length; i++) {
-		temp[filt[i]] = true;
-	}
-	for (i = 0; i < src.length; i++) {
-		if (!(src[i] in temp)) {
-			result.push(src[i]);
-		}
-	}
+	var temp = {}, i, result = [];
+	for (i = 0; i < filt.length; i++) { temp[filt[i]] = true; }
+	for (i = 0; i < src.length; i++) { if (!(src[i] in temp)) { result.push(src[i]); } }
 	return result;
 }
