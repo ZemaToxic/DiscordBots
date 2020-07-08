@@ -89,7 +89,7 @@ module.exports = {
         const serverSettings ={}
         guilds.forEach(element => {
             return new Promise((resolve, reject) => {
-                fetch(`localhost:3001/discord?serverID=${element.id}`)
+                fetch(`https://localhost:3001/discord?serverID=${element.id}`)
                     .then(res => res.json())
                     .then((data) => {
                         resolve(data)
