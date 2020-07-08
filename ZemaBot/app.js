@@ -15,23 +15,7 @@ let options = {}; // -- Used for prefix and activity etc.
 const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
-
-const moment = require('moment');
-require('moment-duration-format');
-
-// Enmap setup 
-const Enmap = require('enmap');
-client.settings = new Enmap({ name: 'settings', fetchAll: false, autoFetch: true, cloneLevel: 'deep' });
-
-// Just setting up a default configuration object here, to have somethign to insert.
-const defaultSettings = {
-	prefix: '!',
-	modLogChannel: 'mod-log',
-	modRole: 'Moderator',
-	adminRole: 'Administrator',
-	ignoreChannel: 'IgnoreThis',
-	sillyStuff: 'false'
-};
+const urlHandler = require('./utility/urlHandler')
 
 // New collections of Commands
 client.commands = new Discord.Collection();
@@ -59,22 +43,21 @@ for (const file of adminCommandFiles) { const admincommand = require(`./includes
 // Iterate through and add them to the client.sillyStuff Collection.
 for (const file of sillyStuffFiles) { const sillycommand = require(`./includes/sillyStuff/${file}`); client.sillyStuff.set(sillycommand.name, sillycommand); }
 
-function _setActivity() {
-	// Set the Activity to what is saved.
-	client.user.setActivity(options.Activity, { name: 'game', type: 0 }); 
-}
+// Set the Activity to what is saved.
+function setActivity() { client.user.setActivity(options.Activity, { name: 'game', type: 0 }); }
 
 // ---------- Event Handlers ----------
 
 // Bot is Ready to communicate
-client.on('ready', () => {
+client.on('ready', async () => {
 	// Print to console that we have logged in.
 	console.log(`Logged in as ${client.user.tag}!`);
 	loadOptions(options);
 	// Set the activity
-	_setActivity();
+	setActivity();
 	// Make sure the activity is always there, by resetting it every 12 hours
-	setInterval(_setActivity, 43200); // 43200 -> 12 Hours
+	setInterval(setActivity, 43200); // 43200 -> 12 Hours
+	client.settings = await urlHandler.fetchDatabase(client.guilds)
 });
 
 // Member Joins
@@ -96,29 +79,28 @@ client.on('error', error => { eventHandler.errorHandler(client, client.settings,
 
 // Client recieves a message
 client.on('message', message => {
-
 	if (message.channel.id === client.settings.ignoreChannel) return;
 	if (message.author.bot) return;
 
-	const guildConf = client.settings.ensure(message.guild.id, defaultSettings);
+	const guildConf = client.settings[message.guild.id];
 
-	if (guildConf.sillyStuff == 'true') { var stringToTest = message.content.toLowerCase(); if (stringToTest.match(/(^| )heck($|.)/g)) { client.sillyStuff.get('heck').execute(message); } }
+	if (guildConf[0].sillyStuff == 'true') { var stringToTest = message.content.toLowerCase(); if (stringToTest.match(/(^| )heck($|.)/g)) { client.sillyStuff.get('heck').execute(message); } }
 
 	// Return if message does not start with the prefix.
-	if (message.content.indexOf(guildConf.prefix) !== 0) return;
+	if (message.content.indexOf(guildConf[0].prefix) !== 0) return;
 
 	// Split the message up then remove the prefix
 	const args = message.content.split(/\s+/g);
-	const commands = args.shift().slice(guildConf.prefix.length);
+	const commands = args.shift().slice(guildConf[0].prefix.length);
 
 	// Check if its an Admin command.
-	if (client.adminCommands.get(commands) && (message.author.id === clientData.OwnerID)) { client.adminCommands.get(commands).execute(client, guildConf, message, args); return; }
+	if (client.adminCommands.get(commands) && (message.author.id === clientData.OwnerID)) { client.adminCommands.get(commands).execute(client, guildConf[0], message, args); return; }
 	// Check if its in a Mod command.
-	if (client.modCommands.get(commands) && (message.member.roles.has(guildConf.modRole))) { client.modCommands.get(commands).execute(client, guildConf, message, args); return; }
+	if (client.modCommands.get(commands) && (message.member.roles.has(guildConf[0].modRole))) { client.modCommands.get(commands).execute(client, guildConf[0], message, args); return; }
 	// Check if its a normal command.
-	if (client.commands.get(commands)) { client.commands.get(commands).execute(client, guildConf, message, args); return; }
+	if (client.commands.get(commands)) { client.commands.get(commands).execute(client, guildConf[0], message, args); return; }
 	// Else error out.
-	else { message.reply('that is not a command use ' + guildConf.prefix + 'help, to see the list of commands.'); return; }
+	else { message.reply('that is not a command use ' + guildConf[0].prefix + 'help, to see the list of commands.'); return; }
 });
 
 // Log the bot in.

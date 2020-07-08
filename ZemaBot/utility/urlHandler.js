@@ -2,7 +2,8 @@ const https = require("https"); // Includes needed for the Bot
 const imgurClient = require("../includes/jsonFiles/imgur.json");
 const StringDecoder = require("string_decoder").StringDecoder; // Includes needed for the Bot
 
-var dataOut;
+const fetch = require("node-fetch");
+const { map } = require("bluebird");
 
 // ----- API Connect Metork -
 function extractURLData(url) {
@@ -83,5 +84,20 @@ module.exports = {
             }).on('error', reject)
             req.end();
         })
+    },
+    fetchDatabase: async function (guilds) {
+        const serverSettings ={}
+        guilds.forEach(element => {
+            return new Promise((resolve, reject) => {
+                fetch(`https://api.zematoxic.com/discord?serverID=${element.id}`)
+                    .then(res => res.json())
+                    .then((data) => {
+                        resolve(data)
+                        serverSettings[element.id] = data
+                    })
+                    .catch(error => console.log('Error:', error))
+            })
+        });
+        return serverSettings
     }
 }
