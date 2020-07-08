@@ -1,5 +1,6 @@
 // Bot Info
 const clientData = require('./includes/jsonFiles/ClientData.json');
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 // Utility Imports
 const eventHandler = require('./utility/eventHandler.js');
