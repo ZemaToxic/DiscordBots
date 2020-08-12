@@ -76,6 +76,54 @@ client.on('messageDeleteBulk', messages => { eventHandler.bulkDelete(client, cli
 // Client experiances an error
 client.on('error', error => { eventHandler.errorHandler(client, client.settings, error); });
 
+client.on('messageReactionAdd', (reaction, user) => {
+	if(reaction.message.id == '743249306517241879') {
+		if(reaction._emoji.name == 'KiwiNinja')
+		{
+			const guild = reaction.message.guild;
+			const memberWhoReacted = guild.members.find(member => member.id === user.id);
+			memberWhoReacted.addRole('442136610218180609');
+		}
+	}
+});
+
+client.on('messageReactionRemove', (reaction, user) => {
+	if(reaction.message.id == '743249306517241879') {
+		console.log('Correct message reacted to')
+		if(reaction._emoji.name == 'KiwiNinja')
+		{
+			const guild = reaction.message.guild;
+			const memberWhoReacted = guild.members.find(member => member.id === user.id);
+			memberWhoReacted.removeRole('442136610218180609');
+		}
+	}
+});
+
+client.on('raw', packet => {
+    // We don't want this to run on unrelated packets
+    if (!['MESSAGE_REACTION_ADD', 'MESSAGE_REACTION_REMOVE'].includes(packet.t)) return;
+    // Grab the channel to check the message from
+    const channel = client.channels.get(packet.d.channel_id);
+    // There's no need to emit if the message is cached, because the event will fire anyway for that
+    if (channel.messages.has(packet.d.message_id)) return;
+    // Since we have confirmed the message is not cached, let's fetch it
+    channel.fetchMessage(packet.d.message_id).then(message => {
+        // Emojis can have identifiers of name:id format, so we have to account for that case as well
+        const emoji = packet.d.emoji.id ? `${packet.d.emoji.name}:${packet.d.emoji.id}` : packet.d.emoji.name;
+        // This gives us the reaction we need to emit the event properly, in top of the message object
+        const reaction = message.reactions.get(emoji);
+        // Adds the currently reacting user to the reaction's users collection.
+        if (reaction) reaction.users.set(packet.d.user_id, client.users.get(packet.d.user_id));
+        // Check which type of event it is before emitting
+        if (packet.t === 'MESSAGE_REACTION_ADD') {
+            client.emit('messageReactionAdd', reaction, client.users.get(packet.d.user_id));
+        }
+        if (packet.t === 'MESSAGE_REACTION_REMOVE') {
+            client.emit('messageReactionRemove', reaction, client.users.get(packet.d.user_id));
+        }
+    });
+});
+
 // Client recieves a message
 client.on('message', message => {
 	if (message.channel.id === client.settings.ignoreChannel) return;
@@ -84,14 +132,14 @@ client.on('message', message => {
 	const guildConf = client.settings[message.guild.id];
 
 	if (guildConf[0].sillyStuff == 'true') { var stringToTest = message.content.toLowerCase(); if (stringToTest.match(/(^| )heck($|.)/g)) { client.sillyStuff.get('heck').execute(message); } }
-
+	
 	// Return if message does not start with the prefix.
 	if (message.content.indexOf(guildConf[0].prefix) !== 0) return;
-
+	
 	// Split the message up then remove the prefix
 	const args = message.content.split(/\s+/g);
 	const commands = args.shift().slice(guildConf[0].prefix.length);
-
+	
 	// Check if its an Admin command.
 	if (client.adminCommands.get(commands) && (message.author.id === clientData.OwnerID)) { client.adminCommands.get(commands).execute(client, guildConf[0], message, args); return; }
 	// Check if its in a Mod command.

@@ -246,7 +246,13 @@ module.exports = {
 			.setTimestamp(new Date());
 
 		client.channels.get('402404101713035264').send(embed);
-	}
+	},
+
+	// Add role
+	addRole: function(message, reaction, user)
+	{
+		console.log(message, reaction, user)
+    }
 };
 
 // Custom function used in memberUpdate.
