@@ -191,10 +191,10 @@ module.exports = {
 			.addField("After: ", newMessage.content)
 			.setTimestamp(new Date());
 
-
+		console.log(client.channels.get(client.settings[oldMessage.guild.id].modLogChannel))
 		if (client.channels.get(client.settings[oldMessage.guild.id].modLogChannel)) {
 			// Send the message to the Mod Channel
-			client.channels.get(client.settings[oldMessage.guild.id].modLogChannel).send(embed);
+			client.channels.get(client.settings[newMessage.guild.id].modLogChannel).send(embed);
 		}
 
 	},
