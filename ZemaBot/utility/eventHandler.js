@@ -164,7 +164,7 @@ module.exports = {
 			.setColor(0xF44242)
 			.setTimestamp(new Date());
 
-
+		console.log(clientSettings[0])
 		if (client.channels.get(clientSettings[0][message.guild.id].modLogChannel)) {
 			// Send the message to the Mod Channel
 			client.channels.get(clientSettings[0][message.guild.id].modLogChannel).send(embed);
