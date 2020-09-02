@@ -164,7 +164,6 @@ module.exports = {
 			.setColor(0xF44242)
 			.setTimestamp(new Date());
 
-		console.log(clientSettings[0])
 		if (client.channels.get(clientSettings[0][message.guild.id].modLogChannel)) {
 			// Send the message to the Mod Channel
 			client.channels.get(clientSettings[0][message.guild.id].modLogChannel).send(embed);
@@ -191,8 +190,8 @@ module.exports = {
 			.addField("After: ", newMessage.content)
 			.setTimestamp(new Date());
 
-		console.log(client.channels.get(clientSettings[0][oldMessage.guild.id].modLogChannel))
-		console.log(oldMessage.guild)
+			console.log(clientSettings[0])
+
 		if (client.channels.get(clientSettings[0][oldMessage.guild.id].modLogChannel)) {
 			// Send the message to the Mod Channel
 			client.channels.get(clientSettings[0][newMessage.guild.id].modLogChannel).send(embed);
