@@ -13,9 +13,9 @@ module.exports = {
 			.setTimestamp(new Date());
 
 
-		if (client.channels.get(client.settings[member.guild.id].modLogChannel)) {
+		if (client.channels.get(clientSettings[0][member.guild.id].modLogChannel)) {
 			// Send the message to the Mod Channel
-			client.channels.get(client.settings[member.guild.id].modLogChannel).send(embed);
+			client.channels.get(clientSettings[0][member.guild.id].modLogChannel).send(embed);
 		}
 
 	},
@@ -31,9 +31,9 @@ module.exports = {
 			.setColor(0xF44242)
 			.setTimestamp(new Date());
 
-		if (client.channels.get(client.settings[member.guild.id].modLogChannel)) {
+		if (client.channels.get(clientSettings[0][member.guild.id].modLogChannel)) {
 			// Send the message to the Mod Channel
-			client.channels.get(client.settings[member.guild.id].modLogChannel).send(embed);
+			client.channels.get(clientSettings[0][member.guild.id].modLogChannel).send(embed);
 		}
 
 	},
@@ -68,9 +68,9 @@ module.exports = {
 				.setTimestamp(new Date());
 
 
-			if (client.channels.get(client.settings[oldMember.guild.id].modLogChannel)) {
+			if (client.channels.get(clientSettings[0][oldMember.guild.id].modLogChannel)) {
 				// Send the message to the Mod Channel
-				client.channels.get(client.settings[oldMember.guild.id].modLogChannel).send(embed);
+				client.channels.get(clientSettings[0][oldMember.guild.id].modLogChannel).send(embed);
 			}
 
 			return;
@@ -104,9 +104,9 @@ module.exports = {
 					.setTimestamp(new Date());
 
 
-				if (client.channels.get(client.settings[oldMember.guild.id].modLogChannel)) {
+				if (client.channels.get(clientSettings[0][oldMember.guild.id].modLogChannel)) {
 					// Send the message to the Mod Channel
-					client.channels.get(client.settings[oldMember.guild.id].modLogChannel).send(embed);
+					client.channels.get(clientSettings[0][oldMember.guild.id].modLogChannel).send(embed);
 				}
 
 			}
@@ -122,9 +122,9 @@ module.exports = {
 					.setColor(0xFF7700)
 					.setTimestamp(new Date());
 
-				if (client.channels.get(client.settings[oldMember.guild.id].modLogChannel)) {
+				if (client.channels.get(clientSettings[0][oldMember.guild.id].modLogChannel)) {
 					// Send the message to the Mod Channel
-					client.channels.get(client.settings[oldMember.guild.id].modLogChannel).send(embed);
+					client.channels.get(clientSettings[0][oldMember.guild.id].modLogChannel).send(embed);
 				}
 
 			}
@@ -144,9 +144,9 @@ module.exports = {
 			.setTimestamp(new Date());
 
 
-		if (client.channels.get(client.settings[member.guild.id].modLogChannel)) {
+		if (client.channels.get(clientSettings[0][member.guild.id].modLogChannel)) {
 			// Send the message to the Mod Channel
-			client.channels.get(client.settings[member.guild.id].modLogChannel).send(embed);
+			client.channels.get(clientSettings[0][member.guild.id].modLogChannel).send(embed);
 		}
 	},
 
@@ -165,9 +165,9 @@ module.exports = {
 			.setTimestamp(new Date());
 
 
-		if (client.channels.get(client.settings[message.guild.id].modLogChannel)) {
+		if (client.channels.get(clientSettings[0][message.guild.id].modLogChannel)) {
 			// Send the message to the Mod Channel
-			client.channels.get(client.settings[message.guild.id].modLogChannel).send(embed);
+			client.channels.get(clientSettings[0][message.guild.id].modLogChannel).send(embed);
 		}
 
 	},
@@ -191,10 +191,11 @@ module.exports = {
 			.addField("After: ", newMessage.content)
 			.setTimestamp(new Date());
 
-		console.log(client.channels.get(client.settings[oldMessage.guild.id].modLogChannel))
-		if (client.channels.get(client.settings[oldMessage.guild.id].modLogChannel)) {
+		console.log(client.channels.get(clientSettings[0][oldMessage.guild.id].modLogChannel))
+		console.log(oldMessage.guild)
+		if (client.channels.get(clientSettings[0][oldMessage.guild.id].modLogChannel)) {
 			// Send the message to the Mod Channel
-			client.channels.get(client.settings[newMessage.guild.id].modLogChannel).send(embed);
+			client.channels.get(clientSettings[0][newMessage.guild.id].modLogChannel).send(embed);
 		}
 
 	},
