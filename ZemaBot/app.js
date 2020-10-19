@@ -143,7 +143,10 @@ client.on('message', message => {
 	// Check if its an Admin command.
 	if (client.adminCommands.get(commands) && (message.author.id === clientData.OwnerID)) { client.adminCommands.get(commands).execute(client, guildConf[0], message, args); return; }
 	// Check if its in a Mod command.
+	/* 
+	// Remove mod commands temporarily until the logic for connecting to the Database is implemented 
 	if (client.modCommands.get(commands) && (message.member.roles.has(guildConf[0].modRole))) { client.modCommands.get(commands).execute(client, guildConf[0], message, args); return; }
+	*/
 	// Check if its a normal command.
 	if (client.commands.get(commands)) { client.commands.get(commands).execute(client, guildConf[0], message, args); return; }
 	// Else error out.
