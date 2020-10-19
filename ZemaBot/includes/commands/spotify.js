@@ -24,8 +24,8 @@ async function getCreds() {
     return "Complete";
 }
 
-var newArgs;
-var searchQuery;
+let newArgs;
+let searchQuery;
 
 module.exports = {
     name: "spotify",
@@ -44,7 +44,7 @@ module.exports = {
                             // Go through the first page of results
                             const firstPage = data.body.tracks.items;
 
-                            var messageToSend = [];
+                            let messageToSend = [];
                             firstPage.forEach(function (track, index) { messageToSend.push(track); });
                             messageToSend.sort((first, next) => first.popularity - next.popularity).reverse();
 
@@ -66,7 +66,7 @@ module.exports = {
                 }
                 // Search for albums from a single artist
                 else if (args[0] === "artist") {
-                    var artistID;
+                    let artistID;
                     newArgs = args.slice(1);
                     // Join the incominng args
                     searchQuery = newArgs.join(" ");
@@ -75,7 +75,7 @@ module.exports = {
                             // Go through the first page of results
                             const firstPage = data.body.tracks.items;
 
-                            var messageToSend = [];
+                            let messageToSend = [];
                             firstPage.forEach(function (track, index) { messageToSend.push(track); });
 
                             messageToSend.sort((first, next) => first.popularity - next.popularity).reverse();
@@ -87,11 +87,11 @@ module.exports = {
                             // Get albums by a certain artist
                             spotifyApi.getArtistAlbums(artistID, { type: "album", limit: "25" })
                                 .then(function (data) {
-                                    var albums = data.body.items;
-                                    var albumNames = "";
+                                    let albums = data.body.items;
+                                    let albumNames = "";
                                     albums.forEach(element => { albumNames = albumNames + element.name + "\n"; });
 
-                                    var arr = albumNames.split("\n");
+                                    let arr = albumNames.split("\n");
 
                                     albumNames = arr.filter(function (value, index, self) { return self.indexOf(value) === index; }).join("\n");
 
@@ -109,8 +109,8 @@ module.exports = {
                 // Search for tracks from a specific album
                 else if (args[0] === "album") {
                     newArgs = args.slice(1);
-                    var trackID;
-                    var messageToSend = [];
+                    let trackID;
+                    let messageToSend = [];
                     // Join the incominng args
                     searchQuery = newArgs.join(" ");
                     // Get tracks in an album
@@ -145,7 +145,7 @@ module.exports = {
 };
 
 function convertMilli(millis) {
-    var minutes = Math.floor(millis / 60000);
-    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    let minutes = Math.floor(millis / 60000);
+    let seconds = ((millis % 60000) / 1000).toFixed(0);
     return (seconds == 60 ? (minutes + 1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
 }

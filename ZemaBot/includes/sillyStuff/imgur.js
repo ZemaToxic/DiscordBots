@@ -1,15 +1,15 @@
 const url = require("../../utility/urlHandler.js");
 
 let images;
-var imageToSend;
+let imageToSend;
 
 function getRandomImage() {
     if (!images) return;
-    var imagesCount;
+    let imagesCount;
     // get the length of the images
     imagesCount = images["data"].length;
     // get a random number between 0 and (imagesCount)
-    var RandomImage = Math.floor(Math.random() * imagesCount - 1) + 1;
+    let RandomImage = Math.floor(Math.random() * imagesCount - 1) + 1;
     // Assign imageToSend the value at that index
     if (images["data"][RandomImage]["type"] === ("image/jpeg" || "image/png")) {
         imageToSend = images["data"][RandomImage]["link"];

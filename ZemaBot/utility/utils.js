@@ -11,7 +11,7 @@ module.exports = function() {
     };
     this.loadOptions = function(options) {
         try {
-            var optionsJson;
+            let optionsJson;
             optionsJson = fs.readFileSync("./includes/jsonFiles/options.json");
 
             const optionsFromFile = JSON.parse(optionsJson);

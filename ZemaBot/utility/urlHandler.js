@@ -7,11 +7,11 @@ const { map } = require("bluebird");
 
 // ----- API Connect Metork -
 function extractURLData(url) {
-    var data = {};
+    let data = {};
     //find & remove protocol (http, ftp, etc.) and get domain
-    var domain;
-    var domainSplit;
-    var pathStart = "";
+    let domain;
+    let domainSplit;
+    let pathStart = "";
     if (url.indexOf("://") > -1) {
         domainSplit = url.split("/");
         domain = domainSplit[2];
@@ -35,7 +35,7 @@ function extractURLData(url) {
 module.exports = {
     imgurDecoder: function (searchValue) {
         return new Promise((resolve, reject) => {
-            var options = {
+            let options = {
                 'method': "GET",
                 'hostname': "api.imgur.com",
                 'path': `/3/gallery/search/?q_all=${searchValue}`,
@@ -43,9 +43,9 @@ module.exports = {
                     'Authorization': `Client-ID ${imgurClient.ClientID}`
                 }
             };
-            var req = https.request(options, function (results) {
-                var decoder = new StringDecoder("utf8")
-                var body = " ";
+            let req = https.request(options, function (results) {
+                let decoder = new StringDecoder("utf8")
+                let body = " ";
                 results
                     .setEncoding("utf8")
                     .on('data', (chunk) => body += decoder.write(chunk))
@@ -61,17 +61,17 @@ module.exports = {
     },
     urlHandler: function (url) {
         return new Promise((resolve, reject) => {
-            var data = extractURLData(url);
-            var options =
+            let data = extractURLData(url);
+            let options =
             {
                 'host': data.domain,
                 'port': data.port,
                 'path': "/" + data.path,
                 'method': "GET"
             };
-            var req = https.request(options, function (results) {
-                var decoder = new StringDecoder("utf8")
-                var body = " ";
+            let req = https.request(options, function (results) {
+                let decoder = new StringDecoder("utf8")
+                let body = " ";
                 results
                     .setEncoding("utf8")
                     .on('data', (chunk) => body += decoder.write(chunk))

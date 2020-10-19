@@ -30,12 +30,12 @@ const bots = directories.reduce((bots, dir) => {
 bots.forEach((bot) => bot.start());
 
 function timeStamp() {
-	var now = new Date();
-	var date = now.getDate();
-	var month = now.getMonth();
-	var year = now.getFullYear();
-	var hours = now.getHours();
-	var minutes = now.getMinutes();
+	let now = new Date();
+	let date = now.getDate();
+	let month = now.getMonth();
+	let year = now.getFullYear();
+	let hours = now.getHours();
+	let minutes = now.getMinutes();
 	return '[' + date + '/' + month + '/' + year + ' - ' + hours + ':' + minutes + ']';
 }
 

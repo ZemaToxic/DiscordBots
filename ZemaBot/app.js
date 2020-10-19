@@ -22,7 +22,7 @@ client.modCommands = new Discord.Collection();
 client.adminCommands = new Discord.Collection();
 client.sillyStuff = new Discord.Collection();
 
-var commandFiles, modCommandFiles, adminCommandFiles, sillyStuffFiles;
+let commandFiles, modCommandFiles, adminCommandFiles, sillyStuffFiles;
 
 // Make a new const of all files in the commands folder which end in .js
 commandFiles = fs.readdirSync('./includes/commands').filter(file => file.endsWith('.js'));
@@ -131,7 +131,7 @@ client.on('message', message => {
 
 	const guildConf = client.settings[message.guild.id];
 
-	if (guildConf[0].sillyStuff == 'true') { var stringToTest = message.content.toLowerCase(); if (stringToTest.match(/(^| )heck($|.)/g)) { client.sillyStuff.get('heck').execute(message); } }
+	if (guildConf[0].sillyStuff == 'true') { let stringToTest = message.content.toLowerCase(); if (stringToTest.match(/(^| )heck($|.)/g)) { client.sillyStuff.get('heck').execute(message); } }
 	
 	// Return if message does not start with the prefix.
 	if (message.content.indexOf(guildConf[0].prefix) !== 0) return;

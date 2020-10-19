@@ -1,20 +1,20 @@
-var moment = require("moment");
+let moment = require("moment");
 
 module.exports = {
     name: "remindme",
     description: 'Reminds the user to do "something" after a set time.',
     execute(client, guildConf, message, args) {
         // Make a variable of the time the command was called.
-        var currentTime = moment();
+        let currentTime = moment();
         // Split the inputed value.
-        var inputedTime = args[0].split("");
+        let inputedTime = args[0].split("");
 
         //	Variables for the time and the length (minutes, hours, days).
-        var delayValue = inputedTime.pop();
+        let delayValue = inputedTime.pop();
         // Parse the Value as an (int).
-        var timeValue = parseInt(inputedTime.join(""));
+        let timeValue = parseInt(inputedTime.join(""));
         // Declare (remindMeTime) so we can edit it later.
-        var remindMeTime = 0;
+        let remindMeTime = 0;
 
         // Make a new variable of the stuff we want as a reminder.
         args.splice(0, 1);
@@ -30,7 +30,7 @@ module.exports = {
             }
 
             // Make a value based on the time requested.
-            var miliseconds = remindMeTime - currentTime;
+            let miliseconds = remindMeTime - currentTime;
 
             // Check that (milliseconds) isnt set to high/ridiclous.
             if (isWithinTime(miliseconds) === true) {
@@ -70,7 +70,7 @@ function isNumber(n) {
 
 // Returns true if the time period is within the 32 bit interger.
 function isWithinTime(miliseconds) {
-    var mili = parseInt(miliseconds);
+    let mili = parseInt(miliseconds);
     if ((mili >= 2147483647) || isNaN(mili) || mili < 0) {
         return false;
     } else {
