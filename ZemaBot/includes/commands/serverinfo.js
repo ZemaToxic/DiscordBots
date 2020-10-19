@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-var moment = require("moment-timezone");
+const moment = require("moment-timezone");
 
 module.exports = {
     name: "serverinfo",
@@ -7,16 +7,16 @@ module.exports = {
     execute(client, guildConf, message, args) {
 
         // Get the server roles, sort via the [position] and then reverse the entire thing so it counts down 3, 2, 1 ... etc
-        var serverRoles = message.guild.roles.sort((first, next) => first.position - next.position)
+        let serverRoles = message.guild.roles.sort((first, next) => first.position - next.position)
             .map(r => `${r.name}`).reverse().join("] [");
         // Get all memebers with a status of 'online'
-        var onlineMembers = message.guild.members.filter(m => m.presence.status === "online");
+        let onlineMembers = message.guild.members.filter(m => m.presence.status === "online");
         // Get all memebers with a status of 'idle'
-        var idleMembers = message.guild.members.filter(m => m.presence.status === "idle");
+        let idleMembers = message.guild.members.filter(m => m.presence.status === "idle");
         // Get all memebers with a status of 'do not disturb'
-        var dndMembers = message.guild.members.filter(m => m.presence.status === "dnd");
+        let dndMembers = message.guild.members.filter(m => m.presence.status === "dnd");
         // Get all memebers with a status of 'offline'
-        var offlineMembers = message.guild.members.filter(m => m.presence.status === "offline");
+        let offlineMembers = message.guild.members.filter(m => m.presence.status === "offline");
 
         const embed = new Discord.RichEmbed()
             .setTitle("Server Information")

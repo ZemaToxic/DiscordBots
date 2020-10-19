@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-var moment = require("moment-timezone");
+let moment = require("moment-timezone");
 
 module.exports = {
     name: "time",
@@ -7,7 +7,7 @@ module.exports = {
     execute(client, guildConf, message, args) {
 
         // Make a local variable of the current time.
-        var currentDate = new Date();
+        let currentDate = new Date();
 
         const embed = new Discord.RichEmbed()
             .setTitle("Current Time")

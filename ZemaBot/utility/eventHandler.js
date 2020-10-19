@@ -46,8 +46,8 @@ module.exports = {
 		if (oldMember.nickname !== newMember.nickname) {
 
 			// Make local vars
-			var oldName = oldMember.nickname;
-			var newName = newMember.nickname;
+			let oldName = oldMember.nickname;
+			let newName = newMember.nickname;
 
 			// If no set nickname, use the user's username.
 			if (oldMember.nickname === null) {
@@ -80,8 +80,8 @@ module.exports = {
 		if (oldMember.roles !== newMember.roles) {
 
 			// Make local vars.
-			var oldRoles = [];
-			var newRoles = [];
+			let oldRoles = [];
+			let newRoles = [];
 
 			// Get the roles from the user and push to our local vars.
 			oldMember.roles.forEach(function (k) {
@@ -93,7 +93,7 @@ module.exports = {
 
 			// If a role was Added.
 			if (oldRoles.length < newRoles.length) {
-				var addedChange = filterArray(newRoles, oldRoles)[0];
+				let addedChange = filterArray(newRoles, oldRoles)[0];
 
 				// Make a new RichEmbed
 				const embed = new Discord.RichEmbed()
@@ -112,7 +112,7 @@ module.exports = {
 			}
 			// If a role was Removed.
 			else {
-				var removedChange = filterArray(oldRoles, newRoles)[0];
+				let removedChange = filterArray(oldRoles, newRoles)[0];
 
 				// Make a new RichEmbed
 				const embed = new Discord.RichEmbed()
@@ -203,19 +203,19 @@ module.exports = {
 	bulkDelete: function (client, clientSettings, messages) {
 
 		// Grab the purged messages and who sent them.
-		var purgedMessages = messages.map(c => `${c.author.username}: ${c.content || c.embeds[0].title} \n`).reverse();
+		let purgedMessages = messages.map(c => `${c.author.username}: ${c.content || c.embeds[0].title} \n`).reverse();
 		// remove the comma's and replace them with nothing.
-		var cleanedString = purgedMessages.toString().replace(/,/g, "");
+		let cleanedString = purgedMessages.toString().replace(/,/g, "");
 		// surround the new messages in code tags.
-		var codeBlock = "```\n" + cleanedString + "```";
+		let codeBlock = "```\n" + cleanedString + "```";
 
 		// Grab the channel the messages where purged from.
-		var purgedChannel = messages.map(c => c.channel);
+		let purgedChannel = messages.map(c => c.channel);
 		// get the first one.
-		var firstChannel = purgedChannel[0];
+		let firstChannel = purgedChannel[0];
 
 		// Grab the user who purged.
-		var purger = messages.map(u => u.author.username);
+		let purger = messages.map(u => u.author.username);
 
 		// Make a new RichEmbed
 		const embed = new Discord.RichEmbed()
@@ -257,7 +257,7 @@ module.exports = {
 
 // Custom function used in memberUpdate.
 function filterArray(src, filt) {
-	var temp = {}, i, result = [];
+	let temp = {}, i, result = [];
 	for (i = 0; i < filt.length; i++) { temp[filt[i]] = true; }
 	for (i = 0; i < src.length; i++) { if (!(src[i] in temp)) { result.push(src[i]); } }
 	return result;
