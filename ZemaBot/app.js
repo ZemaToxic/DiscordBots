@@ -34,13 +34,17 @@ adminCommandFiles = fs.readdirSync('./includes/adminCommands').filter(file => fi
 sillyStuffFiles = fs.readdirSync('./includes/sillyStuff').filter(file => file.endsWith('.js'));
 
 // Iterate through and add them to the client.commands Collection.
-for (const file of commandFiles) { const command = require(`./includes/commands/${file}`); client.commands.set(command.name, command); }
+for (const file of commandFiles) { const command = require(`./includes/commands/${file}`);
+    client.commands.set(command.name, command); }
 // Iterate through and add them to the client.modCommands Collection.
-for (const file of modCommandFiles) { const modcommand = require(`./includes/modCommands/${file}`); client.modCommands.set(modcommand.name, modcommand); }
+for (const file of modCommandFiles) { const modcommand = require(`./includes/modCommands/${file}`);
+    client.modCommands.set(modcommand.name, modcommand); }
 // Iterate through and add them to the client.adminCommands Collection.
-for (const file of adminCommandFiles) { const admincommand = require(`./includes/adminCommands/${file}`); client.adminCommands.set(admincommand.name, admincommand); }
+for (const file of adminCommandFiles) { const admincommand = require(`./includes/adminCommands/${file}`);
+    client.adminCommands.set(admincommand.name, admincommand); }
 // Iterate through and add them to the client.sillyStuff Collection.
-for (const file of sillyStuffFiles) { const sillycommand = require(`./includes/sillyStuff/${file}`); client.sillyStuff.set(sillycommand.name, sillycommand); }
+for (const file of sillyStuffFiles) { const sillycommand = require(`./includes/sillyStuff/${file}`);
+    client.sillyStuff.set(sillycommand.name, sillycommand); }
 
 // Set the Activity to what is saved.
 function setActivity() { client.user.setActivity(options.Activity, { name: 'game', type: 0 }); }
@@ -48,15 +52,15 @@ function setActivity() { client.user.setActivity(options.Activity, { name: 'game
 // ---------- Event Handlers ----------
 
 // Bot is Ready to communicate
-client.on('ready', async () => {
-	// Print to console that we have logged in.
-	console.log(`Logged in as ${client.user.tag}!`);
-	loadOptions(options);
-	// Set the activity
-	setActivity();
-	// Make sure the activity is always there, by resetting it every 12 hours
-	setInterval(setActivity, 43200); // 43200 -> 12 Hours
-	client.settings = await urlHandler.fetchDatabase(client.guilds)
+client.on('ready', async() => {
+    // Print to console that we have logged in.
+    console.log(`Logged in as ${client.user.tag}!`);
+    loadOptions(options);
+    // Set the activity
+    setActivity();
+    // Make sure the activity is always there, by resetting it every 12 hours
+    setInterval(setActivity, 43200); // 43200 -> 12 Hours
+    client.settings = await urlHandler.fetchDatabase(client.guilds)
 });
 
 // Member Joins
@@ -77,26 +81,24 @@ client.on('messageDeleteBulk', messages => { eventHandler.bulkDelete(client, cli
 client.on('error', error => { eventHandler.errorHandler(client, client.settings, error); });
 
 client.on('messageReactionAdd', (reaction, user) => {
-	if(reaction.message.id == '743249306517241879') {
-		if(reaction._emoji.name == 'KiwiNinja')
-		{
-			const guild = reaction.message.guild;
-			const memberWhoReacted = guild.members.find(member => member.id === user.id);
-			memberWhoReacted.addRole('442136610218180609');
-		}
-	}
+    if (reaction.message.id == '743249306517241879') {
+        if (reaction._emoji.name == 'KiwiNinja') {
+            const guild = reaction.message.guild;
+            const memberWhoReacted = guild.members.find(member => member.id === user.id);
+            memberWhoReacted.addRole('442136610218180609');
+        }
+    }
 });
 
 client.on('messageReactionRemove', (reaction, user) => {
-	if(reaction.message.id == '743249306517241879') {
-		console.log('Correct message reacted to')
-		if(reaction._emoji.name == 'KiwiNinja')
-		{
-			const guild = reaction.message.guild;
-			const memberWhoReacted = guild.members.find(member => member.id === user.id);
-			memberWhoReacted.removeRole('442136610218180609');
-		}
-	}
+    if (reaction.message.id == '743249306517241879') {
+        console.log('Correct message reacted to')
+        if (reaction._emoji.name == 'KiwiNinja') {
+            const guild = reaction.message.guild;
+            const memberWhoReacted = guild.members.find(member => member.id === user.id);
+            memberWhoReacted.removeRole('442136610218180609');
+        }
+    }
 });
 
 client.on('raw', packet => {
@@ -126,37 +128,37 @@ client.on('raw', packet => {
 
 // Client recieves a message
 client.on('message', message => {
-	if (message.channel.id === client.settings.ignoreChannel) return;
-	if (message.author.bot) return;
+    if (message.channel.id === client.settings.ignoreChannel) return;
+    if (message.author.bot) return;
 
-	const guildConf = client.settings[message.guild.id];
+    const guildConf = client.settings[message.guild.id];
 
-	if (guildConf[0].sillyStuff == 'true') { let stringToTest = message.content.toLowerCase(); if (stringToTest.match(/(^| )heck($|.)/g)) { client.sillyStuff.get('heck').execute(message); } }
-	
-	// Return if message does not start with the prefix.
-	if (message.content.indexOf(guildConf[0].prefix) !== 0) return;
-	
-	// Split the message up then remove the prefix
-	const args = message.content.split(/\s+/g);
-	const commands = args.shift().slice(guildConf[0].prefix.length);
-	
-	// Check if its an Admin command.
-	if (client.adminCommands.get(commands) && (message.author.id === clientData.OwnerID)) { client.adminCommands.get(commands).execute(client, guildConf[0], message, args); return; }
-	// Check if its in a Mod command.
-	/* 
-	// Remove mod commands temporarily until the logic for connecting to the Database is implemented 
-	if (client.modCommands.get(commands) && (message.member.roles.has(guildConf[0].modRole))) { client.modCommands.get(commands).execute(client, guildConf[0], message, args); return; }
-	*/
-	// Check if its a normal command.
-	if (client.commands.get(commands)) { client.commands.get(commands).execute(client, guildConf[0], message, args); return; }
-	// Else error out.
-	else { message.reply('that is not a command use ' + guildConf[0].prefix + 'help, to see the list of commands.'); return; }
+    if (guildConf[0].sillyStuff == 'true') { let stringToTest = message.content.toLowerCase(); if (stringToTest.match(/(^| )heck|bamboozle($|.)/g)) { client.sillyStuff.get('heck').execute(message); } }
+
+    // Return if message does not start with the prefix.
+    if (message.content.indexOf(guildConf[0].prefix) !== 0) return;
+
+    // Split the message up then remove the prefix
+    const args = message.content.split(/\s+/g);
+    const commands = args.shift().slice(guildConf[0].prefix.length);
+
+    // Check if its an Admin command.
+    if (client.adminCommands.get(commands) && (message.author.id === clientData.OwnerID)) { client.adminCommands.get(commands).execute(client, guildConf[0], message, args); return; }
+    // Check if its in a Mod command.
+    /* 
+    // Remove mod commands temporarily until the logic for connecting to the Database is implemented 
+    if (client.modCommands.get(commands) && (message.member.roles.has(guildConf[0].modRole))) { client.modCommands.get(commands).execute(client, guildConf[0], message, args); return; }
+    */
+    // Check if its a normal command.
+    if (client.commands.get(commands)) { client.commands.get(commands).execute(client, guildConf[0], message, args); return; }
+    // Else error out.
+    else { message.reply('that is not a command use ' + guildConf[0].prefix + 'help, to see the list of commands.'); return; }
 });
 
 // Log the bot in.
 client.login(clientData.Token);
 
 // Process listeners 
-process.on('exit', (code) => { console.log('Bot exited with code: ' + code); }); 
+process.on('exit', (code) => { console.log('Bot exited with code: ' + code); });
 process.on('unhandledRejection', err => { console.error('Unhandled Rejection: \n', err); });
 process.on('error', err => { console.error('Error happened: \n ', err); });
